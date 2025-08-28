@@ -1,6 +1,7 @@
-import 'package:cenith_storage/features/home/view/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../features/home/view/home_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> routes (RouteSettings settings) {
