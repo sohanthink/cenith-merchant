@@ -1,12 +1,16 @@
-import 'package:cenith_storage/features/home/view/home_screen.dart';
+import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../features/home/view/home_view.dart';
 
 class AppRoutes {
   static Route<dynamic> routes (RouteSettings settings) {
     late final Widget screenWidget;
-    if(settings.name == HomeScreen.name){
-      screenWidget = HomeScreen();
+    if(settings.name == HomeView.name){
+      screenWidget = HomeView();
+    } if(settings.name == MainBottomNavView.name){
+      screenWidget = MainBottomNavView();
     }
 
     return MaterialPageRoute(builder: (context)=> screenWidget);
