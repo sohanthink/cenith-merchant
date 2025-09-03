@@ -6,16 +6,16 @@ import '../../../core/constants/asstes_path/icons_path.dart';
 import '../../common/topic_header.dart';
 import '../widgets/dashboard_card_widget.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   static final String name = 'home-screen';
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeaderSection(context),
@@ -35,49 +36,65 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 20.h),
             BuildDashBoardSection(),
-            SizedBox(height: 8.h),
+            SizedBox(height: 30.h),
             Expanded(child: buildDashBoardSection()),
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20 ,left: 8,right: 8),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
 
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                    backgroundColor: AppColors.themColor,
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'Check in/out',
+                    style: TextTheme.of(context).headlineLarge!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
   // it will removed and will adjusted with state management;
   int selectedIndex = 0;
 
   ListView buildDashBoardSection() {
-
-
-    List<Map<String,dynamic>> item = [
-      {
-        'title' : 'Customer To Check In',
-        'count' : 0,
-      },
-      {
-        'title' : 'Customer To Check Out',
-        'count' : 0,
-      },
-      {
-        'title' : 'Walk-ins',
-        'count' : 0,
-      }
+    List<Map<String, dynamic>> item = [
+      {'title': 'Customer To Check In', 'count': 0 ,'sub-title': null},
+      {'title': 'Customer To Check Out', 'count': 0, 'sub-title': null },
+      {'title': 'Walk-ins', 'count': 0 , 'sub-title': 'Walk-ins left for next €100.00 bonus: 20 '  },
     ];
 
     return ListView.builder(
+      padding: EdgeInsets.all(0),
       itemCount: item.length,
       itemBuilder: ((BuildContext context, index) {
         return GestureDetector(
           onTap: () {
             selectedIndex = index;
             setState(() {});
-            print(selectedIndex);
           },
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(
+              top: index == 0 ? 0 : 8.0,
+              left: 8,
+              right: 8,
+              bottom: 8,
+            ),
             child: BuildDashboardCard(
               title: item[index]['title'],
               count: item[index]['count'],
+              subTitle: item[index]['sub-title'],
               isSelected: selectedIndex == index,
             ),
           ),
@@ -90,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 45.h),
+        SizedBox(height: 50.h),
         Row(
           children: [
             topicHeader(title: 'Hello Ashraful!', subTitle: 'good morning'),
@@ -131,7 +148,7 @@ class _BuildDashBoardSectionState extends State<BuildDashBoardSection> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: ['Today', 'Upcoming', 'Past'].asMap().entries.map((item) {
         return GestureDetector(
           onTap: () {
@@ -146,7 +163,7 @@ class _BuildDashBoardSectionState extends State<BuildDashBoardSection> {
                   : Colors.white,
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
               child: Text(
                 item.value,
                 style: TextStyle(

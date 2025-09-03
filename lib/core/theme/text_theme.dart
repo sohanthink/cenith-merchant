@@ -10,5 +10,6 @@ TextTheme get textTheme {
     headlineLarge: TextStyle(fontSize: 16.sp, color: AppColors.midLightBlue),
     titleMedium: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.normal,color: AppColors.midLightBlue),
     headlineMedium: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal,color: AppColors.midLightBlue),
+    titleSmall: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.normal,color: AppColors.midLightBlue),
   );
 }

@@ -2,6 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'app.dart';
 
-void main(){
+void main() {
   runApp(const CenithStorage());
 }
