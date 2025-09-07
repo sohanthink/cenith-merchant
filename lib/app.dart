@@ -19,7 +19,7 @@ class CenithStorage extends StatelessWidget {
       builder: (_,child){
         return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: '/',
+            initialRoute: 'booking-screen',
             initialBinding: ControllerBindings(),
             onGenerateRoute: AppRoutes.routes,
             theme: AppTheme.themeData
