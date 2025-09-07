@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:cenith_marchent/core/constants/app_colors.dart';
+import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -18,6 +17,7 @@ class BookingScreen extends StatefulWidget {
 class _BookingScreenState extends State<BookingScreen> {
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.9),
       body: Column(
@@ -27,16 +27,14 @@ class _BookingScreenState extends State<BookingScreen> {
               Container(
                 height: 150.h,
                 width: double.infinity,
-                decoration: BoxDecoration(color: AppColors.midLightBlue),
+                decoration: BoxDecoration(color: AppColors.themColor),
                 child: Padding(
                   padding: EdgeInsets.only(top: 40.0.h),
                   child: Text(
                     'Booking',
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.1.sp,
+                    style: style.titleMedium?.copyWith(
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -49,6 +47,13 @@ class _BookingScreenState extends State<BookingScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      )
+                    ],
                   ),
                   child: TableCalendar(
                     focusedDay: DateTime.now(),
@@ -63,7 +68,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       },
                       titleTextStyle: TextStyle(
                         fontSize: 20.sp,
-                        color: AppColors.midLightBlue,
+                        color: AppColors.themColor,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 0.1.sp,
                       ),
@@ -77,6 +82,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Icons.chevron_right,
                         color: Colors.black,
                       ),
+
                     ),
                     daysOfWeekStyle: DaysOfWeekStyle(
                       dowTextFormatter: (date, locale) {
@@ -95,11 +101,11 @@ class _BookingScreenState extends State<BookingScreen> {
                             : 'S';
                       },
                       weekdayStyle: TextStyle(
-                        color: AppColors.midLightBlue,
+                        color: AppColors.themColor,
                         fontWeight: FontWeight.bold,
                       ),
                       weekendStyle: TextStyle(
-                        color: AppColors.midLightBlue,
+                        color: AppColors.themColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -125,10 +131,10 @@ class _BookingScreenState extends State<BookingScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16.0.w),
             child: Row(
               children: [
-                buildTextFormField(),
+                buildTextFormField(style),
                 SizedBox(width: 5.w),
-                buildIcons(Icons.icecream_outlined),
-                buildIcons(Icons.icecream_outlined),
+                buildIcons(IconsPath.toolsFilterIconSvg),
+                buildIcons(IconsPath.downloadIconSvg),
               ],
             ),
           ),
@@ -138,9 +144,9 @@ class _BookingScreenState extends State<BookingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildElevatedButton('Today', () {}),
-                buildElevatedButton('Upcoming', () {}, size: 120.w),
-                buildElevatedButton('Past', () {}),
+                buildElevatedButton('Today', () {}, style),
+                buildElevatedButton('Upcoming', () {}, style, size: 120.w),
+                buildElevatedButton('Past', () {}, style),
               ],
             ),
           ),
@@ -151,35 +157,29 @@ class _BookingScreenState extends State<BookingScreen> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
-              color: AppColors.midLightBlue,
+              color: AppColors.themColor,
             ),
           ),
-          Text('Your booking are coming soon',style: TextStyle(color: AppColors.midLightBlue),),
-          SizedBox(height: 16.h,),
+          Text(
+            'Your booking are coming soon',
+            style: TextStyle(color: AppColors.midLightBlue),
+          ),
+          SizedBox(height: 16.h),
           RichText(
-              text: TextSpan(
-                style: TextStyle(fontSize: 14,color: AppColors.midLightBlue),
-            children: [
-              TextSpan(text: 'Have question? '),
-              TextSpan(text: 'Contact our support team',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15))
-            ]
-          )),
-          
-         SizedBox(height: 48.h,),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(350.w, 45.h),
-                backgroundColor: AppColors.midLightBlue,
-                foregroundColor: Colors.white,
-                textStyle: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.1.sp
-                )
-              ),
-              onPressed: (){}, child: Text('Check in/out'))
-          
+            text: TextSpan(
+              style: style.titleSmall,
+              children: [
+                TextSpan(text: 'Have question? '),
+                TextSpan(
+                  text: 'Contact our support team',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ],
+            ),
+          ),
 
+          SizedBox(height: 48.h),
+          ElevatedButton(onPressed: () {}, child: Text('Check in/out')),
         ],
       ),
     );
@@ -203,23 +203,15 @@ class _BookingScreenState extends State<BookingScreen> {
     return months[month - 1];
   }
 
-  Widget buildTextFormField() {
+  Widget buildTextFormField(TextTheme style) {
     return Expanded(
       child: TextFormField(
         decoration: InputDecoration(
           hintText: 'Search Booking',
-          hintStyle: TextStyle(
-            fontWeight: FontWeight.w400,
-            color: AppColors.midLightBlue,
-            fontSize: 12.sp,
-          ),
+          hintStyle: style.headlineMedium?.copyWith(letterSpacing: 0.1.sp),
           prefixIcon: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-            child: Icon(
-              Icons.search,
-              color: AppColors.midLightBlue,
-              size: 25.sp,
-            ),
+            child: Icon(Icons.search, color: AppColors.midLightBlue, size: 25.sp),
           ),
           prefixIconConstraints: BoxConstraints(maxHeight: 25, maxWidth: 35),
           border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -239,31 +231,28 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Widget buildIcons(IconData icon) {
+  Widget buildIcons(String icon) {
     return Container(
-      margin: EdgeInsets.all(3.w),
+      margin: EdgeInsets.all(4.w),
       decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
       child: Padding(
-        padding: EdgeInsets.all(8.0.w),
-        child: Icon(icon, size: 28.sp, color: AppColors.midLightBlue),
+        padding: EdgeInsets.all(10.0.w),
+        child: SvgPicture.asset(icon, width: 28.w),
       ),
     );
   }
 
   Widget buildElevatedButton(
     String buttonName,
-    VoidCallback onTap, {
+    VoidCallback onTap,
+    TextTheme style, {
     double? size,
   }) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.midLightBlue,
+        backgroundColor: AppColors.themColor,
         foregroundColor: Colors.white,
-        textStyle: TextStyle(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.1.sp,
-        ),
+        textStyle: style.titleSmall?.copyWith(fontWeight: FontWeight.w600),
         fixedSize: Size(size ?? 100.w, 40.h),
       ),
       onPressed: onTap,
