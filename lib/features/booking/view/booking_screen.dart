@@ -1,5 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,7 +54,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         color: Colors.black12,
                         blurRadius: 6,
                         offset: Offset(0, 3),
-                      )
+                      ),
                     ],
                   ),
                   child: TableCalendar(
@@ -82,7 +84,6 @@ class _BookingScreenState extends State<BookingScreen> {
                         Icons.chevron_right,
                         color: Colors.black,
                       ),
-
                     ),
                     daysOfWeekStyle: DaysOfWeekStyle(
                       dowTextFormatter: (date, locale) {
@@ -165,18 +166,7 @@ class _BookingScreenState extends State<BookingScreen> {
             style: TextStyle(color: AppColors.midLightBlue),
           ),
           SizedBox(height: 16.h),
-          RichText(
-            text: TextSpan(
-              style: style.titleSmall,
-              children: [
-                TextSpan(text: 'Have question? '),
-                TextSpan(
-                  text: 'Contact our support team',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-              ],
-            ),
-          ),
+          ContactSupportText.supportText(context, () {}),
 
           SizedBox(height: 48.h),
           ElevatedButton(onPressed: () {}, child: Text('Check in/out')),
@@ -211,7 +201,11 @@ class _BookingScreenState extends State<BookingScreen> {
           hintStyle: style.headlineMedium?.copyWith(letterSpacing: 0.1.sp),
           prefixIcon: Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-            child: Icon(Icons.search, color: AppColors.midLightBlue, size: 25.sp),
+            child: Icon(
+              Icons.search,
+              color: AppColors.midLightBlue,
+              size: 25.sp,
+            ),
           ),
           prefixIconConstraints: BoxConstraints(maxHeight: 25, maxWidth: 35),
           border: OutlineInputBorder(borderSide: BorderSide.none),
