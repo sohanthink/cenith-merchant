@@ -40,21 +40,13 @@ class _HomeViewState extends State<HomeView> {
             Expanded(child: buildDashBoardSection()),
             SizedBox(
               width: double.infinity,
+              height: 60.h,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20 ,left: 8,right: 8),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                    backgroundColor: AppColors.themColor,
-                  ),
                   onPressed: () {},
                   child: Text(
                     'Check in/out',
-                    style: TextTheme.of(context).headlineLarge!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
                   ),
                 ),
               ),
