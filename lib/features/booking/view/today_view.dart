@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/features/booking/widgets/no_bookings_yet_design.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class _TodayViewState extends State<TodayView> {
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: AppColors.scaffoldColor,
       body: NoBookingsYetDesign(style: style),
     );
   }

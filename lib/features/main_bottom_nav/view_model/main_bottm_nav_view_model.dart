@@ -1,4 +1,5 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:cenith_marchent/features/home/view/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class MainBottomNavViewModel extends GetxController {
     ),
   ];
 
-  List<Widget> screens = [HomeView(), HomeView(), HomeView(), HomeView(),HomeView()];
+  List<Widget> screens = [HomeView(), AllBookingsView(), HomeView(), HomeView(),HomeView()];
 
   onchange(int index) {
     selectedIndex = index;

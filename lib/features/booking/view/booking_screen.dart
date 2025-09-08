@@ -2,10 +2,8 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
 import 'package:cenith_marchent/features/common/contact_support_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -22,7 +20,7 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.9),
+      backgroundColor: AppColors.scaffoldColor,
       body: Column(
         children: [
           Stack(
@@ -226,7 +224,6 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-
   Widget buildElevatedButton(
     String buttonName,
     VoidCallback onTap,
@@ -245,5 +242,3 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 }
-
-
