@@ -2,25 +2,26 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
 import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class BookingScreen extends StatefulWidget {
-  const BookingScreen({super.key});
+class BookingView extends StatefulWidget {
+  const BookingView({super.key});
 
   static final String name = 'booking-screen';
 
   @override
-  State<BookingScreen> createState() => _BookingScreenState();
+  State<BookingView> createState() => _BookingViewState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
+class _BookingViewState extends State<BookingView> {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: AppColors.scaffoldColor,
+      backgroundColor: Colors.white.withOpacity(0.9),
       body: Column(
         children: [
           Stack(
@@ -51,7 +52,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black12,
-                        blurRadius: 6,
+                        blurRadius: 6.r,
                         offset: Offset(0, 3),
                       ),
                     ],
@@ -156,7 +157,7 @@ class _BookingScreenState extends State<BookingScreen> {
             "You Don't Have Any Booking",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 20.sp,
               color: AppColors.themColor,
             ),
           ),
@@ -206,7 +207,7 @@ class _BookingScreenState extends State<BookingScreen> {
               size: 25.sp,
             ),
           ),
-          prefixIconConstraints: BoxConstraints(maxHeight: 25, maxWidth: 35),
+          prefixIconConstraints: BoxConstraints(maxHeight: 25.h, maxWidth: 35.w),
           border: OutlineInputBorder(borderSide: BorderSide.none),
           contentPadding: EdgeInsets.all(14.w),
           filled: true,
@@ -223,6 +224,7 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
     );
   }
+
 
   Widget buildElevatedButton(
     String buttonName,
@@ -242,3 +244,5 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 }
+
+
