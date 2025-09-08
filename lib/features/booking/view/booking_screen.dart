@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
 import 'package:cenith_marchent/features/common/contact_support_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -134,8 +135,8 @@ class _BookingScreenState extends State<BookingScreen> {
               children: [
                 buildTextFormField(style),
                 SizedBox(width: 5.w),
-                buildIcons(IconsPath.toolsFilterIconSvg),
-                buildIcons(IconsPath.downloadIconSvg),
+                CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg),
+                CustomCircleIcons(icon: IconsPath.downloadIconSvg),
               ],
             ),
           ),
@@ -225,16 +226,6 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Widget buildIcons(String icon) {
-    return Container(
-      margin: EdgeInsets.all(4.w),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-      child: Padding(
-        padding: EdgeInsets.all(10.0.w),
-        child: SvgPicture.asset(icon, width: 28.w),
-      ),
-    );
-  }
 
   Widget buildElevatedButton(
     String buttonName,
@@ -254,3 +245,5 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 }
+
+
