@@ -26,7 +26,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: AppColors.scaffoldColor,
         appBar: AppBar(
           title: Text('Booking', style: style.headlineLarge),
           backgroundColor: Colors.grey.shade100,
@@ -47,7 +47,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                     padding: 12.w,
                   ),
                   CustomCircleIcons(
-                    icon: IconsPath.simpleToolIconSvg,
+                    icon: IconsPath.downloadIconSvg,
                     padding: 12.w,
                   ),
                 ],
@@ -63,15 +63,15 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                 ),
                 tabs: [
                   Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: Text('Today', style: style.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
                   ),
                   Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: Text('Upcoming', style:  style.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
                   ),
                   Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.center,
                     child: Text('Past', style:  style.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
                   ),
                 ],
