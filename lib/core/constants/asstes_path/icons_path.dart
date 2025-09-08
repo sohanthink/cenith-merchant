@@ -41,6 +41,7 @@ class IconsPath{
   static const String warningIconSvg = '$_basePath/warning_icon.svg';
   static const String worldGloveIconSvg = '$_basePath/world_glove_icon.svg';
   static const String worldIconSvg = '$_basePath/world_icon.svg';
+  static const String moreIconSvg = '$_basePath/more_icon.svg';
 
 
 

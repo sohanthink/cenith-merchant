@@ -11,23 +11,27 @@ class MainBottomNavViewModel extends GetxController {
   List<CustomNavigationDestination> destinations = [
     CustomNavigationDestination(
       svgIconPath: IconsPath.homeButtonIconSvg,
-      label: 'home',
+      label: 'Home',
     ),
     CustomNavigationDestination(
-      svgIconPath: IconsPath.homeButtonIconSvg,
-      label: 'home',
+      svgIconPath: IconsPath.calenderIconSvg,
+      label: 'Bbooking',
     ),
     CustomNavigationDestination(
-      svgIconPath: IconsPath.homeButtonIconSvg,
-      label: 'home',
+      svgIconPath: IconsPath.storeIconSvg,
+      label: 'Store',
     ),
     CustomNavigationDestination(
-      svgIconPath: IconsPath.homeButtonIconSvg,
-      label: 'home',
+      svgIconPath: IconsPath.earningIconSvg,
+      label: 'Earning',
+    ),
+    CustomNavigationDestination(
+      svgIconPath: IconsPath.moreIconSvg,
+      label: 'Earning',
     ),
   ];
 
-  List<Widget> screens = [HomeView(), HomeView(), HomeView(), HomeView()];
+  List<Widget> screens = [HomeView(), HomeView(), HomeView(), HomeView(),HomeView()];
 
   onchange(int index) {
     selectedIndex = index;
