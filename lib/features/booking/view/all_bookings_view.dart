@@ -28,7 +28,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
         appBar: AppBar(
-          title: Text('Booking', style: style.headlineLarge),
+          title: Text('Booking', style: style.headlineLarge!.copyWith(fontWeight: FontWeight.w700)),
           backgroundColor: Colors.grey.shade100,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
@@ -41,7 +41,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
               Row(
                 children: [
                   buildSearchTextField(style),
-                  SizedBox(width: 5.w,),
+                  SizedBox(width: 5.w),
                   CustomCircleIcons(
                     icon: IconsPath.simpleToolIconSvg,
                     padding: 12.w,
@@ -52,45 +52,56 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                   ),
                 ],
               ),
-              SizedBox(height: 16.h,),
+              SizedBox(height: 16.h),
               TabBar(
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 labelColor: AppColors.themColor,
                 indicator: UnderlineTabIndicator(
-                  borderSide: BorderSide(width: 2.5, color: AppColors.themColor),
-                  insets: EdgeInsets.symmetric(horizontal: 0), // indicator start
+                  borderSide: BorderSide(
+                    width: 2.5,
+                    color: AppColors.themColor,
+                  ),
+                  insets: EdgeInsets.symmetric(
+                    horizontal: 0,
+                  ), // indicator start
                 ),
                 tabs: [
                   Align(
                     alignment: Alignment.center,
-                    child: Text('Today', style: style.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
+                    child: Text(
+                      'Today',
+                      style: style.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Text('Upcoming', style:  style.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
+                    child: Text(
+                      'Upcoming',
+                      style: style.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Text('Past', style:  style.titleSmall?.copyWith(fontWeight: FontWeight.w500)),
+                    child: Text(
+                      'Past',
+                      style: style.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ],
               ),
 
               Expanded(
                 child: TabBarView(
-                    children:[
-                   TodayView(),
-                      UpcomingView(),
-                      PastView(),
-
-
-
-                ]
+                  children: [TodayView(), UpcomingView(), PastView()],
                 ),
-              )
-
-
+              ),
             ],
           ),
         ),

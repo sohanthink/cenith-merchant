@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_colors.dart';
@@ -77,21 +78,24 @@ class BuildDashboardCard extends StatelessWidget {
                 ? Positioned(
                     top: 75.h,
                     left: 105.w,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                    child: GestureDetector(
+                      onTap: ()=>Navigator.pushNamed(context, AllBookingsView.name),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Text(
-                          'View All Bookings',
-                          style: TextStyle(
-                            color: AppColors.themColor,
-                            fontWeight: FontWeight.bold,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            'View All Bookings',
+                            style: TextStyle(
+                              color: AppColors.themColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
