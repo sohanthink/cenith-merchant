@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/booking/view/past_view.dart';
 import 'package:cenith_marchent/features/booking/view/today_view.dart';
 import 'package:cenith_marchent/features/booking/view/upcoming_view.dart';
@@ -28,7 +29,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
         appBar: AppBar(
-          title: Text('Booking', style: style.headlineLarge!.copyWith(fontWeight: FontWeight.w700)),
+          title: Text('Booking', style: fontSize12(context)!.copyWith(fontWeight: FontWeight.w700)),
           backgroundColor: Colors.grey.shade100,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
