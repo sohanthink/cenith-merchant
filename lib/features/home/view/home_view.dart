@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,9 +31,7 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(height: 20.h),
             Text(
               'Your Dashboard',
-              style: TextTheme.of(
-                context,
-              ).titleLarge!.copyWith(fontWeight: FontWeight.bold),
+              style: fontSize26(context) !.copyWith(fontWeight: FontWeight.w900),
             ),
             SizedBox(height: 20.h),
             BuildDashBoardSection(),
