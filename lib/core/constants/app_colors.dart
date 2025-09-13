@@ -8,6 +8,7 @@ class AppColors{
   static final Color _lightBlue = const Color(0xFFBFE0F7);
   static final Color _scaffoldColor = const Color(0xFFF4F4F7);
   static final Color _greenShade = const Color(0xFF37F222);
+  static final Color _black = const Color(0xFFE8E7EC);
 
   static MaterialColor themColor = getMaterialColor(_themColor);
   static MaterialColor darkBlue = getMaterialColor(_darkBlue);
@@ -15,6 +16,8 @@ class AppColors{
   static MaterialColor lightBlue = getMaterialColor(_lightBlue);
   static MaterialColor greenShade = getMaterialColor(_greenShade);
   static get scaffoldColor => _scaffoldColor;
+  static get black12 => _black;
+
 
 
   static MaterialColor getMaterialColor (Color color){
