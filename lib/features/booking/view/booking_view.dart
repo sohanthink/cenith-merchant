@@ -22,155 +22,157 @@ class _BookingViewState extends State<BookingView> {
     final style = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.9),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 150.h,
-                width: double.infinity,
-                decoration: BoxDecoration(color: AppColors.themColor),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 40.0.h),
-                  child: Text(
-                    'Booking',
-                    style: style.titleMedium?.copyWith(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 150.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: AppColors.themColor),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 40.0.h),
+                    child: Text(
+                      'Booking',
+                      style: style.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 80.h),
+                  child: Container(
+                    margin: EdgeInsets.all(16.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 6.r,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 80.h),
-                child: Container(
-                  margin: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 6.r,
-                        offset: Offset(0, 3),
+                    child: TableCalendar(
+                      focusedDay: DateTime.now(),
+                      firstDay: DateTime.utc(2000, 1, 12),
+                      lastDay: DateTime.utc(2100, 1, 12),
+                      selectedDayPredicate: (day) =>
+                          isSameDay(day, DateTime.now()),
+        
+                      headerStyle: HeaderStyle(
+                        titleTextFormatter: (date, locale) {
+                          return '${_monthName(date.month)}';
+                        },
+                        titleTextStyle: TextStyle(
+                          fontSize: 20.sp,
+                          color: AppColors.themColor,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.1.sp,
+                        ),
+                        formatButtonVisible: false,
+                        titleCentered: true,
+                        leftChevronIcon: Icon(
+                          Icons.chevron_left,
+                          color: Colors.black,
+                        ),
+                        rightChevronIcon: Icon(
+                          Icons.chevron_right,
+                          color: Colors.black,
+                        ),
                       ),
-                    ],
-                  ),
-                  child: TableCalendar(
-                    focusedDay: DateTime.now(),
-                    firstDay: DateTime.utc(2000, 1, 12),
-                    lastDay: DateTime.utc(2100, 1, 12),
-                    selectedDayPredicate: (day) =>
-                        isSameDay(day, DateTime.now()),
-
-                    headerStyle: HeaderStyle(
-                      titleTextFormatter: (date, locale) {
-                        return '${_monthName(date.month)}';
-                      },
-                      titleTextStyle: TextStyle(
-                        fontSize: 20.sp,
-                        color: AppColors.themColor,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.1.sp,
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                        dowTextFormatter: (date, locale) {
+                          return date.weekday == DateTime.sunday
+                              ? 'S'
+                              : date.weekday == DateTime.monday
+                              ? 'M'
+                              : date.weekday == DateTime.tuesday
+                              ? 'T'
+                              : date.weekday == DateTime.wednesday
+                              ? 'W'
+                              : date.weekday == DateTime.thursday
+                              ? 'T'
+                              : date.weekday == DateTime.friday
+                              ? 'F'
+                              : 'S';
+                        },
+                        weekdayStyle: TextStyle(
+                          color: AppColors.themColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        weekendStyle: TextStyle(
+                          color: AppColors.themColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      formatButtonVisible: false,
-                      titleCentered: true,
-                      leftChevronIcon: Icon(
-                        Icons.chevron_left,
-                        color: Colors.black,
-                      ),
-                      rightChevronIcon: Icon(
-                        Icons.chevron_right,
-                        color: Colors.black,
-                      ),
-                    ),
-                    daysOfWeekStyle: DaysOfWeekStyle(
-                      dowTextFormatter: (date, locale) {
-                        return date.weekday == DateTime.sunday
-                            ? 'S'
-                            : date.weekday == DateTime.monday
-                            ? 'M'
-                            : date.weekday == DateTime.tuesday
-                            ? 'T'
-                            : date.weekday == DateTime.wednesday
-                            ? 'W'
-                            : date.weekday == DateTime.thursday
-                            ? 'T'
-                            : date.weekday == DateTime.friday
-                            ? 'F'
-                            : 'S';
-                      },
-                      weekdayStyle: TextStyle(
-                        color: AppColors.themColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      weekendStyle: TextStyle(
-                        color: AppColors.themColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    calendarStyle: CalendarStyle(
-                      defaultTextStyle: TextStyle(fontWeight: FontWeight.bold),
-                      weekendTextStyle: TextStyle(fontWeight: FontWeight.bold),
-                      todayDecoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      selectedDecoration: const BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle,
+                      calendarStyle: CalendarStyle(
+                        defaultTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                        weekendTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                        todayDecoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.5),
+                          shape: BoxShape.circle,
+                        ),
+                        selectedDecoration: const BoxDecoration(
+                          color: Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ),
                 ),
+              ],
+            ),
+        
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+              child: Row(
+                children: [
+                  buildTextFormField(style),
+                  SizedBox(width: 5.w),
+                  CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg),
+                  CustomCircleIcons(icon: IconsPath.downloadIconSvg),
+                ],
               ),
-            ],
-          ),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-            child: Row(
-              children: [
-                buildTextFormField(style),
-                SizedBox(width: 5.w),
-                CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg),
-                CustomCircleIcons(icon: IconsPath.downloadIconSvg),
-              ],
             ),
-          ),
-          SizedBox(height: 12.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildElevatedButton('Today', () {}, style),
-                buildElevatedButton('Upcoming', () {}, style, size: 120.w),
-                buildElevatedButton('Past', () {}, style),
-              ],
+            SizedBox(height: 12.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildElevatedButton('Today', () {}, style),
+                  buildElevatedButton('Upcoming', () {}, style, size: 120.w),
+                  buildElevatedButton('Past', () {}, style),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 16.h),
-          Center(child: CircularProgressIndicator()),
-          Text(
-            "You Don't Have Any Booking",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.sp,
-              color: AppColors.themColor,
+            SizedBox(height: 16.h),
+            Center(child: CircularProgressIndicator()),
+            Text(
+              "You Don't Have Any Booking",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.sp,
+                color: AppColors.themColor,
+              ),
             ),
-          ),
-          Text(
-            'Your booking are coming soon',
-            style: TextStyle(color: AppColors.midLightBlue),
-          ),
-          SizedBox(height: 16.h),
-          ContactSupportText.supportText(context, () {}),
-
-          SizedBox(height: 48.h),
-          ElevatedButton(onPressed: () {}, child: Text('Check in/out')),
-        ],
+            Text(
+              'Your booking are coming soon',
+              style: TextStyle(color: AppColors.midLightBlue),
+            ),
+            SizedBox(height: 16.h),
+            ContactSupportText.supportText(context, () {}),
+        
+            SizedBox(height: 48.h),
+            ElevatedButton(onPressed: () {}, child: Text('Check in/out')),
+          ],
+        ),
       ),
     );
   }

@@ -20,17 +20,19 @@ class _StoreViewState extends State<StoreView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              buildHeaderSection(context),
-              SizedBox(height: 25),
-              buildMenuSection(context),
-              SizedBox(height: 20),
-              tabs[selectedIndex]
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              children: [
+                SizedBox(height: 10),
+                buildHeaderSection(context),
+                SizedBox(height: 25),
+                buildMenuSection(context),
+                SizedBox(height: 20),
+                tabs[selectedIndex]
+              ],
+            ),
           ),
         ),
       ),

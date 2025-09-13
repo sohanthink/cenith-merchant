@@ -1,7 +1,9 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
 
@@ -17,12 +19,228 @@ class _OverViewState extends State<OverView> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildHeaderSection(context),
           SizedBox(height: 15.h),
           buildStoreOverViewSection(context),
           SizedBox(height: 30.h),
           buildStoreCommissionSection(context),
+          SizedBox(height: 10.h),
+          walkinBookingCountCard(context),
+          SizedBox(height: 10.h),
+          buildContactInfoCard(context),
+          SizedBox(height: 10.h),
+          buildLocationPhotoSection(context),
+          SizedBox(height: 15),
+          Column(
+            children: [
+              Text('Reviews'),
+              Text('12 reviews'),
+              Container(
+                decoration: BoxDecoration(color: Colors.white),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30.r,
+                      backgroundImage: AssetImage(ImagePaths.person_demo),
+                    ),
+                    SizedBox(width: 10.w,)
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildLocationPhotoSection(BuildContext context) {
+    List<dynamic> images = [1, 2, 3];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Location Photos',
+          style: fontSize20(
+            context,
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w900),
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Partners with storefront photos are preferred by '
+          'customers and receive higher reviews on average. '
+          'Add yours to help increase bookings.',
+          style: fontSize14(
+            context,
+          )!.copyWith(fontWeight: FontWeight.w300, color: Colors.black),
+        ),
+        SizedBox(height: 20),
+        Text('Learn how to take good photos', style: fontSize14(context)),
+        SizedBox(height: 25),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GestureDetector(onTap: () {}, child: uploadImageCard(context)),
+            GestureDetector(onTap: () {}, child: uploadImageCard(context)),
+          ],
+        ),
+        SizedBox(height: 25),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: images
+                .asMap()
+                .entries
+                .map(
+                  (e) => Container(
+                    margin: EdgeInsets.all(10),
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.themColor.shade100,
+                    ),
+                    child: e.key == images.length - 1
+                        ? Center(child: Icon(Icons.add, size: 50))
+                        : null,
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(IconsPath.downloadIconSvg, color: Colors.white),
+              SizedBox(width: 10),
+              Text(
+                'Earning Details',
+                style: fontSize16(context)!.copyWith(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Container uploadImageCard(BuildContext context) {
+    return Container(
+      height: 150.h,
+      width: 150.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: AppColors.themColor,
+          width: 2,
+          style: BorderStyle.solid,
+        ),
+        color: AppColors.themColor.shade50,
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(ImagePaths.uploadImagePng),
+            SizedBox(height: 10),
+            Text(
+              textAlign: TextAlign.center,
+              'Add photo of\nstorefront',
+              style: fontSize16(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Card buildContactInfoCard(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Contact info',
+              style: fontSize16(
+                context,
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                SvgPicture.asset(IconsPath.callPhoneIconSvg),
+                Text(
+                  ' +8465845764',
+                  style: fontSize14(context)!.copyWith(color: Colors.black),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Edit store details', style: fontSize16(context)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Card walkinBookingCountCard(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Image.asset("assets/images/bag.png", height: 80, width: 80),
+          ),
+          SizedBox(width: 5),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '1',
+                    style: fontSize20(context)!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    'of 23',
+                    style: fontSize14(context)!.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              Text(
+                'Walk-in bookings',
+                style: fontSize20(context)!.copyWith(color: Colors.black),
+              ),
+              SizedBox(height: 5),
+              GestureDetector(
+                onTap: () {},
+                child: Text(
+                  'Get More Walk-ins',
+                  style: fontSize16(context)!.copyWith(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -98,7 +316,7 @@ class _OverViewState extends State<OverView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SvgPicture.asset(iconsPath),
+          SvgPicture.asset(iconsPath, height: 22, width: 22),
           SizedBox(width: 6.w),
           Text(
             rate,
