@@ -24,6 +24,7 @@ class IconsPath{
   static const String hyperlinkIconSvg = '$_basePath/hyper_link_Icon.svg';
   static const String logoSvg = '$_basePath/logo.svg';
   static const String luggageIconSvg = '$_basePath/luggage_icon.svg';
+  static const String bagIconSvg = '$_basePath/bag_icon.svg';
   static const String peopleStaffIconSvg = '$_basePath/lpeople_staff_icon.svg';
   static const String phoneIconSvg = '$_basePath/phone_icon.svg';
   static const String questionRoundIconSvg = '$_basePath/question_round_icon.svg';

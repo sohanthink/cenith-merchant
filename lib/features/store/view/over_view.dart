@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
+import 'package:cenith_marchent/features/common/contact_support_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,28 +34,80 @@ class _OverViewState extends State<OverView> {
           SizedBox(height: 10.h),
           buildLocationPhotoSection(context),
           SizedBox(height: 15),
-          Column(
-            children: [
-              Text('Reviews'),
-              Text('12 reviews'),
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 30.r,
-                      backgroundImage: AssetImage(ImagePaths.person_demo),
-                    ),
-                    SizedBox(width: 10.w,)
-
-                  ],
-                ),
-              ),
-            ],
-          ),
+          buildReviewSection(context),
         ],
       ),
     );
+  }
+
+  Column buildReviewSection(BuildContext context) {
+    return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Reviews',style: fontSize24(context)!.copyWith(color: Colors.black,fontWeight: FontWeight.w600),),
+            SizedBox(height: 5.h,),
+            Text('12 reviews',style: fontSize12(context)!.copyWith(color: Colors.black),),
+            SizedBox(height: 8.h,),
+            reviewCard(context,
+            Name: 'Charise Wokes',
+              date: '3 days ago',
+              stars: 5,
+            ),
+            SizedBox(height: 8.h,),
+            reviewCard(context,
+              Name: 'Charise Wokes',
+              date: '3 days ago',
+              stars: 5,
+            ),
+
+            SizedBox(height: 20.h,),
+            Text('I think this is one of the best store where i leave'
+                'my bag,, the staff are very friendly and I bought some others thing where they make me a good price'),
+            SizedBox(height: 40.h,),
+
+
+            Center(child: ContactSupportText.supportText(context, () {})),
+
+            SizedBox(height: 20.h)
+
+          ],
+        );
+  }
+
+  Container reviewCard(BuildContext context ,{required String Name, required String date, required int stars}) {
+    return Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.white),
+              child: Row(
+
+                children: [
+                  CircleAvatar(
+                    radius: 30.r,
+                    backgroundImage: AssetImage(ImagePaths.personDemo),
+                  ),
+                  SizedBox(width: 10.w),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10.h),
+                      Text('Chris Wokes',style: fontSize20(context)!.copyWith(color: Colors.black),),
+                      Text('3 days ago'),
+                    ],
+                  ),
+                  Spacer(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return SvgPicture.asset(
+                        IconsPath.starIconSvg,
+                        color: AppColors.themColor,
+                      );
+                    }),
+                  ),
+                ],
+              ),
+            );
   }
 
   Widget buildLocationPhotoSection(BuildContext context) {
@@ -83,8 +136,8 @@ class _OverViewState extends State<OverView> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            GestureDetector(onTap: () {}, child: uploadImageCard(context)),
-            GestureDetector(onTap: () {}, child: uploadImageCard(context)),
+            GestureDetector(onTap: () {}, child: uploadImageCard(context, 'Add photos of\nstorefront')),
+            GestureDetector(onTap: () {}, child: uploadImageCard(context, 'Add photos of\nBag store')),
           ],
         ),
         SizedBox(height: 25),
@@ -130,7 +183,7 @@ class _OverViewState extends State<OverView> {
     );
   }
 
-  Container uploadImageCard(BuildContext context) {
+  Container uploadImageCard(BuildContext context, String title) {
     return Container(
       height: 150.h,
       width: 150.w,
@@ -151,7 +204,7 @@ class _OverViewState extends State<OverView> {
             SizedBox(height: 10),
             Text(
               textAlign: TextAlign.center,
-              'Add photo of\nstorefront',
+              title,
               style: fontSize16(context),
             ),
           ],
@@ -274,7 +327,7 @@ class _OverViewState extends State<OverView> {
           horizontalDevider(),
           storeCommissionRateCard(
             context,
-            iconsPath: IconsPath.luggageIconSvg,
+            iconsPath: IconsPath.bagIconSvg,
             rate: '€3.50 ',
             titleText: 'per regular bag stored',
           ),
