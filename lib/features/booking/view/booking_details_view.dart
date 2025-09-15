@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,14 +24,14 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
         title: Text(
           'Booking Details',
           style: TextStyle(
-            fontSize: 20.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.1.sp,
             color: AppColors.midLightBlue,
           ),
         ),
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () =>Navigator.pop(context),
           icon: Icon(Icons.arrow_back, color: AppColors.midLightBlue),
         ),
         backgroundColor: Colors.grey.shade100,
@@ -39,7 +40,6 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
         child: Column(
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -190,8 +190,7 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
                     blurRadius: 2.r,
                     offset: Offset(0, 1),
                   ),
-
-                ]
+                ],
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25.0.w),
@@ -223,52 +222,70 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
                 ),
               ),
             ),
-        SizedBox(height: 24.h),
+            SizedBox(height: 24.h),
             Row(
               children: [
-                buildCard(style, icon: IconsPath.addIconSvg, moreInfoText: 'Add more\n bags'),
-                SizedBox(width: 10.w,),
-                buildCard(style, icon: IconsPath.chatIconSvg, moreInfoText: 'Chat with\n customer'),
-                SizedBox(width: 10.w,),
-                buildCard(style, icon: IconsPath.worldIconSvg, moreInfoText: 'Reach out to\n Support'),
+                buildCard(
+                  style,
+                  icon: IconsPath.addIconSvg,
+                  moreInfoText: 'Add more\nbags',
+                ),
+                SizedBox(width: 10.w),
+                buildCard(
+                  style,
+                  icon: IconsPath.chatIconSvg,
+                  moreInfoText: 'Chat with\ncustomer',
+                ),
+                SizedBox(width: 10.w),
+                buildCard(
+                  style,
+                  icon: IconsPath.worldIconSvg,
+                  moreInfoText: 'Reach out to\nSupport',
+                ),
               ],
             ),
             SizedBox(height: 40.h),
-            ElevatedButton(onPressed: (){}, child: Text('Check in/out'))
-  ]
-        )
+            ElevatedButton(onPressed: () {}, child: Text('Check in/out')),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildCard(TextTheme style,{required String icon,required String moreInfoText}) {
+  Widget buildCard(
+    TextTheme style, {
+    required String icon,
+    required String moreInfoText,
+  }) {
     return Container(
-                height: 95.h,
-                width: 107.w,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 2.r,
-                      offset: Offset(0, 1),
-                    ),
-
-                  ]
-                ),
-                child:Padding(
-                  padding:  EdgeInsets.all(10.0.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(icon,width: 30.w,),
-                      SizedBox(height: 5.h,),
-                      Text(moreInfoText,style: style.titleSmall?.copyWith(fontWeight: FontWeight.w600),)
-                    ],
-                  ),
-                ) ,
-              );
+      height: 95.h,
+      width: 107.w,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 2.r,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SvgPicture.asset(icon, width: 30.w),
+            SizedBox(height: 5.h),
+            Text(textAlign: TextAlign.start,
+              moreInfoText,
+              style: style.titleSmall?.copyWith(fontWeight: FontWeight.w600,),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildDropAndPicText(
