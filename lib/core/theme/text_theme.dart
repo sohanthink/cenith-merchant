@@ -1,7 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../constants/app_colors.dart';
 
 TextTheme get textTheme {
@@ -13,6 +11,25 @@ TextTheme get textTheme {
     headlineMedium: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal,color: AppColors.midLightBlue),
     titleSmall: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.normal,color: AppColors.midLightBlue),
   );
+}
+
+TextStyle? fontSize26(context){
+  return TextTheme.of(context).titleLarge;
+}
+TextStyle? fontSize16(context){
+  return TextTheme.of(context).headlineLarge;
+}
+TextStyle? fontSize20(context){
+  return TextTheme.of(context).bodyLarge;
+}
+TextStyle? fontSize24(context){
+  return TextTheme.of(context).titleMedium;
+}
+TextStyle? fontSize12(context){
+  return TextTheme.of(context).headlineMedium;
+}
+TextStyle? fontSize14(context){
+  return TextTheme.of(context).titleSmall;
 }
 
 
