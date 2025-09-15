@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/features/booking/view/download_view.dart';
 import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
 import 'package:cenith_marchent/features/common/contact_support_text.dart';
 import 'package:flutter/gestures.dart';
@@ -21,7 +22,7 @@ class _BookingViewState extends State<BookingView> {
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.9),
+      backgroundColor: AppColors.scaffoldColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,7 +65,7 @@ class _BookingViewState extends State<BookingView> {
                       lastDay: DateTime.utc(2100, 1, 12),
                       selectedDayPredicate: (day) =>
                           isSameDay(day, DateTime.now()),
-        
+
                       headerStyle: HeaderStyle(
                         titleTextFormatter: (date, locale) {
                           return '${_monthName(date.month)}';
@@ -112,8 +113,12 @@ class _BookingViewState extends State<BookingView> {
                         ),
                       ),
                       calendarStyle: CalendarStyle(
-                        defaultTextStyle: TextStyle(fontWeight: FontWeight.bold),
-                        weekendTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                        defaultTextStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        weekendTextStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                         todayDecoration: BoxDecoration(
                           color: Colors.blue.withOpacity(0.5),
                           shape: BoxShape.circle,
@@ -128,15 +133,25 @@ class _BookingViewState extends State<BookingView> {
                 ),
               ],
             ),
-        
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
               child: Row(
                 children: [
                   buildTextFormField(style),
                   SizedBox(width: 5.w),
-                  CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg),
-                  CustomCircleIcons(icon: IconsPath.downloadIconSvg),
+                  CustomCircleIcons(
+                    icon: IconsPath.toolsFilterIconSvg,
+                    padding: 12.w,
+                    onTap: () {},
+                  ),
+                  CustomCircleIcons(
+                    icon: IconsPath.downloadIconSvg,
+                    padding: 12.w,
+                    onTap: () {
+                      Navigator.pushNamed(context, DownloadView.name);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -168,7 +183,7 @@ class _BookingViewState extends State<BookingView> {
             ),
             SizedBox(height: 16.h),
             ContactSupportText.supportText(context, () {}),
-        
+
             SizedBox(height: 48.h),
             ElevatedButton(onPressed: () {}, child: Text('Check in/out')),
           ],
@@ -209,7 +224,10 @@ class _BookingViewState extends State<BookingView> {
               size: 25.sp,
             ),
           ),
-          prefixIconConstraints: BoxConstraints(maxHeight: 25.h, maxWidth: 35.w),
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: 25.h,
+            maxWidth: 35.w,
+          ),
           border: OutlineInputBorder(borderSide: BorderSide.none),
           contentPadding: EdgeInsets.all(14.w),
           filled: true,
@@ -226,7 +244,6 @@ class _BookingViewState extends State<BookingView> {
       ),
     );
   }
-
 
   Widget buildElevatedButton(
     String buttonName,
@@ -246,5 +263,3 @@ class _BookingViewState extends State<BookingView> {
     );
   }
 }
-
-

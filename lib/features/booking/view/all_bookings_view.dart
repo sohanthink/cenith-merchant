@@ -29,7 +29,10 @@ class _AllBookingsViewState extends State<AllBookingsView> {
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
         appBar: AppBar(
-          title: Text('Booking', style: fontSize12(context)!.copyWith(fontWeight: FontWeight.w700)),
+          title: Text(
+            'Booking',
+            style: fontSize12(context)!.copyWith(fontWeight: FontWeight.w700),
+          ),
           backgroundColor: Colors.grey.shade100,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
@@ -46,10 +49,12 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                   CustomCircleIcons(
                     icon: IconsPath.simpleToolIconSvg,
                     padding: 12.w,
+                    onTap: () {},
                   ),
                   CustomCircleIcons(
                     icon: IconsPath.downloadIconSvg,
                     padding: 12.w,
+                    onTap: () {},
                   ),
                 ],
               ),
