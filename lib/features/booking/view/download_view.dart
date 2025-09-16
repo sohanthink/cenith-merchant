@@ -48,7 +48,7 @@ class _DownloadViewState extends State<DownloadView> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: ()=> Navigator.pop(context),
             icon: Icon(Icons.close, color: AppColors.midLightBlue),
           ),
         ],
