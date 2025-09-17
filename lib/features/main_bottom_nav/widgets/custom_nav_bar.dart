@@ -33,38 +33,42 @@ class CustomNavBar extends StatelessWidget {
         children: destinations.asMap().entries.map((item) {
           return GestureDetector(
             onTap: () => onDestinationSelected(item.key),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  height: 25.h,
-                  width: 25.w,
-                  destinations[item.key].svgIconPath,
-                  color: selectedIndex == item.key
-                      ? selectedColor
-                      : unSelectedColor,
-                ),
-                SizedBox(height: 3),
-                Text(
-                  destinations[item.key].label,
-                  style:
-                      labelStyle ??
-                      TextStyle(
-                        color: selectedIndex == item.key
-                            ? selectedColor
-                            : unSelectedColor,
-                        fontSize: 12.sp,
-                      ),
-                ),
-                SizedBox(height: 2),
-                selectedIndex == item.key
-                    ? CircleAvatar(
-                        radius: 4.r,
-                        backgroundColor: AppColors.themColor,
-                      )
-                    : SizedBox.shrink(),
-              ],
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    height: 25.h,
+                    width: 25.w,
+                    destinations[item.key].svgIconPath,
+                    color: selectedIndex == item.key
+                        ? selectedColor
+                        : unSelectedColor,
+                  ),
+                  SizedBox(height: 3),
+                  Text(
+                    destinations[item.key].label,
+                    style:
+                        labelStyle ??
+                        TextStyle(
+                          color: selectedIndex == item.key
+                              ? selectedColor
+                              : unSelectedColor,
+                          fontSize: 12.sp,
+                        ),
+                  ),
+                  SizedBox(height: 2),
+                  selectedIndex == item.key
+                      ? CircleAvatar(
+                          radius: 4.r,
+                          backgroundColor: AppColors.themColor,
+                        )
+                      : SizedBox.shrink(),
+                ],
+              ),
             ),
           );
         }).toList(),
