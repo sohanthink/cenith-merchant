@@ -2,6 +2,7 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/more/view/edit_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -128,7 +129,6 @@ class _ProfileViewState extends State<ProfileView> {
           BoxShadow(
             color: Colors.black12,
             blurRadius: 4.r,
-
             offset: Offset(0, 1),
           ),
         ],
@@ -145,6 +145,7 @@ class _ProfileViewState extends State<ProfileView> {
               context,
               icon: IconsPath.rewardIconSvg,
               title: 'Rewards',
+              onTapC: () {},
             ),
             SizedBox(height: 32.h),
             Text('Settings', style: fontSize14(context)),
@@ -154,7 +155,8 @@ class _ProfileViewState extends State<ProfileView> {
               icon: IconsPath.settingsIconSvg,
               title: 'Profile',
               Ticon: Icons.error_outline_outlined,
-              onTap: () {},
+              onTapT: () {},
+              onTapC: () => Navigator.pushNamed(context, EditProfileView.name),
             ),
             space(10),
             _buildBenefitsAndSettingsCard(
@@ -162,25 +164,29 @@ class _ProfileViewState extends State<ProfileView> {
               icon: IconsPath.peopleStaffIconSvg,
               title: 'Staff management',
               Ticon: Icons.error_outline_outlined,
-              onTap: () {},
+              onTapT: () {},
+              onTapC: () {},
             ),
             space(10),
             _buildBenefitsAndSettingsCard(
               context,
               icon: IconsPath.chattingIconSvg,
               title: 'Chat with support',
+              onTapC: () {},
             ),
             space(10),
             _buildBenefitsAndSettingsCard(
               context,
               icon: IconsPath.questionRoundIconSvg,
               title: 'Help center',
+              onTapC: () {},
             ),
             space(10),
             _buildBenefitsAndSettingsCard(
               context,
               icon: IconsPath.logOutIconSvg,
               title: 'Log out',
+              onTapC: () {},
             ),
           ],
         ),
@@ -192,36 +198,42 @@ class _ProfileViewState extends State<ProfileView> {
     BuildContext context, {
     required String icon,
     required String title,
-    VoidCallback? onTap,
+    VoidCallback? onTapT,
+    required VoidCallback onTapC,
     IconData? Ticon,
   }) {
-    return Container(
-      height: 50.h,
-      width: 350.w,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300, width: 1.5.w),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: 4.0.h),
-              child: SvgPicture.asset(icon, width: 25.w),
-            ),
-            SizedBox(width: 8.w),
-            Text(
-              title,
-              style: fontSize16(context)?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Spacer(),
-            if (Ticon != null)
-              IconButton(
-                onPressed: onTap,
-                icon: Icon(Ticon, color: AppColors.midLightBlue),
+    return GestureDetector(
+      onTap: onTapC,
+      child: Container(
+        height: 50.h,
+        width: 350.w,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300, width: 1.5.w),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 4.0.h),
+                child: SvgPicture.asset(icon, width: 25.w),
               ),
-          ],
+              SizedBox(width: 8.w),
+              Text(
+                title,
+                style: fontSize16(
+                  context,
+                )?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
+              if (Ticon != null)
+                IconButton(
+                  onPressed: onTapT,
+                  icon: Icon(Ticon, color: AppColors.midLightBlue),
+                ),
+            ],
+          ),
         ),
       ),
     );
