@@ -4,18 +4,17 @@ import 'package:cenith_marchent/features/common/contact_support_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive/hive.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
 
-class OverView extends StatefulWidget {
-  const OverView({super.key});
+class Overview extends StatefulWidget {
+  const Overview({super.key});
 
   @override
-  State<OverView> createState() => _OverViewState();
+  State<Overview> createState() => _OverviewState();
 }
 
-class _OverViewState extends State<OverView> {
+class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
