@@ -3,6 +3,7 @@ class ImagePaths {
   static const String bagImagePng  = '$_basePath/bag.png';
   static const String uploadImagePng  = '$_basePath/upload_image.png';
   static const String personDemo  = '$_basePath/person_demo.jpeg';
+  static const String bgImage  = '$_basePath/bg_image.jpg';
 
 
 }
