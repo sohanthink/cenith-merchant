@@ -9,6 +9,6 @@ class PayoutDetailsView extends StatefulWidget {
 class _PayoutDetailsViewState extends State<PayoutDetailsView> {
   @override
   Widget build(BuildContext context) {
-    return ;
+    return Column() ;
   }
 }
