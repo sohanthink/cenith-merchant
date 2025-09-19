@@ -1,11 +1,11 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
-import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
-import 'package:cenith_marchent/features/booking/view/booking_screen.dart';
+import 'package:cenith_marchent/features/booking/view/booking_view.dart';
 import 'package:cenith_marchent/features/home/view/home_view.dart';
-import 'package:cenith_marchent/features/store/view/store_view.dart';
+import 'package:cenith_marchent/features/more/view/profile_view.dart';
+import 'package:cenith_marchent/features/store/view/storeview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../earnings/view/earning_view.dart';
 import '../widgets/custom_nav_bar.dart';
 
 class MainBottomNavViewModel extends GetxController {
@@ -18,7 +18,7 @@ class MainBottomNavViewModel extends GetxController {
     ),
     CustomNavigationDestination(
       svgIconPath: IconsPath.calenderIconSvg,
-      label: 'Bbooking',
+      label: 'Booking',
     ),
     CustomNavigationDestination(
       svgIconPath: IconsPath.storeIconSvg,
@@ -30,11 +30,17 @@ class MainBottomNavViewModel extends GetxController {
     ),
     CustomNavigationDestination(
       svgIconPath: IconsPath.moreIconSvg,
-      label: 'Earning',
+      label: 'More',
     ),
   ];
 
-  List<Widget> screens = [HomeView(), BookingScreen(), StoreView(), HomeView(),HomeView()];
+  List<Widget> screens = [
+    HomeView(),
+    BookingView(),
+    StoreView(),
+    EarningView(),
+    ProfileView(),
+  ];
 
   onchange(int index) {
     selectedIndex = index;

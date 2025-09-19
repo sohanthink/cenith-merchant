@@ -1,4 +1,5 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/home/view/qr_code_scanning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,30 +35,38 @@ class _HomeViewState extends State<HomeView> {
               style: fontSize26(context) !.copyWith(fontWeight: FontWeight.w900),
             ),
             SizedBox(height: 20.h),
-            BuildDashBoardSection(),
+            HeaderButtonWidget(),
             SizedBox(height: 30.h),
             Expanded(child: buildDashBoardSection()),
-            SizedBox(
-              width: double.infinity,
-              height: 60.h,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20 ,left: 8,right: 8),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Check in/out',
-                  ),
-                ),
-              ),
-            ),
+            buildCheckinCheckoutSection(context),
           ],
         ),
       ),
     );
   }
 
+  SizedBox buildCheckinCheckoutSection(BuildContext context) {
+    return SizedBox(
+            width: double.infinity,
+            height: 60.h,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20 ,left: 8,right: 8),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, QrCodeScanningScreen.name);
+                },
+                child: Text(
+                  'Check in/out',
+                ),
+              ),
+            ),
+          );
+  }
+
   // it will removed and will adjusted with state management;
   int selectedIndex = 0;
+
+
 
   ListView buildDashBoardSection() {
     List<Map<String, dynamic>> item = [
@@ -126,15 +135,20 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-class BuildDashBoardSection extends StatefulWidget {
-  const BuildDashBoardSection({super.key});
+class HeaderButtonWidget extends StatefulWidget {
+  const HeaderButtonWidget({super.key, });
+
 
   @override
-  State<BuildDashBoardSection> createState() => _BuildDashBoardSectionState();
+  State<HeaderButtonWidget> createState() => _HeaderButtonWidgetState();
 }
 
-class _BuildDashBoardSectionState extends State<BuildDashBoardSection> {
+class _HeaderButtonWidgetState extends State<HeaderButtonWidget> {
+
+
+
   int selectedIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -170,3 +184,5 @@ class _BuildDashBoardSectionState extends State<BuildDashBoardSection> {
     );
   }
 }
+
+

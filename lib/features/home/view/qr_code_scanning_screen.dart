@@ -19,7 +19,7 @@ class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back),
+        leading:  IconButton(onPressed: ()=>Navigator.pop(context) , icon: Icon(Icons.arrow_back)),
         title: const Text("scan qr code", style: TextStyle(color: Colors.blue)),
         backgroundColor: Colors.white,
         elevation: 0,

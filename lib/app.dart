@@ -8,6 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/routes/app_routes.dart';
 class CenithStorage extends StatelessWidget {
   const CenithStorage({super.key});
+
+
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -23,6 +26,7 @@ class CenithStorage extends StatelessWidget {
             theme: AppTheme.themeData
         );
       },
+
     );
   }
 }
