@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomCircleIcons extends StatelessWidget {
-   CustomCircleIcons({super.key, required this.icon,this.padding, required this.onTap});
+    CustomCircleIcons({super.key, required this.icon,this.padding, required this.onTap});
 
   final String icon;
   double? padding;

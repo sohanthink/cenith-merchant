@@ -22,80 +22,83 @@ class _StoreViewState extends State<StoreView> {
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-                buildHeaderSection(context),
-                SizedBox(height: 25),
-                buildMenuSection(context),
-                SizedBox(height: 20),
-                tabs[selectedIndex]
-              ],
-            ),
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              buildHeaderSection(context),
+              SizedBox(height: 25),
+              buildMenuSection(context),
+              SizedBox(height: 20),
+              tabs[selectedIndex]
+            ],
           ),
         ),
       ),
     );
   }
   Widget buildMenuSection(BuildContext context) {
-    return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((
-                item,
-              ) {
-                return GestureDetector(
-                  onTap: () {
-                    selectedIndex = item.key;
-                    //TODO: remove the setState when fetch the api
-                    setState(() {});
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: item.key == selectedIndex
-                          ? AppColors.themColor
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((
+                  item,
+                ) {
+                  return GestureDetector(
+                    onTap: () {
+                      selectedIndex = item.key;
+                      //TODO: remove the setState when fetch the api
+                      setState(() {});
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: item.key == selectedIndex
+                            ? AppColors.themColor
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Text(
-                        item.value,
-                        style: fontSize14(context)!.copyWith(
-                          color: item.key == selectedIndex
-                              ? Colors.white
-                              : null,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          item.value,
+                          style: fontSize14(context)!.copyWith(
+                            color: item.key == selectedIndex
+                                ? Colors.white
+                                : null,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              }).toList(),
-            );
+                  );
+                }).toList(),
+              ),
+    );
   }
 
   Widget buildHeaderSection(BuildContext context) {
-    return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Lavaterilla',
-                  style: fontSize24(
-                    context,
-                  )!.copyWith(fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  'Add Store +',
-                  style: fontSize16(context)!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Catamaran',
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Lavaterilla',
+                    style: fontSize24(
+                      context,
+                    )!.copyWith(fontWeight: FontWeight.w600),
                   ),
-                ),
-              ],
-            );
+                  Text(
+                    'Add Store +',
+                    style: fontSize16(context)!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Catamaran',
+                    ),
+                  ),
+                ],
+              ),
+    );
   }
 }

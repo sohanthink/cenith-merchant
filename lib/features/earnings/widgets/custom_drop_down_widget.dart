@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 
@@ -24,7 +25,7 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
       height: 50,
-      width: (MediaQuery.of(context).size.width / 2) - 17,
+      width: (MediaQuery.of(context).size.width / 2) - 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.themColor.shade500),
@@ -33,6 +34,7 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
         child: DropdownButton(
           items: widget.selectedOption,
           value:  selectedItem,
+          style: fontSize16(context),
           icon: Icon(
             Icons.keyboard_arrow_down_sharp,
             size: 30,

@@ -143,7 +143,7 @@ class _BookingViewState extends State<BookingView> {
                   CustomCircleIcons(
                     icon: IconsPath.toolsFilterIconSvg,
                     padding: 12.w,
-                    onTap: () {},
+                    onTap: () {Navigator.pushNamed(context, DownloadView.name);},
                   ),
                   CustomCircleIcons(
                     icon: IconsPath.downloadIconSvg,
