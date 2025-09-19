@@ -1,6 +1,7 @@
+import 'package:cenith_marchent/features/blank_screen.dart';
+import 'package:cenith_marchent/features/earnings/view/earning_details_view.dart';
 import 'package:cenith_marchent/features/earnings/view/overview.dart';
 import 'package:flutter/material.dart';
-
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
 class EarningView extends StatefulWidget {
@@ -12,7 +13,7 @@ class EarningView extends StatefulWidget {
 
 class _EarningViewState extends State<EarningView> {
   int selectedIndex = 0;
-  List<Widget>tabs =[Overview()];
+  List<Widget>tabs =[Overview(),EarningDetailsView(),BlankScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class _EarningViewState extends State<EarningView> {
             SizedBox(height: 20,),
             buildMenuSection(context),
             SizedBox(height: 20,),
-
+            tabs[selectedIndex]
           ],
         ),
       ),
@@ -36,7 +37,7 @@ class _EarningViewState extends State<EarningView> {
   Widget buildMenuSection(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((
+      children: ['Overview', 'Earning Details', 'Payout Details'].asMap().entries.map((
           item,
           ) {
         return GestureDetector(
@@ -59,7 +60,7 @@ class _EarningViewState extends State<EarningView> {
               ),
               child: Text(
                 item.value,
-                style: fontSize14(context)!.copyWith(
+                style: fontSize12(context)!.copyWith(
                   color: item.key == selectedIndex
                       ? Colors.white
                       : null,
