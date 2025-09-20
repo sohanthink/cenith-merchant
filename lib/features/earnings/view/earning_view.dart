@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/features/blank_screen.dart';
 import 'package:cenith_marchent/features/earnings/view/earning_details_view.dart';
 import 'package:cenith_marchent/features/earnings/view/overview.dart';
+import 'package:cenith_marchent/features/earnings/view/payout_details_view.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
@@ -13,7 +14,7 @@ class EarningView extends StatefulWidget {
 
 class _EarningViewState extends State<EarningView> {
   int selectedIndex = 0;
-  List<Widget>tabs =[Overview(),EarningDetailsView(),BlankScreen()];
+  List<Widget>tabs =[Overview(),EarningDetailsView(),PayoutDetailsView()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

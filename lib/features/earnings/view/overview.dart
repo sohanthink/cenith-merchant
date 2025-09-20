@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-import '../widgets/sorting_section.dart';
+import '../widgets/sorting_section_widget.dart';
 
 class Overview extends StatefulWidget {
   const Overview({super.key});
@@ -24,7 +24,7 @@ class _OverviewState extends State<Overview> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SortingSection(),
+          SortingSectionWidget(),
           SizedBox(height: 5.h),
           buildEarningListSection(),
           SizedBox(height: 5.h),
