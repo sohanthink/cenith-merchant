@@ -18,95 +18,115 @@ class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildHeaderSection(context),
-          SizedBox(height: 15.h),
-          buildStoreOverViewSection(context),
-          SizedBox(height: 30.h),
-          buildStoreCommissionSection(context),
-          SizedBox(height: 10.h),
-          walkinBookingCountCard(context),
-          SizedBox(height: 10.h),
-          buildContactInfoCard(context),
-          SizedBox(height: 10.h),
-          buildLocationPhotoSection(context),
-          SizedBox(height: 15),
-          buildReviewSection(context),
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildHeaderSection(context),
+            SizedBox(height: 15.h),
+            buildStoreOverViewSection(context),
+            SizedBox(height: 30.h),
+            buildStoreCommissionSection(context),
+            SizedBox(height: 10.h),
+            walkinBookingCountCard(context),
+            SizedBox(height: 10.h),
+            buildContactInfoCard(context),
+            SizedBox(height: 10.h),
+            buildLocationPhotoSection(context),
+            SizedBox(height: 15),
+            buildReviewSection(context),
+          ],
+        ),
       ),
     );
   }
 
   Column buildReviewSection(BuildContext context) {
     return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Reviews',style: fontSize24(context)!.copyWith(color: Colors.black,fontWeight: FontWeight.w600),),
-            SizedBox(height: 5.h,),
-            Text('12 reviews',style: fontSize12(context)!.copyWith(color: Colors.black),),
-            SizedBox(height: 8.h,),
-            reviewCard(context,
-            Name: 'Charise Wokes',
-              date: '3 days ago',
-              stars: 5,
-            ),
-            SizedBox(height: 8.h,),
-            reviewCard(context,
-              Name: 'Charise Wokes',
-              date: '3 days ago',
-              stars: 5,
-            ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Reviews',
+          style: fontSize24(
+            context,
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 5.h),
+        Text(
+          '12 reviews',
+          style: fontSize12(context)!.copyWith(color: Colors.black),
+        ),
+        SizedBox(height: 8.h),
+        reviewCard(
+          context,
+          Name: 'Charise Wokes',
+          date: '3 days ago',
+          stars: 5,
+        ),
+        SizedBox(height: 8.h),
+        reviewCard(
+          context,
+          Name: 'Charise Wokes',
+          date: '3 days ago',
+          stars: 5,
+        ),
 
-            SizedBox(height: 20.h,),
-            Text('I think this is one of the best store where i leave'
-                'my bag,, the staff are very friendly and I bought some others thing where they make me a good price'),
-            SizedBox(height: 40.h,),
+        SizedBox(height: 20.h),
+        Text(
+          'I think this is one of the best store where i leave'
+          'my bag,, the staff are very friendly and I bought some others thing where they make me a good price',
+        ),
+        SizedBox(height: 40.h),
 
+        Center(child: ContactSupportText.supportText(context, () {})),
 
-            Center(child: ContactSupportText.supportText(context, () {})),
-
-            SizedBox(height: 20.h)
-
-          ],
-        );
+        SizedBox(height: 20.h),
+      ],
+    );
   }
 
-  Container reviewCard(BuildContext context ,{required String Name, required String date, required int stars}) {
+  Container reviewCard(
+    BuildContext context, {
+    required String Name,
+    required String date,
+    required int stars,
+  }) {
     return Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.white),
-              child: Row(
-
-                children: [
-                  CircleAvatar(
-                    radius: 30.r,
-                    backgroundImage: AssetImage(ImagePaths.personDemo),
-                  ),
-                  SizedBox(width: 10.w),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10.h),
-                      Text('Chris Wokes',style: fontSize20(context)!.copyWith(color: Colors.black),),
-                      Text('3 days ago'),
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: List.generate(5, (index) {
-                      return SvgPicture.asset(
-                        IconsPath.starIconSvg,
-                        color: AppColors.themColor,
-                      );
-                    }),
-                  ),
-                ],
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(color: Colors.white),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 30.r,
+            backgroundImage: AssetImage(ImagePaths.personDemo),
+          ),
+          SizedBox(width: 10.w),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10.h),
+              Text(
+                'Chris Wokes',
+                style: fontSize20(context)!.copyWith(color: Colors.black),
               ),
-            );
+              Text('3 days ago'),
+            ],
+          ),
+          Spacer(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: List.generate(5, (index) {
+              return SvgPicture.asset(
+                IconsPath.starIconSvg,
+                color: AppColors.themColor,
+              );
+            }),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget buildLocationPhotoSection(BuildContext context) {
@@ -135,8 +155,14 @@ class _OverviewState extends State<Overview> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            GestureDetector(onTap: () {}, child: uploadImageCard(context, 'Add photos of\nstorefront')),
-            GestureDetector(onTap: () {}, child: uploadImageCard(context, 'Add photos of\nBag store')),
+            GestureDetector(
+              onTap: () {},
+              child: uploadImageCard(context, 'Add photos of\nstorefront'),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: uploadImageCard(context, 'Add photos of\nBag store'),
+            ),
           ],
         ),
         SizedBox(height: 25),

@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/features/booking/view/booking_view.dart';
 import 'package:cenith_marchent/features/home/view/home_view.dart';
+import 'package:cenith_marchent/features/more/view/profile_view.dart';
 import 'package:cenith_marchent/features/store/view/storeview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,7 +39,7 @@ class MainBottomNavViewModel extends GetxController {
     BookingView(),
     StoreView(),
     EarningView(),
-    HomeView(),
+    ProfileView(),
   ];
 
   onchange(int index) {

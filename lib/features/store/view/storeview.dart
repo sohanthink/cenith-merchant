@@ -2,7 +2,9 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/blank_screen.dart';
 import 'package:cenith_marchent/features/store/view/overview.dart';
+import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StoreView extends StatefulWidget {
   const StoreView({super.key});
@@ -14,27 +16,22 @@ class StoreView extends StatefulWidget {
 class _StoreViewState extends State<StoreView> {
   //TODO: will be managed from view model
   int selectedIndex = 0;
-  List<Widget> tabs =  [Overview(),BlankScreen(),BlankScreen()];
+  List<Widget> tabs =  [Overview(),BlankScreen(),SignageView()];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-                buildHeaderSection(context),
-                SizedBox(height: 25),
-                buildMenuSection(context),
-                SizedBox(height: 20),
-                tabs[selectedIndex]
-              ],
-            ),
-          ),
+        body: Column(
+          children: [
+            SizedBox(height: 10),
+            buildHeaderSection(context),
+            SizedBox(height: 25),
+            buildMenuSection(context),
+            SizedBox(height: 20),
+            Expanded(child: tabs[selectedIndex])
+          ],
         ),
       ),
     );
@@ -79,23 +76,26 @@ class _StoreViewState extends State<StoreView> {
   }
 
   Widget buildHeaderSection(BuildContext context) {
-    return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Lavaterilla',
-                  style: fontSize24(
-                    context,
-                  )!.copyWith(fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  'Add Store +',
-                  style: fontSize16(context)!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Catamaran',
+    return Padding(
+      padding:  EdgeInsets.symmetric(horizontal: 12.w),
+      child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Lavaterilla',
+                    style: fontSize24(
+                      context,
+                    )!.copyWith(fontWeight: FontWeight.w600),
                   ),
-                ),
-              ],
-            );
+                  Text(
+                    'Add Store +',
+                    style: fontSize16(context)!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Catamaran',
+                    ),
+                  ),
+                ],
+              ),
+    );
   }
 }
