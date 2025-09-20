@@ -16,171 +16,173 @@ class SignageView extends StatefulWidget {
 class _SignageViewState extends State<SignageView> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          space(16),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildCircleImage(),
-                space(16),
-                Text(
-                  'Get walk-in bonuses and more bookings by linking your signage',
-                  textAlign: TextAlign.center,
-                  style: fontSize16(context)?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.1.sp,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            space(16),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildCircleImage(),
+                  space(16),
+                  Text(
+                    'Get walk-in bonuses and more bookings by linking your signage',
+                    textAlign: TextAlign.center,
+                    style: fontSize16(context)?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.1.sp,
+                    ),
                   ),
-                ),
-                space(16),
-                RichText(
-                  text: TextSpan(
+                  space(16),
+                  RichText(
+                    text: TextSpan(
+                      style: fontSize14(context),
+                      children: [
+                        TextSpan(
+                          text:
+                              'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                        ),
+                        TextSpan(
+                          text: 'Benefits of linking signage',
+                          style: fontSize14(
+                            context,
+                          )?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 32.h),
+                  Center(
+                    child: Text('6 signs linked', style: fontSize14(context)),
+                  ),
+                  SizedBox(height: 16.h),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Link Cenith signage'),
+                  ),
+                  space(16),
+                  _buildButton(onTap: () {}, buttonName: 'Print A Signage'),
+                  SizedBox(height: 24.h),
+                  Text(
+                    'Your orders',
+                    style: fontSize20(
+                      context,
+                    )?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  space(16),
+                  Text(
+                    'Check the status of recent orders, manage returns, and create new orders.',
                     style: fontSize14(context),
+                  ),
+                  space(16),
+                  _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
+                ],
+              ),
+            ),
+            SizedBox(height: 24.h),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(bottom: 20.h),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 32.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(15.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(12.r),
+                          topLeft: Radius.circular(12.r),
+                        ),
+                        color: Colors.blue.shade100.withOpacity(0.2),
+                      ),
+                      child: Text(
+                        'Signage and Status',
+                        style: fontSize16(context)?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.1.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                  space(16),
+                  _buildSignageAndStatus(
+                    context,
+                    signageTitle: 'Window sticker (back)',
+                    unit: '1 unit',
+                    status: 'Delivered',
+                    onTap: () {},
+                  ),
+                  space(16),
+                  _buildSignageAndStatus(
+                    context,
+                    signageTitle: 'Mini sticker',
+                    unit: '2 unit',
+                    status: 'Delivered',
+                    onTap: () {},
+                  ),
+                  space(16),
+                  _buildSignageAndStatus(
+                    context,
+                    signageTitle: 'Window sticker (front)',
+                    unit: '1 unit',
+                    status: 'Delivered',
+                    onTap: () {},
+                  ),
+                  space(16),
+                  _buildSignageAndStatus(
+                    context,
+                    signageTitle: 'Reusable tags',
+                    unit: '1 unit',
+                    status: 'Delivered',
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.blue.shade100.withOpacity(0.2),
+              child: Row(
+                children: [
+                  Row(
                     children: [
-                      TextSpan(
-                        text:
-                            'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: AppColors.midLightBlue,
+                        ),
                       ),
-                      TextSpan(
-                        text: 'Benefits of linking signage',
-                        style: fontSize14(
-                          context,
-                        )?.copyWith(fontWeight: FontWeight.bold),
-                      ),
+                      Text('Previous', style: fontSize14(context)),
                     ],
                   ),
-                ),
-                SizedBox(height: 32.h),
-                Center(
-                  child: Text('6 signs linked', style: fontSize14(context)),
-                ),
-                SizedBox(height: 16.h),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Link Cenith signage'),
-                ),
-                space(16),
-                _buildButton(onTap: () {}, buttonName: 'Print A Signage'),
-                SizedBox(height: 24.h),
-                Text(
-                  'Your orders',
-                  style: fontSize20(
-                    context,
-                  )?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                space(16),
-                Text(
-                  'Check the status of recent orders, manage returns, and create new orders.',
-                  style: fontSize14(context),
-                ),
-                space(16),
-                _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
-              ],
-            ),
-          ),
-          SizedBox(height: 24.h),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(bottom: 20.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 32.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(15.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(12.r),
-                        topLeft: Radius.circular(12.r),
+                  SizedBox(width: 190.w),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          color: AppColors.midLightBlue,
+                        ),
                       ),
-                      color: Colors.blue.shade100.withOpacity(0.2),
-                    ),
-                    child: Text(
-                      'Signage and Status',
-                      style: fontSize16(context)?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.1.sp,
-                      ),
-                    ),
+                      Text('Next', style: fontSize14(context)),
+                    ],
                   ),
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Window sticker (back)',
-                  unit: '1 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Mini sticker',
-                  unit: '2 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Window sticker (front)',
-                  unit: '1 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Reusable tags',
-                  unit: '1 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            color: Colors.blue.shade100.withOpacity(0.2),
-            child: Row(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: AppColors.midLightBlue,
-                      ),
-                    ),
-                    Text('Previous', style: fontSize14(context)),
-                  ],
-                ),
-                SizedBox(width: 190.w),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward,
-                        color: AppColors.midLightBlue,
-                      ),
-                    ),
-                    Text('Next', style: fontSize14(context)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

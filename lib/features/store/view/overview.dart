@@ -17,26 +17,28 @@ class Overview extends StatefulWidget {
 class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildHeaderSection(context),
-            SizedBox(height: 15.h),
-            buildStoreOverViewSection(context),
-            SizedBox(height: 30.h),
-            buildStoreCommissionSection(context),
-            SizedBox(height: 10.h),
-            walkinBookingCountCard(context),
-            SizedBox(height: 10.h),
-            buildContactInfoCard(context),
-            SizedBox(height: 10.h),
-            buildLocationPhotoSection(context),
-            SizedBox(height: 15),
-            buildReviewSection(context),
-          ],
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildHeaderSection(context),
+              SizedBox(height: 15.h),
+              buildStoreOverViewSection(context),
+              SizedBox(height: 30.h),
+              buildStoreCommissionSection(context),
+              SizedBox(height: 10.h),
+              walkinBookingCountCard(context),
+              SizedBox(height: 10.h),
+              buildContactInfoCard(context),
+              SizedBox(height: 10.h),
+              buildLocationPhotoSection(context),
+              SizedBox(height: 15),
+              buildReviewSection(context),
+            ],
+          ),
         ),
       ),
     );
