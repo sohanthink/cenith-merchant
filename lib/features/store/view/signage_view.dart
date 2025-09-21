@@ -14,6 +14,64 @@ class SignageView extends StatefulWidget {
 }
 
 class _SignageViewState extends State<SignageView> {
+  final List<Map<String, dynamic>> _orders = [
+    {
+      "title": "Window sticker (back)",
+      "unit": "1 unit",
+      "status": "Delivered",
+      "date": DateTime(2025, 9, 20),
+    },
+    {
+      "title": "Mini sticker",
+      "unit": "2 unit",
+      "status": "Pending",
+      "date": DateTime(2025, 9, 21),
+    },
+    {
+      "title": "Window sticker (front)",
+      "unit": "1 unit",
+      "status": "Cancelled",
+      "date": DateTime(2025, 9, 21),
+    },
+    {
+      "title": "Reusable tags",
+      "unit": "1 unit",
+      "status": "Delivered",
+      "date": DateTime(2025, 9, 19),
+    },
+  ];
+  DateTime? _selectedDate;
+  String? _selectedStatus;
+
+  final List<String> _statusList = ["Delivered", "Pending", "Cancelled"];
+
+  Future<void> _picDate() async {
+    final DateTime? picDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+    );
+    if (picDate != null) {
+      setState(() {
+        _selectedDate = picDate;
+      });
+    }
+  }
+
+  List<Map<String, dynamic>> _filterOrder() {
+    return _orders.where((order) {
+      final matchDate =
+          _selectedDate == null ||
+          (order['date'].day == _selectedDate!.day &&
+              order['date'].month == _selectedDate!.month &&
+              order['date'].year == _selectedDate!.year);
+      final matchStatus =
+          _selectedStatus == null || order['status'] == _selectedStatus;
+      return matchDate && matchStatus;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -78,107 +136,151 @@ class _SignageViewState extends State<SignageView> {
                 ),
                 space(16),
                 _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
+                space(16),
+
+                _buildSelectOrderDate(context),
+                space(16),
+                _buildSelectStatus(context),
               ],
             ),
           ),
           SizedBox(height: 24.h),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(bottom: 20.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 32.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(15.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(12.r),
-                        topLeft: Radius.circular(12.r),
-                      ),
-                      color: Colors.blue.shade100.withOpacity(0.2),
-                    ),
-                    child: Text(
-                      'Signage and Status',
-                      style: fontSize16(context)?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.1.sp,
-                      ),
-                    ),
-                  ),
+          _buildSignateAndStatus(context),
+          _buildPagination(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSelectOrderDate(BuildContext context) {
+    return GestureDetector(
+      onTap: _picDate,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(12.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25.r),
+          border: Border.all(color: AppColors.themColor, width: 1.5.w),
+        ),
+        child: Text(
+          _selectedDate == null
+              ? 'Select Order Date'
+              : '${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}',
+          style: fontSize14(context),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSelectStatus(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 45.h,
+      padding: EdgeInsets.all(12.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(25.r),
+        border: Border.all(color: AppColors.themColor, width: 1.5.w),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _selectedStatus,
+          isExpanded: true,
+          icon: Icon(
+            Icons.keyboard_arrow_down_sharp,
+            color: AppColors.themColor,
+          ),
+          hint: Text('Select Status', style: fontSize14(context)),
+          items: _statusList.map((status) {
+            return DropdownMenuItem(
+              child: Text(status, style: fontSize14(context)),
+              value: status,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _selectedStatus = value;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignateAndStatus(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(bottom: 20.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 32.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(15.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(12.r),
+                  topLeft: Radius.circular(12.r),
                 ),
-                space(16),
-                _buildSignageAndStatus(
+                color: Colors.blue.shade100.withOpacity(0.2),
+              ),
+              child: Text(
+                'Signage and Status',
+                style: fontSize16(
                   context,
-                  signageTitle: 'Window sticker (back)',
-                  unit: '1 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Mini sticker',
-                  unit: '2 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Window sticker (front)',
-                  unit: '1 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-                space(16),
-                _buildSignageAndStatus(
-                  context,
-                  signageTitle: 'Reusable tags',
-                  unit: '1 unit',
-                  status: 'Delivered',
-                  onTap: () {},
-                ),
-              ],
+                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+              ),
             ),
           ),
-          Container(
-            color: Colors.blue.shade100.withOpacity(0.2),
-            child: Row(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: AppColors.midLightBlue,
-                      ),
-                    ),
-                    Text('Previous', style: fontSize14(context)),
-                  ],
-                ),
-                SizedBox(width: 190.w),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.arrow_forward,
-                        color: AppColors.midLightBlue,
-                      ),
-                    ),
-                    Text('Next', style: fontSize14(context)),
-                  ],
-                ),
-              ],
-            ),
+          space(16),
+          ..._filterOrder().map((order) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: _buildSignageAndStatus(
+                context,
+                signageTitle: order['title'] as String,
+                unit: order['unit'] as String,
+                status: order['status'] as String,
+                onTap: () {},
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPagination(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(right: 16.w),
+      color: Colors.blue.shade100.withOpacity(0.2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.arrow_back, color: AppColors.midLightBlue),
+              ),
+              Text('Previous', style: fontSize14(context)),
+            ],
+          ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.arrow_forward, color: AppColors.midLightBlue),
+              ),
+              Text('Next', style: fontSize14(context)),
+            ],
           ),
         ],
       ),
