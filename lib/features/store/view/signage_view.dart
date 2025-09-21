@@ -1,6 +1,8 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -103,10 +105,17 @@ class _SignageViewState extends State<SignageView> {
                             'Start by scanning the QR code on your Bounce signage to link it to your store. ',
                       ),
                       TextSpan(
-                        text: 'Benefits of linking signage',
+                        text: 'Benefits Of Linking Signage',
                         style: fontSize14(
                           context,
                         )?.copyWith(fontWeight: FontWeight.bold),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(
+                              context,
+                              BenefitsOfLinkingSignageView.name,
+                            );
+                          },
                       ),
                     ],
                   ),

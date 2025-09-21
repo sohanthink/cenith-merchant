@@ -17,6 +17,7 @@ class _StoreViewState extends State<StoreView> {
   int selectedIndex = 0;
   List<Widget> tabs =  [Overview(),BlankScreen(),SignageView()];
 
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
