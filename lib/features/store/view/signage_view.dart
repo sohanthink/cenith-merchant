@@ -2,6 +2,7 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
+import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -126,8 +127,9 @@ class _SignageViewState extends State<SignageView> {
                 ),
                 SizedBox(height: 16.h),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Link Cenith signage'),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, LinkBounceSignage.name),
+                  child: Text('Link Cenith Signage'),
                 ),
                 space(16),
                 _buildButton(onTap: () {}, buttonName: 'Print A Signage'),

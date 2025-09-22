@@ -8,6 +8,7 @@ import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_vi
 import 'package:cenith_marchent/features/more/view/edit_profile_view.dart';
 import 'package:cenith_marchent/features/more/view/profile_view.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
+import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -34,6 +35,8 @@ class AppRoutes {
       screenWidget = EditProfileView();
     } else if (settings.name == BenefitsOfLinkingSignageView.name) {
       screenWidget = BenefitsOfLinkingSignageView();
+    } else if (settings.name == LinkBounceSignage.name) {
+      screenWidget = LinkBounceSignage();
     }
     return MaterialPageRoute(builder: (context) => screenWidget);
   }
