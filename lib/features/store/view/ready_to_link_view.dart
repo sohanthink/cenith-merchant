@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +81,8 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
               child: Column(
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.pushNamed(context, DontHaveCameraView.name),
                     child: Text(
                       'Don\'t have a camera?',
                       style: fontSize14(context)?.copyWith(
