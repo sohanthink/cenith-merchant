@@ -3,6 +3,7 @@ import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/home/view/home_view.dart';
+import 'package:cenith_marchent/features/store/view/ready_to_link_view.dart';
 import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -74,7 +75,8 @@ class _LinkBounceSignageState extends State<LinkBounceSignage> {
 
                   SizedBox(height: 16.h),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.pushNamed(context, ReadyToLinkView.name),
                     child: Text('I\'m Ready To Link'),
                   ),
                 ],
