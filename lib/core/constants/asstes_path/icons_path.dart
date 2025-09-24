@@ -45,6 +45,7 @@ class IconsPath{
   static const String worldIconSvg = '$_basePath/world_icon.svg';
   static const String moreIconSvg = '$_basePath/more_icon.svg';
   static const String lowGraphIconSvg = 'assets/icons/low_graph.svg';
+  static const String downArrowSvg = '$_basePath/down_arrow.svg';
 
 
 

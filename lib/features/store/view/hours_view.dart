@@ -1,15 +1,20 @@
+import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:cenith_marchent/features/store/view/add_exception_view.dart';
+import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class HourseView extends StatefulWidget {
-  const HourseView({super.key});
+class HoursView extends StatefulWidget {
+  const HoursView({super.key});
 
   @override
-  State<HourseView> createState() => _HourseViewState();
+  State<HoursView> createState() => _HoursViewState();
 }
 
-class _HourseViewState extends State<HourseView> {
+class _HoursViewState extends State<HoursView> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -21,14 +26,57 @@ class _HourseViewState extends State<HourseView> {
               buildHeaderSection(context),
               SizedBox(height: 20.h),
               buildHoursSection(context),
-              SizedBox(height: 20.h,),
-              Column(children: [
-
-              ],)
+              SizedBox(height: 15.h),
+              buildExceptionSection(context),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildExceptionSection(BuildContext context) {
+    return Column(
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {},
+          child: Text(
+            'Close store for today',
+            style: fontSize16(context)!.copyWith(color: Colors.white),
+          ),
+        ),
+        SizedBox(height: 12.h),
+        Image.asset(ImagePaths.clockImage, height: 150.h, width: 150.w),
+        SizedBox(height: 12.h),
+        Text(
+          'no hour exception yet',
+          style: fontSize24(
+            context,
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 12.h),
+        Text(
+          'Set exceptions for days with different opening hours',
+          style: fontSize14(
+            context,
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
+        ),
+        SizedBox(height: 25.h),
+        ElevatedButton(
+          onPressed: onTapAddException,
+          child: Text(
+            'Add Exception',
+            style: fontSize20(context)!.copyWith(color: Colors.white),
+          ),
+        ),
+        SizedBox(height: 150.h),
+        ContactSupportText.supportText(context, () {}),
+        SizedBox(height: 25.h),
+      ],
     );
   }
 
@@ -56,7 +104,9 @@ class _HourseViewState extends State<HourseView> {
           SizedBox(
             width: 200.w,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, EditOpeningHoursView.name);
+              },
               child: Text(
                 'Edit Opening Hours',
                 style: fontSize16(context)!.copyWith(color: Colors.white),
@@ -83,7 +133,7 @@ class _HourseViewState extends State<HourseView> {
               );
             }),
           ),
-          SizedBox(height: 10.h,)
+          SizedBox(height: 10.h),
         ],
       ),
     );
@@ -103,9 +153,20 @@ class _HourseViewState extends State<HourseView> {
       ),
       child: Column(
         children: [
-          Text(day, style: fontSize20(context)!.copyWith(fontSize: 20, color: isOpened? Colors.red: Colors.black)),
+          Text(
+            day,
+            style: fontSize20(context)!.copyWith(
+              fontSize: 20,
+              color: isOpened ? Colors.red : Colors.black,
+            ),
+          ),
           SizedBox(height: 5),
-          Text(time, style: fontSize12(context)!.copyWith(color: isOpened? Colors.red: Colors.black)),
+          Text(
+            time,
+            style: fontSize12(
+              context,
+            )!.copyWith(color: isOpened ? Colors.red : Colors.black),
+          ),
         ],
       ),
     );
@@ -129,5 +190,8 @@ class _HourseViewState extends State<HourseView> {
         ),
       ],
     );
+  }
+  onTapAddException(){
+    Navigator.pushNamed(context, AddExceptionView.name);
   }
 }

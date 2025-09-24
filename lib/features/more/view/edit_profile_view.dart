@@ -332,7 +332,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildLanguageField(BuildContext context) {
     return DropdownButtonFormField<String>(
       style: fontSize12(context),
-      value: _selectedLanguage,
+      initialValue: _selectedLanguage,
       items: _languages.map((lang) {
         return DropdownMenuItem(value: lang, child: Text(lang));
       }).toList(),

@@ -1,6 +1,5 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
-import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,7 +30,7 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
           ),
         ),
         leading: IconButton(
-          onPressed: () =>Navigator.pop(context),
+          onPressed: () => Navigator.pop(context),
           icon: Icon(Icons.arrow_back, color: AppColors.midLightBlue),
         ),
         backgroundColor: Colors.grey.shade100,
@@ -278,9 +277,10 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
           children: [
             SvgPicture.asset(icon, width: 30.w),
             SizedBox(height: 5.h),
-            Text(textAlign: TextAlign.start,
+            Text(
+              textAlign: TextAlign.start,
               moreInfoText,
-              style: style.titleSmall?.copyWith(fontWeight: FontWeight.w600,),
+              style: style.titleSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),
