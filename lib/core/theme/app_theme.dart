@@ -12,6 +12,8 @@ class AppTheme {
       inputDecorationTheme: TextFormFieldTheme.textFormFieldTheme,
       elevatedButtonTheme: CustomButtonTheme.elevatedButtonThemeData(),
       scaffoldBackgroundColor: AppColors.scaffoldColor,
+
+
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_vi
 import 'package:cenith_marchent/features/more/view/edit_profile_view.dart';
 import 'package:cenith_marchent/features/more/view/profile_view.dart';
 import 'package:cenith_marchent/features/store/view/add_exception_view.dart';
+import 'package:cenith_marchent/features/store/view/add_new_store_view.dart';
 import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +38,8 @@ class AppRoutes {
       screenWidget = EditOpeningHoursView();
     }else if (settings.name == AddExceptionView.name) {
       screenWidget = AddExceptionView();
+    }else if (settings.name == AddNewStoreView.name) {
+      screenWidget = AddNewStoreView();
     }
     return MaterialPageRoute(builder: (context) => screenWidget);
   }

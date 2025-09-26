@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/store/view/add_new_store_view.dart';
 import 'package:cenith_marchent/features/store/view/hours_view.dart';
 import 'package:cenith_marchent/features/store/view/overview.dart';
 import 'package:cenith_marchent/features/store/view/signage_view.dart';
@@ -22,15 +23,14 @@ class _StoreViewState extends State<StoreView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.scaffoldColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             buildHeaderSection(context),
-            SizedBox(height: 25),
+            SizedBox(height: 25.h),
             buildMenuSection(context),
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
             tabs[selectedIndex],
           ],
         ),
@@ -58,9 +58,9 @@ class _StoreViewState extends State<StoreView> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
+                padding:  EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                  vertical: 10.h,
                 ),
                 child: Text(
                   item.value,
@@ -86,14 +86,19 @@ class _StoreViewState extends State<StoreView> {
             'Lavaterilla',
             style: fontSize24(context)!.copyWith(fontWeight: FontWeight.w600),
           ),
-          Text(
-            'Add Store +',
+          TextButton(
+            onPressed: onTapAddStore,
+            child: Text ('Add Store +',
             style: fontSize16(
               context,
-            )!.copyWith(fontWeight: FontWeight.w600, fontFamily: 'Catamaran'),
+            )!.copyWith(fontWeight: FontWeight.w600, fontFamily: 'Catamaran'),)
           ),
         ],
       ),
     );
+  }
+
+  onTapAddStore(){
+    Navigator.pushNamed(context, AddNewStoreView.name);
   }
 }
