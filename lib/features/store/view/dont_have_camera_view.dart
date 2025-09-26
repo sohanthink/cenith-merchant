@@ -22,10 +22,15 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Link Bounce Signage',
+          'Link Cenith Signage',
           style: fontSize16(
             context,
-          )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+          )?.copyWith(
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.1.sp,
+            color: Colors.black
+
+          ),
         ),
         actions: [
           IconButton(
@@ -44,7 +49,9 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
             children: [
               Text(
                 'Find the signage PIN near the QR code.',
-                style: fontSize14(context),
+                style: fontSize14(context)!.copyWith(
+                  color: Colors.black
+                ),
               ),
               SizedBox(height: 24.h),
               _buildDirectionText(context),
@@ -53,7 +60,7 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
                 'PIN Code',
                 style: fontSize14(
                   context,
-                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+                )?.copyWith(color: Colors.black, fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
               ),
               SizedBox(height: 16.h),
               _buildPinCodeField(context),
@@ -74,10 +81,10 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
           onPressed: () {},
           child: Text(
             'Have a Camera?',
-            style: fontSize14(context)?.copyWith(
-              fontWeight: FontWeight.bold,
+            style: fontSize16(context)?.copyWith(
+              fontWeight: FontWeight.w300,
               letterSpacing: 0.1.sp,
-              color: AppColors.midLightBlue.shade400,
+              color: Colors.black,
             ),
           ),
         ),
@@ -88,11 +95,11 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
         SizedBox(height: 16.h),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.grey.shade400,
+            backgroundColor: Color(0xff787A7F).withOpacity(.21 ),
             foregroundColor: AppColors.midLightBlue,
           ),
           onPressed: () {},
-          child: Text('Link Signage'),
+          child: Text('Link Signage',style: TextStyle(color: Colors.black),),
         ),
       ],
     );
@@ -103,7 +110,7 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
       controller: _pinCodeController,
       decoration: InputDecoration(
         hintText: 'eg.wwwrew',
-        hintStyle: fontSize14(context),
+        hintStyle: fontSize14(context)!.copyWith(color: Colors.black),
       ),
       validator: (value) {
         if (value!.isEmpty) {
@@ -131,14 +138,14 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.error_outline_outlined, color: AppColors.themColor),
+          Icon(Icons.error_outline_outlined, ),
           SizedBox(width: 10.w),
           Expanded(
             child: Text(
               'If your signage doesn\'t have a printed PIN, scan the QR code using your phone camera and copy url to the field below.',
               maxLines: 3,
               textAlign: TextAlign.justify,
-              style: fontSize14(context)?.copyWith(letterSpacing: 0.1.sp),
+              style: fontSize14(context)?.copyWith(letterSpacing: 0.1.sp,color: Colors.black),
               softWrap: true,
             ),
           ),

@@ -24,15 +24,18 @@ class _LinkBounceSignageState extends State<LinkBounceSignage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Link Bounce Signage',
-          style: fontSize16(
-            context,
-          )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+          'Link Cenith Signage',
+          style: fontSize16(context)?.copyWith(
+            color: Colors.black,
+
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.1.sp,
+          ),
         ),
         actions: [
           IconButton(
             onPressed: _onTapPop,
-            icon: Icon(Icons.close, color: AppColors.themColor),
+            icon: Icon(Icons.close, ),
           ),
         ],
         automaticallyImplyLeading: false,
@@ -48,14 +51,16 @@ class _LinkBounceSignageState extends State<LinkBounceSignage> {
               SizedBox(height: 24.h),
               Text(
                 'Link Signage To Your Location',
-                style: fontSize16(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+                style: fontSize16(context)?.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.1.sp,
+                ),
               ),
               SizedBox(height: 16.h),
               Text(
                 'Linking signage is an important step to ensure walk-in customers book in the right location and you can earn bonuses along with it!',
-                style: fontSize14(context),
+                style: fontSize14(context)!.copyWith(color: Colors.black),
               ),
               SizedBox(height: 16.h),
               _buildLearnAboutWalkInsButton(context),
@@ -64,7 +69,7 @@ class _LinkBounceSignageState extends State<LinkBounceSignage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.pop(context),
                     child: Text(
                       'Skip for now',
                       style: fontSize16(

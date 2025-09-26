@@ -155,35 +155,31 @@ class _OverviewState extends State<Overview> {
   }
 
   Expanded buildEarningListSection() {
-    List<Widget> cardList = [
-      buildEarningCard(
-        context,
-        title: 'Total Earning',
-        earning: '0.00',
-        isIncrease: false,
-        inDecreaseAmount: '0.00',
-      ),
-      buildEarningCard(
-        context,
-        title: 'From tips',
-        earning: '0.00',
-        isIncrease: true,
-        inDecreaseAmount: '0.00',
-      ),
-      buildEarningCard(
-        context,
-        title: 'From Bonus',
-        earning: '0.00',
-        isIncrease: null,
-        inDecreaseAmount: '0.00',
-      ),
-      buildEarningCard(
-        context,
-        title: 'Affiliate earnings',
-        earning: '0.00',
-        isIncrease: false,
-        inDecreaseAmount: '0.00',
-      ),
+    List<Map<String, dynamic>> cardList = [
+      {
+        'title': 'Total Earning',
+        'earning': '0.00',
+        'isIncrease': false,
+        'inDecreaseAmt': '0.00',
+      },
+      {
+        'title': 'From tips',
+        'earning': '0.00',
+        'isIncrease': true,
+        'inDecreaseAmt': '0.00',
+      },
+      {
+        'title': 'From Bonus',
+        'earning': '0.00',
+        'isIncrease': null,
+        'inDecreaseAmt': '0.00',
+      },
+      {
+        'title': 'Affiliate earnings',
+        'earning': '0.00',
+        'isIncrease': false,
+        'inDecreaseAmt': '0.00',
+      },
     ];
     return Expanded(
       child: ListView.builder(
@@ -192,7 +188,21 @@ class _OverviewState extends State<Overview> {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return cardList[index];
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+            child: buildEarningCard(
+              context,
+              title: cardList[index]['title'],
+              earning: cardList[index]['earning'],
+              isIncrease: cardList[index]['isIncrease'],
+              inDecreaseAmount: cardList[index]['inDecreaseAmt'],
+              isSelected: selectedIndex == index
+            ),
+          );
         },
       ),
     );
@@ -204,6 +214,7 @@ class _OverviewState extends State<Overview> {
     required String earning,
     bool? isIncrease,
     required String inDecreaseAmount,
+    required bool isSelected,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -212,7 +223,7 @@ class _OverviewState extends State<Overview> {
         height: 83.h,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColors.themColor,
+          color: isSelected? AppColors.themColor:Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -227,25 +238,25 @@ class _OverviewState extends State<Overview> {
               '\$$earning',
               style: fontSize20(
                 context,
-              )!.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+              )!.copyWith(color: isSelected? Colors.white:Colors.black, fontWeight: FontWeight.w600),
             ),
             Row(
               children: [
                 isIncrease == null
-                    ? Container()
-                    : isIncrease
-                    ? Icon(Icons.auto_graph, color: Colors.white)
-                    : SvgPicture.asset(IconsPath.lowGraphIconSvg),
+                    ? SizedBox.shrink()
+                    : isIncrease == true
+                    ? Icon(Icons.auto_graph, color:isSelected? Colors.white:Colors.black)
+                    : SvgPicture.asset(IconsPath.lowGraphIconSvg,color: Colors.red,),
                 SizedBox(width: 10),
                 Text(
                   isIncrease == null
                       ? 'No Changes on last month'
-                      : isIncrease
+                      : isIncrease == true
                       ? 'Increase of \$$inDecreaseAmount from last month'
                       : 'Decrease of \$$inDecreaseAmount from last month',
                   style: fontSize12(
                     context,
-                  )!.copyWith(fontWeight: FontWeight.w300, color: Colors.white),
+                  )!.copyWith(fontWeight: FontWeight.w300, color: isSelected? Colors.white:Colors.black),
                 ),
               ],
             ),

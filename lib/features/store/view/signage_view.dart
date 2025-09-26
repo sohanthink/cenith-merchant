@@ -1,6 +1,9 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
+import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,6 +37,7 @@ class _SignageViewState extends State<SignageView> {
                     style: fontSize16(context)?.copyWith(
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.1.sp,
+                      color: Colors.black,
                     ),
                   ),
                   space(16),
@@ -44,23 +48,33 @@ class _SignageViewState extends State<SignageView> {
                         TextSpan(
                           text:
                               'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                          style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(
                           text: 'Benefits of linking signage',
                           style: fontSize14(
                             context,
                           )?.copyWith(fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.pushNamed(
+                              context,
+                              BenefitsOfLinkingSignageView.name,
+                            ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 32.h),
                   Center(
-                    child: Text('6 signs linked', style: fontSize14(context)),
+                    child: Text(
+                      '6 signs linked',
+                      style: fontSize14(context)!.copyWith(color: Colors.black),
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.pushNamed(context, LinkBounceSignage.name),
                     child: Text('Link Cenith signage'),
                   ),
                   space(16),
@@ -68,17 +82,21 @@ class _SignageViewState extends State<SignageView> {
                   SizedBox(height: 24.h),
                   Text(
                     'Your orders',
-                    style: fontSize20(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.bold),
+                    style: fontSize20(context)?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                   space(16),
                   Text(
                     'Check the status of recent orders, manage returns, and create new orders.',
-                    style: fontSize14(context),
+                    style: fontSize14(context)!.copyWith(color: Colors.black),
                   ),
                   space(16),
-                  _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
+                  _buildButton(
+                    onTap: () {},
+                    buttonName: 'Order Tags & Signage',
+                  ),
                 ],
               ),
             ),
@@ -110,6 +128,7 @@ class _SignageViewState extends State<SignageView> {
                         style: fontSize16(context)?.copyWith(
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.1.sp,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -232,7 +251,7 @@ Widget _buildSignageAndStatus(
   required VoidCallback onTap,
 }) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+    padding: EdgeInsets.only(left: 30.0.w, right: 10.w),
     child: Row(
       children: [
         Column(
@@ -240,11 +259,16 @@ Widget _buildSignageAndStatus(
           children: [
             Text(
               signageTitle,
-              style: fontSize16(
-                context,
-              )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+              style: fontSize16(context)?.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.1.sp,
+              ),
             ),
-            Text(unit, style: fontSize14(context)),
+            Text(
+              unit,
+              style: fontSize14(context)!.copyWith(color: Colors.black),
+            ),
           ],
         ),
         Spacer(),
