@@ -134,8 +134,8 @@ class _BookingScreenState extends State<BookingScreen> {
                 children: [
                   buildTextFormField(style),
                   SizedBox(width: 5.w),
-                  CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg),
-                  CustomCircleIcons(icon: IconsPath.downloadIconSvg),
+                  CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg, onTap: () {  },),
+                  CustomCircleIcons(icon: IconsPath.downloadIconSvg, onTap: (){},),
                 ],
               ),
             ),
