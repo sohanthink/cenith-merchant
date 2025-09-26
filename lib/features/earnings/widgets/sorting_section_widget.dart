@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'custom_drop_down_widget.dart';
-class SortingSection extends StatelessWidget {
-  const SortingSection({super.key});
+class SortingSectionWidget extends StatelessWidget {
+  const SortingSectionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
