@@ -58,7 +58,7 @@ class _OverviewState extends State<Overview> {
         if (item.y > maxValue) {
           maxValue = item.y;
           maxValueIndex = item.x;
-          print('Value ${maxValue} index${maxValueIndex}');
+          print('Value $maxValue index$maxValueIndex');
         }
       }
     }
@@ -255,7 +255,6 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-
   Widget getTitleWidget(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Colors.grey,
@@ -307,6 +306,3 @@ class _OverviewState extends State<Overview> {
     return SideTitleWidget(meta: meta, space: 8, child: text);
   }
 }
-
-
-

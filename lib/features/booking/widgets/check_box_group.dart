@@ -8,11 +8,11 @@ class CheckboxGroup extends StatelessWidget {
   final Function(String, bool) onChanged;
 
   const CheckboxGroup({
-    Key? key,
+    super.key,
     required this.title,
     required this.items,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class CheckboxGroup extends StatelessWidget {
             value: items[key],
             onChanged: (value) => onChanged(key, value!),
           );
-        }).toList(),
+        }),
       ],
     );
   }

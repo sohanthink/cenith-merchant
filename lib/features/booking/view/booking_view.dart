@@ -3,7 +3,6 @@ import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/features/booking/view/download_view.dart';
 import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
 import 'package:cenith_marchent/features/common/contact_support_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -68,7 +67,7 @@ class _BookingViewState extends State<BookingView> {
 
                       headerStyle: HeaderStyle(
                         titleTextFormatter: (date, locale) {
-                          return '${_monthName(date.month)}';
+                          return _monthName(date.month);
                         },
                         titleTextStyle: TextStyle(
                           fontSize: 20.sp,
@@ -143,7 +142,9 @@ class _BookingViewState extends State<BookingView> {
                   CustomCircleIcons(
                     icon: IconsPath.toolsFilterIconSvg,
                     padding: 12.w,
-                    onTap: () {Navigator.pushNamed(context, DownloadView.name);},
+                    onTap: () {
+                      Navigator.pushNamed(context, DownloadView.name);
+                    },
                   ),
                   CustomCircleIcons(
                     icon: IconsPath.downloadIconSvg,
