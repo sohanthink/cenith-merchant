@@ -19,7 +19,10 @@ class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:  IconButton(onPressed: ()=>Navigator.pop(context) , icon: Icon(Icons.arrow_back)),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back),
+        ),
         title: const Text("scan qr code", style: TextStyle(color: Colors.blue)),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -37,12 +40,20 @@ class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
                 if (barcode.format == BarcodeFormat.qrCode) {
                   // bounding box / corners check
                   final corners = barcode.corners; // List<Offset>?
-                  if (corners != null && corners.isNotEmpty) {
+                  if (corners.isNotEmpty) {
                     // Approximate bounding box from corners
-                    final left = corners.map((e) => e.dx).reduce((a, b) => a < b ? a : b);
-                    final right = corners.map((e) => e.dx).reduce((a, b) => a > b ? a : b);
-                    final top = corners.map((e) => e.dy).reduce((a, b) => a < b ? a : b);
-                    final bottom = corners.map((e) => e.dy).reduce((a, b) => a > b ? a : b);
+                    final left = corners
+                        .map((e) => e.dx)
+                        .reduce((a, b) => a < b ? a : b);
+                    final right = corners
+                        .map((e) => e.dx)
+                        .reduce((a, b) => a > b ? a : b);
+                    final top = corners
+                        .map((e) => e.dy)
+                        .reduce((a, b) => a < b ? a : b);
+                    final bottom = corners
+                        .map((e) => e.dy)
+                        .reduce((a, b) => a > b ? a : b);
 
                     final screenSize = MediaQuery.of(context).size;
                     final centerX = screenSize.width / 2;
@@ -66,7 +77,6 @@ class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
                 }
               }
             },
-
           ),
 
           /// 🔹 Center Box UI
@@ -75,10 +85,7 @@ class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
             height: boxSize,
             decoration: BoxDecoration(
               color: Colors.transparent,
-              border: Border.all(
-                color: Colors.black,
-                width: 3,
-              ),
+              border: Border.all(color: Colors.black, width: 3),
               borderRadius: BorderRadius.circular(16),
             ),
           ),

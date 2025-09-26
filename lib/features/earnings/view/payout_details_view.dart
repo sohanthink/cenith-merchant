@@ -15,6 +15,8 @@ class PayoutDetailsView extends StatefulWidget {
 }
 
 class _PayoutDetailsViewState extends State<PayoutDetailsView> {
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -25,75 +27,77 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
             SizedBox(height: 30.h),
             buildPayoutBreakdownSection(context),
             SizedBox(height: 10),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          Icon(Icons.arrow_back),
-                          SizedBox(width: 10.w),
-                          Text('Previous'),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          Text('Previous'),
-                          SizedBox(width: 10.w),
-                          Icon(Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30.h),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'To learn more about receipts please read our ',
-                        style: TextStyle(color: Colors.black, fontSize: 14),
-                      ),
-                      TextSpan(
-                        text: 'FAQ page',
-                        style: fontSize14(context),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 200.h),
-
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Have a question? ',
-                        style: fontSize14(
-                          context,
-                        )!.copyWith(color: Colors.black),
-                      ),
-                      TextSpan(
-                        text: 'Contact Out Support Team',
-                        style: fontSize14(context),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 25,)
-              ],
-            ),
+            buildPaginationSection(context),
           ],
         ),
       ),
+    );
+  }
+
+  Column buildPaginationSection(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Icon(Icons.arrow_back),
+                  SizedBox(width: 10.w),
+                  Text('Previous'),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Text('Previous'),
+                  SizedBox(width: 10.w),
+                  Icon(Icons.arrow_forward),
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 30.h),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'To learn more about receipts please read our ',
+                style: TextStyle(color: Colors.black, fontSize: 14),
+              ),
+              TextSpan(
+                text: 'FAQ page',
+                style: fontSize14(context),
+                recognizer: TapGestureRecognizer()..onTap = () {},
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 200.h),
+
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Have a question?  ',
+                style: fontSize14(context)!.copyWith(color: Colors.black),
+              ),
+              TextSpan(
+                text: 'Contact Out Support Team',
+                style: fontSize14(context),
+                recognizer: TapGestureRecognizer()..onTap = () {},
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 25),
+      ],
     );
   }
 
@@ -124,14 +128,29 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
   }
 
   Widget buildDashboardSeciton(BuildContext context) {
+    List<Map<String, dynamic>> card = [
+      {'title': 'Ready for payout', 'amt': '\$25.50'},
+      {'title': 'Processing', 'amt': '0.00'},
+      {'title': 'Payout date', 'amt': '1 mar'},
+    ];
+
     return Column(
       children: [
-        dashboardCard(context, title: 'Ready for payout', amount: '\$25.50'),
-        SizedBox(height: 10.h),
-        dashboardCard(context, title: 'Processing*', amount: '0.00'),
-        SizedBox(height: 10.h),
-        dashboardCard(context, title: 'Payout date', amount: '1 Mar'),
-        SizedBox(height: 17.h),
+        ...card.asMap().entries.map((item) {
+          return GestureDetector(
+            //TODO: update with viewModel;
+            onTap: ()=>setState(() {
+              selectedIndex  = item.key;
+            }),
+            child: dashboardCard(
+              context,
+              title: item.value['title'],
+              amount: item.value['amt'],
+              isSelected: selectedIndex == item.key,
+            ),
+          );
+        }),
+
         Center(
           child: Text('Visit Stripe Dashboard', style: fontSize16(context)),
         ),
@@ -164,13 +183,15 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
     BuildContext context, {
     required String title,
     required String amount,
+    required bool isSelected,
   }) {
     return Container(
+      margin: EdgeInsets.only(bottom: 10.h),
       width: double.infinity,
       height: 100.h,
       decoration: BoxDecoration(
-        color: AppColors.themColor,
-        borderRadius: BorderRadius.circular(20),
+        color: isSelected ? AppColors.themColor : Colors.white,
+        borderRadius: BorderRadius.circular(20.r),
       ),
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -182,13 +203,13 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
               title,
               style: fontSize20(
                 context,
-              )!.copyWith(color: Colors.white, fontWeight: FontWeight.w400),
+              )!.copyWith(color: isSelected? Colors.white: Colors.black, fontWeight: FontWeight.w400),
             ),
             Text(
               amount,
               style: fontSize24(
                 context,
-              )!.copyWith(color: Colors.white, fontWeight: FontWeight.w900),
+              )!.copyWith(color: isSelected? Colors.white: Colors.black, fontWeight: FontWeight.w900),
             ),
           ],
         ),

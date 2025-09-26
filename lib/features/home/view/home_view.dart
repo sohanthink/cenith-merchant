@@ -23,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,19 +38,19 @@ class _HomeViewState extends State<HomeView> {
             HeaderButtonWidget(),
             SizedBox(height: 30.h),
             Expanded(child: buildDashBoardSection()),
-            buildCheckinCheckoutSection(context),
+            buildCheckInCheckoutSection(context),
           ],
         ),
       ),
     );
   }
 
-  SizedBox buildCheckinCheckoutSection(BuildContext context) {
+  SizedBox buildCheckInCheckoutSection(BuildContext context) {
     return SizedBox(
             width: double.infinity,
             height: 60.h,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 20 ,left: 8,right: 8),
+              padding: const EdgeInsets.only(bottom: 20 ),
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, QrCodeScanningScreen.name);
@@ -87,9 +87,9 @@ class _HomeViewState extends State<HomeView> {
           child: Padding(
             padding: EdgeInsets.only(
               top: index == 0 ? 0 : 8.0,
-              left: 8,
-              right: 8,
-              bottom: 8,
+              left: 0,
+              right: 0,
+              bottom: 0,
             ),
             child: BuildDashboardCard(
               title: item[index]['title'],

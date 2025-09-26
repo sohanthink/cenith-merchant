@@ -63,7 +63,7 @@ class _BenefitsOfLinkingSignageViewState
               separatorBuilder: (context, index) => SizedBox(height: 12.h),
             ),
           ),
-          ElevatedButton(onPressed: (){}, child: Text('Ok')),
+          ElevatedButton(onPressed: ()=> Navigator.pop(context), child: Text('Ok')),
           SizedBox(height: 40.h,)
         ],
       ),
