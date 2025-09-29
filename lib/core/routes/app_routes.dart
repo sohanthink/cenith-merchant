@@ -11,9 +11,9 @@ import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_
 
 import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
+import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/ready_to_link_view.dart';
 import 'package:flutter/material.dart';
-
 
 
 class AppRoutes {
@@ -46,6 +46,8 @@ class AppRoutes {
       screenWidget = ReadyToLinkView();
     } else if (settings.name == DontHaveCameraView.name) {
       screenWidget = DontHaveCameraView();
+    } else if (settings.name == OrderTagAndSignageView.name) {
+      screenWidget = OrderTagAndSignageView();
     }
     return MaterialPageRoute(builder: (context) => screenWidget);
   }
