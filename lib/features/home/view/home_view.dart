@@ -38,6 +38,7 @@ class _HomeViewState extends State<HomeView> {
             HeaderButtonWidget(),
             SizedBox(height: 30.h),
             Expanded(child: buildDashBoardSection()),
+            SizedBox(height: 10.h,),
             buildCheckInCheckoutSection(context),
           ],
         ),
@@ -76,6 +77,7 @@ class _HomeViewState extends State<HomeView> {
     ];
 
     return ListView.builder(
+
       padding: EdgeInsets.all(0),
       itemCount: item.length,
       itemBuilder: ((BuildContext context, index) {

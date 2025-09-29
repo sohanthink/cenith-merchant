@@ -80,7 +80,7 @@ class _AddNewStoreViewState extends State<AddNewStoreView> {
 
   Container buildGetNotifiedSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.r),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.r),
@@ -90,51 +90,52 @@ class _AddNewStoreViewState extends State<AddNewStoreView> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
+
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SvgPicture.asset(IconsPath.storeIconSvg),
               SizedBox(width: 8.w),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Get notified about your bookings',
-                    style: fontSize16(context)!.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Get notified about your bookings',
+                      style: fontSize16(context)!.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10.h),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 70.h,
-                    child: Text(
-                      overflow: TextOverflow.visible,
-                      'Manage which users receive communications from the Users tab.',
+                    SizedBox(height: 10.h),
+                    Container(
+                      child: Text(
+                        'Manage which users receive communications from the Users tab.',
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 15.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          'Visit users tab',
-                          style: fontSize16(
-                            context,
-                          )!.copyWith(fontWeight: FontWeight.w700),
+                    SizedBox(height: 15.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            'Visit users tab',
+                            style: fontSize16(
+                              context,
+                            )!.copyWith(fontWeight: FontWeight.w700),
+                          ),
                         ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: AppColors.themColor,
-                        size: 20,
-                        weight: 0.1,
-                      ),
-                    ],
-                  ),
-                ],
+                        Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: AppColors.themColor,
+                          size: 20,
+                          weight: 0.1,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

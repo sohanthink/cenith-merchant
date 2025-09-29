@@ -26,7 +26,7 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
             buildDashboardSeciton(context),
             SizedBox(height: 30.h),
             buildPayoutBreakdownSection(context),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             buildPaginationSection(context),
           ],
         ),
@@ -188,7 +188,6 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
     return Container(
       margin: EdgeInsets.only(bottom: 10.h),
       width: double.infinity,
-      height: 100.h,
       decoration: BoxDecoration(
         color: isSelected ? AppColors.themColor : Colors.white,
         borderRadius: BorderRadius.circular(20.r),

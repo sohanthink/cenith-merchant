@@ -21,15 +21,17 @@ class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SortingSectionWidget(),
-          SizedBox(height: 5.h),
-          buildEarningListSection(),
-          SizedBox(height: 5.h),
-          buildChartSection(context),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SortingSectionWidget(),
+            SizedBox(height: 5.h),
+            buildEarningListSection(),
+            SizedBox(height: 5.h),
+            buildChartSection(context),
+          ],
+        ),
       ),
     );
   }
@@ -154,7 +156,7 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Expanded buildEarningListSection() {
+  Widget buildEarningListSection() {
     List<Map<String, dynamic>> cardList = [
       {
         'title': 'Total Earning',
@@ -181,32 +183,28 @@ class _OverviewState extends State<Overview> {
         'inDecreaseAmt': '0.00',
       },
     ];
-    return Expanded(
-      child: SingleChildScrollView(
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: cardList.length,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-              child: buildEarningCard(
-                context,
-                title: cardList[index]['title'],
-                earning: cardList[index]['earning'],
-                isIncrease: cardList[index]['isIncrease'],
-                inDecreaseAmount: cardList[index]['inDecreaseAmt'],
-                isSelected: selectedIndex == index
-              ),
-            );
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemCount: cardList.length,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedIndex = index;
+            });
           },
-        ),
-      ),
+          child: buildEarningCard(
+            context,
+            title: cardList[index]['title'],
+            earning: cardList[index]['earning'],
+            isIncrease: cardList[index]['isIncrease'],
+            inDecreaseAmount: cardList[index]['inDecreaseAmt'],
+            isSelected: selectedIndex == index
+          ),
+        );
+      },
     );
   }
 
@@ -219,14 +217,13 @@ class _OverviewState extends State<Overview> {
     required bool isSelected,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding:  EdgeInsets.symmetric(vertical: 8.h),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.sp, vertical: 4),
-        height: 83.h,
+        padding: EdgeInsets.symmetric(horizontal: 8.sp, vertical: 4.h),
         width: double.infinity,
         decoration: BoxDecoration(
           color: isSelected? AppColors.themColor:Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -249,7 +246,7 @@ class _OverviewState extends State<Overview> {
                     : isIncrease == true
                     ? Icon(Icons.auto_graph, color:isSelected? Colors.white:Colors.black)
                     : SvgPicture.asset(IconsPath.lowGraphIconSvg,color: Colors.red,),
-                SizedBox(width: 10),
+                SizedBox(width: 10.w),
                 Text(
                   isIncrease == null
                       ? 'No Changes on last month'

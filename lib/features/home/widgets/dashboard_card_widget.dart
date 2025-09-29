@@ -76,7 +76,7 @@ class BuildDashboardCard extends StatelessWidget {
                 : SizedBox.shrink(),
             isSelected
                 ? Positioned(
-                    top: 75.h,
+                    bottom: 6.h,
                     left: 105.w,
                     child: GestureDetector(
                       onTap: ()=>Navigator.pushNamed(context, AllBookingsView.name),

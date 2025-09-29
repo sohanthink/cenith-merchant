@@ -93,14 +93,14 @@ class _HoursViewState extends State<HoursView> {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.w),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         children: [
-          SizedBox(height: 20),
+          SizedBox(height: 20.h),
           SizedBox(
             width: 200.w,
             child: ElevatedButton(
@@ -119,7 +119,7 @@ class _HoursViewState extends State<HoursView> {
             physics: NeverScrollableScrollPhysics(),
             itemCount: days.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 1.96,
+              childAspectRatio: 2.h,
               crossAxisCount: 2,
               crossAxisSpacing: 15,
               mainAxisSpacing: 10,
@@ -146,21 +146,23 @@ class _HoursViewState extends State<HoursView> {
     required bool isOpened,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300, width: 2),
-        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300, width: 2.w),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             day,
             style: fontSize20(context)!.copyWith(
-              fontSize: 20,
+              overflow: TextOverflow.ellipsis,
+              fontSize: 20.sp,
               color: isOpened ? Colors.red : Colors.black,
             ),
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 5.h),
           Text(
             time,
             style: fontSize12(
