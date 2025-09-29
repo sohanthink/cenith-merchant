@@ -58,7 +58,7 @@ class _OverviewState extends State<Overview> {
         if (item.y > maxValue) {
           maxValue = item.y;
           maxValueIndex = item.x;
-          print('Value $maxValue index$maxValueIndex');
+          // print('Value $maxValue index$maxValueIndex');
         }
       }
     }
@@ -182,28 +182,30 @@ class _OverviewState extends State<Overview> {
       },
     ];
     return Expanded(
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: cardList.length,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-            child: buildEarningCard(
-              context,
-              title: cardList[index]['title'],
-              earning: cardList[index]['earning'],
-              isIncrease: cardList[index]['isIncrease'],
-              inDecreaseAmount: cardList[index]['inDecreaseAmt'],
-              isSelected: selectedIndex == index
-            ),
-          );
-        },
+      child: SingleChildScrollView(
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: cardList.length,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
+              child: buildEarningCard(
+                context,
+                title: cardList[index]['title'],
+                earning: cardList[index]['earning'],
+                isIncrease: cardList[index]['isIncrease'],
+                inDecreaseAmount: cardList[index]['inDecreaseAmt'],
+                isSelected: selectedIndex == index
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -270,7 +272,7 @@ class _OverviewState extends State<Overview> {
     const style = TextStyle(
       color: Colors.grey,
       fontWeight: FontWeight.bold,
-      fontSize: 14,
+      fontSize: 10,
     );
     Widget text;
     switch (value.toInt()) {

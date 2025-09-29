@@ -212,8 +212,7 @@ class _OverviewState extends State<Overview> {
 
   Container uploadImageCard(BuildContext context, String title) {
     return Container(
-      height: 150.h,
-      width: 150.w,
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(

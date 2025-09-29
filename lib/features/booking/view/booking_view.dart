@@ -1,9 +1,10 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
-import 'package:cenith_marchent/features/booking/view/download_view.dart';
 import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
 import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:cenith_marchent/features/common/loading_annimation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -17,6 +18,28 @@ class BookingView extends StatefulWidget {
 }
 
 class _BookingViewState extends State<BookingView> {
+
+  DateTime now = DateTime.now();
+
+  bool _isCalendarReady = false;
+
+  late final DateTime _finalFirstDay = DateTime.utc(now.year - 10, 1, 1);
+  late final DateTime _finalLastDay = DateTime.utc(now.year + 10, 12, 31);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if(mounted){
+          setState(() {
+            _isCalendarReady = true;
+          });
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
@@ -53,15 +76,17 @@ class _BookingViewState extends State<BookingView> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black12,
-                          blurRadius: 6.r,
+                          blurRadius: 6,
                           offset: Offset(0, 3),
                         ),
                       ],
                     ),
-                    child: TableCalendar(
+                    // 💡
+                    child: _isCalendarReady
+                        ? TableCalendar(
                       focusedDay: DateTime.now(),
-                      firstDay: DateTime.utc(2000, 1, 12),
-                      lastDay: DateTime.utc(2100, 1, 12),
+                      firstDay: _finalFirstDay,
+                      lastDay: _finalLastDay,
                       selectedDayPredicate: (day) =>
                           isSameDay(day, DateTime.now()),
 
@@ -105,19 +130,17 @@ class _BookingViewState extends State<BookingView> {
                         weekdayStyle: TextStyle(
                           color: AppColors.themColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 14.sp
                         ),
                         weekendStyle: TextStyle(
-                          color: AppColors.themColor,
+                          color: Colors.grey,
                           fontWeight: FontWeight.bold,
+                          fontSize: 14
                         ),
                       ),
                       calendarStyle: CalendarStyle(
-                        defaultTextStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        weekendTextStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        defaultTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                        weekendTextStyle: TextStyle(fontWeight: FontWeight.bold),
                         todayDecoration: BoxDecoration(
                           color: Colors.blue.withOpacity(0.5),
                           shape: BoxShape.circle,
@@ -126,6 +149,13 @@ class _BookingViewState extends State<BookingView> {
                           color: Colors.blue,
                           shape: BoxShape.circle,
                         ),
+                      ),
+                    )
+                        : SizedBox(
+
+                      height: 350.h,
+                      child: Center(
+                        child:  LoadingAnimation(),
                       ),
                     ),
                   ),
@@ -139,20 +169,8 @@ class _BookingViewState extends State<BookingView> {
                 children: [
                   buildTextFormField(style),
                   SizedBox(width: 5.w),
-                  CustomCircleIcons(
-                    icon: IconsPath.toolsFilterIconSvg,
-                    padding: 12.w,
-                    onTap: () {
-                      Navigator.pushNamed(context, DownloadView.name);
-                    },
-                  ),
-                  CustomCircleIcons(
-                    icon: IconsPath.downloadIconSvg,
-                    padding: 12.w,
-                    onTap: () {
-                      Navigator.pushNamed(context, DownloadView.name);
-                    },
-                  ),
+                  CustomCircleIcons(icon: IconsPath.toolsFilterIconSvg, onTap: () {  },),
+                  CustomCircleIcons(icon: IconsPath.downloadIconSvg, onTap: (){},),
                 ],
               ),
             ),
@@ -168,13 +186,13 @@ class _BookingViewState extends State<BookingView> {
                 ],
               ),
             ),
-            SizedBox(height: 16.h),
-            Center(child: CircularProgressIndicator()),
+            SizedBox(height: 40.h),
+            Center(child: LoadingAnimation()),
             Text(
               "You Don't Have Any Booking",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20.sp,
+                fontSize: 20,
                 color: AppColors.themColor,
               ),
             ),
@@ -225,10 +243,7 @@ class _BookingViewState extends State<BookingView> {
               size: 25.sp,
             ),
           ),
-          prefixIconConstraints: BoxConstraints(
-            maxHeight: 25.h,
-            maxWidth: 35.w,
-          ),
+          prefixIconConstraints: BoxConstraints(maxHeight: 25, maxWidth: 35),
           border: OutlineInputBorder(borderSide: BorderSide.none),
           contentPadding: EdgeInsets.all(14.w),
           filled: true,
@@ -247,11 +262,11 @@ class _BookingViewState extends State<BookingView> {
   }
 
   Widget buildElevatedButton(
-    String buttonName,
-    VoidCallback onTap,
-    TextTheme style, {
-    double? size,
-  }) {
+      String buttonName,
+      VoidCallback onTap,
+      TextTheme style, {
+        double? size,
+      }) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.themColor,
