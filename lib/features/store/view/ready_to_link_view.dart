@@ -20,15 +20,17 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Link Bounce Signage',
-          style: fontSize16(
-            context,
-          )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+          'Link Cenith Signage',
+          style: fontSize16(context)?.copyWith(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.1.sp,
+          ),
         ),
         actions: [
           IconButton(
             onPressed: _onTapPop,
-            icon: Icon(Icons.close, color: AppColors.themColor),
+            icon: Icon(Icons.close, ),
           ),
         ],
         automaticallyImplyLeading: false,
@@ -49,9 +51,11 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
             SizedBox(height: 32.h),
             Text(
               'How To Scan Signage',
-              style: fontSize16(
-                context,
-              )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+              style: fontSize16(context)?.copyWith(
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.1.sp,
+                color: Colors.black,
+              ),
             ),
             SizedBox(height: 16.h),
             Padding(
@@ -62,16 +66,16 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
                 children: [
                   _buildInstructionText(
                     context,
-                    text: '1.Hold your phone towards the signage',
+                    text: '1.  Hold your phone towards the signage',
                   ),
                   _buildInstructionText(
                     context,
                     text:
-                        '2.Make sure the QR code on the signage is at the center of the screen',
+                        '2.  Make sure the QR code on the signage is at the center of the screen',
                   ),
                   _buildInstructionText(
                     context,
-                    text: '3.It wil mically scan the QR code',
+                    text: '3.  It wil mically scan the QR code',
                   ),
                 ],
               ),
@@ -80,27 +84,28 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
             Center(
               child: Column(
                 children: [
-                  TextButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, DontHaveCameraView.name),
-                    child: Text(
-                      'Don\'t have a camera?',
-                      style: fontSize14(context)?.copyWith(
-                        color: AppColors.midLightBlue.shade500,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 0.1.sp,
-                      ),
+                  Text(
+                    'Don\'t have a camera?',
+                    style: fontSize14(context)?.copyWith(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.1.sp,
                     ),
                   ),
-                  Text(
-                    'Link Manually',
-                    style: fontSize12(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.bold),
+
+                  TextButton(
+                    onPressed: ()=>Navigator.pushNamed(context, DontHaveCameraView.name),
+                    child: Text(
+                      'Link Manually',
+                      style: fontSize12(
+                        context,
+                      )?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 30.h),
           ],
         ),
       ),
@@ -108,7 +113,7 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
   }
 
   Widget _buildInstructionText(BuildContext context, {required String text}) {
-    return Text(text, style: fontSize14(context));
+    return Text(text, style: fontSize14(context)!.copyWith(color: Colors.black));
   }
 
   void _onTapPop() {

@@ -1,5 +1,15 @@
+import 'package:cenith_marchent/core/constants/app_colors.dart';
+import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
+import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class QrCodeScanningScreen extends StatefulWidget {
   const QrCodeScanningScreen({super.key});
@@ -11,78 +21,95 @@ class QrCodeScanningScreen extends StatefulWidget {
 }
 
 class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
+  MobileScannerController mobileScannerController = MobileScannerController();
   String? scannedData;
-  final double boxSize = 220; // Center Box Size
-  final GlobalKey scannerKey = GlobalKey();
+  bool isScanning = true;
+
+  @override
+  void dispose() {
+    mobileScannerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:  IconButton(onPressed: ()=>Navigator.pop(context) , icon: Icon(Icons.arrow_back)),
-        title: const Text("scan qr code", style: TextStyle(color: Colors.blue)),
-        backgroundColor: Colors.white,
-        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back),
+        ),
       ),
-      backgroundColor: Colors.white, // পুরো Screen সাদা
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          /// 🔹 Scanner
-          MobileScanner(
-            key: scannerKey,
-            fit: BoxFit.cover,
-            onDetect: (capture) {
-              for (final barcode in capture.barcodes) {
-                if (barcode.format == BarcodeFormat.qrCode) {
-                  // bounding box / corners check
-                  final corners = barcode.corners; // List<Offset>?
-                  if (corners != null && corners.isNotEmpty) {
-                    // Approximate bounding box from corners
-                    final left = corners.map((e) => e.dx).reduce((a, b) => a < b ? a : b);
-                    final right = corners.map((e) => e.dx).reduce((a, b) => a > b ? a : b);
-                    final top = corners.map((e) => e.dy).reduce((a, b) => a < b ? a : b);
-                    final bottom = corners.map((e) => e.dy).reduce((a, b) => a > b ? a : b);
-
-                    final screenSize = MediaQuery.of(context).size;
-                    final centerX = screenSize.width / 2;
-                    final centerY = screenSize.height / 2;
-                    const boxSize = 220.0;
-
-                    final boxLeft = centerX - boxSize / 2;
-                    final boxTop = centerY - boxSize / 2;
-                    final boxRight = centerX + boxSize / 2;
-                    final boxBottom = centerY + boxSize / 2;
-
-                    if (left >= boxLeft &&
-                        top >= boxTop &&
-                        right <= boxRight &&
-                        bottom <= boxBottom) {
-                      debugPrint("✅ QR inside box: ${barcode.rawValue}");
-                    } else {
-                      debugPrint("⚠️ QR outside box");
-                    }
-                  }
-                }
-              }
-            },
-
-          ),
-
-          /// 🔹 Center Box UI
-          Container(
-            width: boxSize,
-            height: boxSize,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                color: Colors.black,
-                width: 3,
-              ),
-              borderRadius: BorderRadius.circular(16),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20.h),
+            Text(
+              'scan qr code',
+              style: fontSize24(
+                context,
+              )!.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
             ),
-          ),
-        ],
+            Text(
+              'Scan the customer\'s QR code to check them in or out.',
+              style: fontSize14(context)!.copyWith(color: Colors.black),
+            ),
+            SizedBox(height: 20.h),
+            Container(
+              width: double.maxFinite,
+              height: 300.h,
+              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: MobileScanner(
+                  controller: mobileScannerController,
+                  overlayBuilder: (context, constraints) {
+                    return buildOverlaySection();
+                  },
+                  onDetect: (BarcodeCapture capture) {
+                    if (isScanning = true) {
+                      scannedData = capture.barcodes.first.rawValue;
+                    }
+
+                    if (scannedData != null) {
+                      setState(() {
+                        isScanning = false;
+                      });
+                    }
+                    mobileScannerController.stop();
+
+                    Logger().e(scannedData);
+                  },
+                ),
+              ),
+            ),
+            Spacer(),
+            Center(child: SvgPicture.asset(IconsPath.logWithoutBgSvg)),
+            SizedBox(height: 100),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildOverlaySection() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black26, width: 50),
+      ),
+      child: DottedBorder(
+        options: RectDottedBorderOptions(
+          dashPattern: [8, 6],
+          strokeWidth: 1,
+          color: AppColors.themColor,
+        ),
+        child: Container(),
       ),
     );
   }

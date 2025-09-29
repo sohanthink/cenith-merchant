@@ -55,7 +55,7 @@ class NotificationPreference extends StatelessWidget {
                 Switch(
                   value: isSwitchOn,
                   onChanged: onTapSwitch,
-                  activeColor: Colors.white,
+                  activeThumbColor: Colors.white,
                   activeTrackColor: AppColors.midLightBlue,
                 ),
               ],
@@ -69,7 +69,7 @@ class NotificationPreference extends StatelessWidget {
               children: [
                 ...buttonCategoryName.map((button) {
                   return InkWell(
-                    onTap: ()=>onTapNotificationType(button),
+                    onTap: () => onTapNotificationType(button),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16.w,
