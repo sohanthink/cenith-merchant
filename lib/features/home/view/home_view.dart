@@ -29,16 +29,34 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeaderSection(context),
-            SizedBox(height: 20.h),
-            Text(
-              'Your Dashboard',
-              style: fontSize26(context) !.copyWith(fontWeight: FontWeight.w900),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Track and manage your operations for the day.',
+                      style: TextTheme.of(
+                        context,
+                      ).headlineMedium!.copyWith(color: AppColors.themColor.shade500),
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      'Your Dashboard',
+                      style: fontSize26(
+                        context,
+                      )!.copyWith(fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(height: 20.h),
+                    HeaderButtonWidget(),
+                    SizedBox(height: 30.h),
+                    buildDashBoardSection(),
+                    SizedBox(height: 10.h),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(height: 20.h),
-            HeaderButtonWidget(),
-            SizedBox(height: 30.h),
-            Expanded(child: buildDashBoardSection()),
-            SizedBox(height: 10.h,),
             buildCheckInCheckoutSection(context),
           ],
         ),
@@ -46,38 +64,39 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  SizedBox buildCheckInCheckoutSection(BuildContext context) {
+  Widget buildCheckInCheckoutSection(BuildContext context) {
     return SizedBox(
-            width: double.infinity,
-            height: 60.h,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20 ),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, QrCodeScanningScreen.name);
-                },
-                child: Text(
-                  'Check in/out',
-                ),
-              ),
-            ),
-          );
+      width: double.infinity,
+      height: 60.h,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, QrCodeScanningScreen.name);
+          },
+          child: Text('Check in/out'),
+        ),
+      ),
+    );
   }
 
   // it will removed and will adjusted with state management;
   int selectedIndex = 0;
 
-
-
   ListView buildDashBoardSection() {
     List<Map<String, dynamic>> item = [
-      {'title': 'Customer To Check In', 'count': 0 ,'sub-title': null},
-      {'title': 'Customer To Check Out', 'count': 0, 'sub-title': null },
-      {'title': 'Walk-ins', 'count': 0 , 'sub-title': 'Walk-ins left for next €100.00 bonus: 20 '  },
+      {'title': 'Customer To Check In', 'count': 0, 'sub-title': null},
+      {'title': 'Customer To Check Out', 'count': 0, 'sub-title': null},
+      {
+        'title': 'Walk-ins',
+        'count': 0,
+        'sub-title': 'Walk-ins left for next €100.00 bonus: 20 ',
+      },
     ];
 
     return ListView.builder(
-
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
       padding: EdgeInsets.all(0),
       itemCount: item.length,
       itemBuilder: ((BuildContext context, index) {
@@ -109,7 +128,7 @@ class _HomeViewState extends State<HomeView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 50.h),
+        SizedBox(height: 35.h),
         Row(
           children: [
             topicHeader(title: 'Hello Ashraful!', subTitle: 'good morning'),
@@ -126,36 +145,25 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
         SizedBox(height: 12.h),
-        Text(
-          'Track and manage your operations for the day.',
-          style: TextTheme.of(
-            context,
-          ).headlineMedium!.copyWith(color: AppColors.themColor.shade500),
-        ),
       ],
     );
   }
 }
 
 class HeaderButtonWidget extends StatefulWidget {
-  const HeaderButtonWidget({super.key, });
-
+  const HeaderButtonWidget({super.key});
 
   @override
   State<HeaderButtonWidget> createState() => _HeaderButtonWidgetState();
 }
 
 class _HeaderButtonWidgetState extends State<HeaderButtonWidget> {
-
-
-
   int selectedIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: ['Today', 'Upcoming', 'Past'].asMap().entries.map((item) {
         return GestureDetector(
           onTap: () {
@@ -186,5 +194,3 @@ class _HeaderButtonWidgetState extends State<HeaderButtonWidget> {
     );
   }
 }
-
-
