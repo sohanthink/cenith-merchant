@@ -1,15 +1,13 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
-import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:dotted_border/dotted_border.dart';
+
 
 class QrCodeScanningScreen extends StatefulWidget {
   const QrCodeScanningScreen({super.key});
