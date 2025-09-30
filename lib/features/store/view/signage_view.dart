@@ -67,9 +67,9 @@ class _SignageViewState extends State<SignageView> {
     return _orders.where((order) {
       final matchDate =
           _selectedDate == null ||
-          (order['date'].day == _selectedDate!.day &&
-              order['date'].month == _selectedDate!.month &&
-              order['date'].year == _selectedDate!.year);
+              (order['date'].day == _selectedDate!.day &&
+                  order['date'].month == _selectedDate!.month &&
+                  order['date'].year == _selectedDate!.year);
       final matchStatus =
           _selectedStatus == null || order['status'] == _selectedStatus;
       return matchDate && matchStatus;
@@ -78,92 +78,97 @@ class _SignageViewState extends State<SignageView> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          space(16),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildCircleImage(),
-                space(16),
-                Text(
-                  'Get walk-in bonuses and more bookings by linking your signage',
-                  textAlign: TextAlign.center,
-                  style: fontSize16(context)?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.1.sp,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            space(16),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildCircleImage(),
+                  space(16),
+                  Text(
+                    'Get walk-in bonuses and more bookings by linking your signage',
+                    textAlign: TextAlign.center,
+                    style: fontSize16(context)?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.1.sp,
+                      color: Colors.black
+                    ),
                   ),
-                ),
-                space(16),
-                RichText(
-                  text: TextSpan(
-                    style: fontSize14(context),
-                    children: [
-                      TextSpan(
-                        text:
-                            'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                  space(16),
+                  RichText(
+                    text: TextSpan(
+                      style: fontSize14(context)?.copyWith(
+                          color: Colors.black
                       ),
-                      TextSpan(
-                        text: 'Benefits Of Linking Signage',
-                        style: fontSize14(
-                          context,
-                        )?.copyWith(fontWeight: FontWeight.bold),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.pushNamed(
-                              context,
-                              BenefitsOfLinkingSignageView.name,
-                            );
-                          },
-                      ),
-                    ],
+                      children: [
+                        TextSpan(
+                          text:
+                          'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                        ),
+                        TextSpan(
+                          text: 'Benefits Of Linking Signage',
+                          style: fontSize14(
+                            context,
+                          )?.copyWith(fontWeight: FontWeight.bold,color: AppColors.themColor),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(
+                                context,
+                                BenefitsOfLinkingSignageView.name,
+                              );
+                            },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 32.h),
-                Center(
-                  child: Text('6 signs linked', style: fontSize14(context)),
-                ),
-                SizedBox(height: 16.h),
-                ElevatedButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, LinkBounceSignage.name),
-                  child: Text('Link Cenith Signage'),
-                ),
-                space(16),
-                _buildButton(
-                  onTap: () =>
-                      Navigator.pushNamed(context, OrderTagAndSignageView.name),
-                  buttonName: 'Print A Signage',
-                ),
-                SizedBox(height: 24.h),
-                Text(
-                  'Your orders',
-                  style: fontSize20(
-                    context,
-                  )?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                space(16),
-                Text(
-                  'Check the status of recent orders, manage returns, and create new orders.',
-                  style: fontSize14(context),
-                ),
-                space(16),
-                _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
-                space(16),
+                  SizedBox(height: 32.h),
+                  Center(
+                    child: Text('6 signs linked', style: fontSize14(context)?.copyWith(color: Colors.black)),
+                  ),
+                  SizedBox(height: 16.h),
+                  ElevatedButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, LinkBounceSignage.name),
+                    child: Text('Link Cenith Signage'),
+                  ),
+                  space(16),
+                  _buildButton(
+                    onTap: () =>
+                        Navigator.pushNamed(context, OrderTagAndSignageView.name),
+                    buttonName: 'Print A Signage',
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    'Your orders',
+                    style: fontSize20(
+                      context,
+                    )?.copyWith(fontWeight: FontWeight.bold,color: Colors.black),
+                  ),
+                  space(16),
+                  Text(
+                    'Check the status of recent orders, manage returns, and create new orders.',
+                    style: fontSize14(context)?.copyWith(color: Colors.black),
+                  ),
+                  space(16),
+                  _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
+                  space(16),
 
-                _buildSelectOrderDate(context),
-                space(16),
-                _buildSelectStatus(context),
-              ],
+                  _buildSelectOrderDate(context),
+                  space(16),
+                  _buildSelectStatus(context),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 24.h),
-          _buildSignateAndStatus(context),
-          _buildPagination(context),
-        ],
+            SizedBox(height: 24.h),
+            _buildSignateAndStatus(context),
+            _buildPagination(context),
+          ],
+        ),
       ),
     );
   }
@@ -251,7 +256,7 @@ class _SignageViewState extends State<SignageView> {
                 'Signage and Status',
                 style: fontSize16(
                   context,
-                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp,color: Colors.black),
               ),
             ),
           ),
@@ -341,12 +346,12 @@ Widget _buildButton({required VoidCallback onTap, required String buttonName}) {
 }
 
 Widget _buildSignageAndStatus(
-  BuildContext context, {
-  required String signageTitle,
-  required String unit,
-  required String status,
-  required VoidCallback onTap,
-}) {
+    BuildContext context, {
+      required String signageTitle,
+      required String unit,
+      required String status,
+      required VoidCallback onTap,
+    }) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.0.w),
     child: Row(
@@ -358,7 +363,7 @@ Widget _buildSignageAndStatus(
               signageTitle,
               style: fontSize16(
                 context,
-              )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+              )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp,color: Colors.black),
             ),
             Text(unit, style: fontSize14(context)),
           ],
@@ -379,7 +384,7 @@ Widget _buildSignageAndStatus(
             status,
             style: fontSize14(
               context,
-            )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp),
+            )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp,),
           ),
         ),
         IconButton(onPressed: onTap, icon: Icon(Icons.arrow_forward_ios)),

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
@@ -21,7 +20,7 @@ class OrderTagAndSignageView extends StatefulWidget {
 
 class _OrderTagAndSignageViewState extends State<OrderTagAndSignageView> {
   final ImagePicker _imagePicker = ImagePicker();
-  List<XFile>?_pickedImages=[];
+  final List<XFile>_pickedImages=[];
 
   @override
   Widget build(BuildContext context) {
