@@ -1,11 +1,12 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/home/view/qr_code_scanning_screen.dart';
+import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
+import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/asstes_path/icons_path.dart';
-import '../../common/topic_header.dart';
+import '../../common/widgets/topic_header.dart';
 import '../widgets/dashboard_card_widget.dart';
 
 class HomeView extends StatefulWidget {
@@ -18,6 +19,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+
+  ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +35,7 @@ class _HomeViewState extends State<HomeView> {
             buildHeaderSection(context),
             Expanded(
               child: SingleChildScrollView(
+                controller: controller,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -57,28 +62,14 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-            buildCheckInCheckoutSection(context),
+            
           ],
         ),
       ),
+      floatingActionButton: CustomCheckInOutWidget(controller: controller, maxWidth: 0.92.sw,),
     );
   }
 
-  Widget buildCheckInCheckoutSection(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 60.h,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, QrCodeScanningScreen.name);
-          },
-          child: Text('Check in/out'),
-        ),
-      ),
-    );
-  }
 
   // it will removed and will adjusted with state management;
   int selectedIndex = 0;

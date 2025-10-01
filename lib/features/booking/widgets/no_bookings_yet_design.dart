@@ -1,4 +1,4 @@
-import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -62,7 +62,6 @@ class NoBookingsYetDesign extends StatelessWidget {
         SizedBox(height: 40.h,),
         ContactSupportText.supportText(context, (){}),
         SizedBox(height: 80.h,),
-        ElevatedButton(onPressed: (){}, child: Text('Check in/out'))
       ],
     );
   }

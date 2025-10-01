@@ -8,16 +8,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-class QrCodeScanningScreen extends StatefulWidget {
-  const QrCodeScanningScreen({super.key});
+class QrCodeScanningView extends StatefulWidget {
+  const QrCodeScanningView({super.key});
 
   static final String name = '/qrCode-scanning-screen';
 
   @override
-  State<QrCodeScanningScreen> createState() => _QrCodeScanningScreenState();
+  State<QrCodeScanningView> createState() => _QrCodeScanningViewState();
 }
 
-class _QrCodeScanningScreenState extends State<QrCodeScanningScreen> {
+class _QrCodeScanningViewState extends State<QrCodeScanningView> {
   MobileScannerController mobileScannerController = MobileScannerController();
   String? scannedData;
   bool isScanning = true;

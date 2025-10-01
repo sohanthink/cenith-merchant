@@ -1,6 +1,6 @@
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/store/view/add_exception_view.dart';
 import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:flutter/material.dart';

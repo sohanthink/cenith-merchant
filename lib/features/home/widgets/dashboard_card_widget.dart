@@ -22,11 +22,16 @@ class BuildDashboardCard extends StatelessWidget {
       height: 125.h,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        boxShadow: [BoxShadow(
+          color: Colors.black12,
+          blurRadius: 4.r,
+          offset: Offset(0, 3),
+        ),],
+        borderRadius: BorderRadius.circular(10.r),
         color: isSelected ? AppColors.themColor : Colors.white,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
         child: Stack(
           children: [
             Positioned(

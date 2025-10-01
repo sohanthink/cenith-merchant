@@ -23,7 +23,7 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
     final item = Get.find<EditHourViewModel>().dayList;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding:  EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
           children: [
             SizedBox(height: 30.h),
@@ -46,7 +46,7 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
                             is24hrs: itemIndex['isOpen24Hrs'],
                             index:  index,
                           ),
-                          SizedBox(height: 20,)
+                          SizedBox(height: 20.h,)
                         ],
                       );
                     }

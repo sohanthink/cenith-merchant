@@ -92,11 +92,20 @@ class _EditTimeTileState extends State<EditTimeTile> {
                     height: 25.h,
                     width: 25.w,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.grey.shade700),
-                      borderRadius: BorderRadiusGeometry.circular(2),
+                      border: Border.all(
+                        width: 1.w,
+                        color: Colors.grey.shade700,
+                      ),
+                      borderRadius: BorderRadiusGeometry.circular(2.r),
                     ),
                     child: widget.isOpened
-                        ? Icon(Icons.done, color: AppColors.themColor)
+                        ? Center(
+                            child: Icon(
+                              Icons.done,
+                              color: AppColors.themColor,
+                              size: 20.sp,
+                            ),
+                          )
                         : SizedBox(),
                   );
                 },
@@ -123,8 +132,8 @@ class _EditTimeTileState extends State<EditTimeTile> {
               },
               child: SvgPicture.asset(
                 IconsPath.downArrowSvg,
-                height: 25,
-                width: 25,
+                height: 25.h,
+                width: 25.w,
               ),
             ),
           ],
@@ -132,9 +141,9 @@ class _EditTimeTileState extends State<EditTimeTile> {
         isExpanded.value == false
             ? Column(
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Container(
-                    height: 1,
+                    height: 1.h,
                     color: Colors.grey.shade500,
                     width: double.infinity,
                   ),
@@ -186,7 +195,7 @@ class _EditTimeTileState extends State<EditTimeTile> {
                           context,
                         )!.copyWith(color: Colors.black),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 10.w),
 
                       GetBuilder<EditHourViewModel>(
                         builder: (controller) {
@@ -221,10 +230,10 @@ class _EditTimeTileState extends State<EditTimeTile> {
   Widget buildTimeButton({required String time, required VoidCallback onTap}) {
     return Container(
       width: 150.w,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.w),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 1, color: Colors.black),
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(width: 1.w, color: Colors.black),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

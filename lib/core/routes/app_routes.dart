@@ -3,13 +3,16 @@ import 'package:cenith_marchent/features/booking/view/booking_details_view.dart'
 import 'package:cenith_marchent/features/booking/view/booking_view.dart';
 import 'package:cenith_marchent/features/booking/view/download_view.dart';
 import 'package:cenith_marchent/features/home/view/home_view.dart';
-import 'package:cenith_marchent/features/home/view/qr_code_scanning_screen.dart';
+import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
 import 'package:cenith_marchent/features/more/view/edit_profile_view.dart';
 import 'package:cenith_marchent/features/more/view/profile_view.dart';
+import 'package:cenith_marchent/features/store/view/add_exception_view.dart';
+import 'package:cenith_marchent/features/store/view/add_new_store_view.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
 
 import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
+import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/ready_to_link_view.dart';
@@ -26,8 +29,8 @@ class AppRoutes {
       screenWidget = MainBottomNavView();
     } else if (settings.name == BookingView.name) {
       screenWidget = BookingView();
-    } else if (settings.name == QrCodeScanningScreen.name) {
-      screenWidget = QrCodeScanningScreen();
+    } else if (settings.name == QrCodeScanningView.name) {
+      screenWidget = QrCodeScanningView();
     } else if (settings.name == AllBookingsView.name) {
       screenWidget = AllBookingsView();
     } else if (settings.name == BookingDetailsView.name) {
@@ -48,6 +51,12 @@ class AppRoutes {
       screenWidget = DontHaveCameraView();
     } else if (settings.name == OrderTagAndSignageView.name) {
       screenWidget = OrderTagAndSignageView();
+    }else if (settings.name == AddExceptionView.name) {
+      screenWidget = AddExceptionView();
+    }else if (settings.name == AddNewStoreView.name) {
+      screenWidget = AddNewStoreView();
+    }else if (settings.name == EditOpeningHoursView.name) {
+      screenWidget = EditOpeningHoursView();
     }
     return MaterialPageRoute(builder: (context) => screenWidget);
   }

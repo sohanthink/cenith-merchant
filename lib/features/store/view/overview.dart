@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
-import 'package:cenith_marchent/features/common/contact_support_text.dart';
+import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
+import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -469,7 +470,7 @@ class _OverviewState extends State<Overview> {
           style: fontSize20(context)!.copyWith(fontWeight: FontWeight.bold),
         ),
         OutlinedButton(
-          onPressed: () {},
+          onPressed: ()=>Navigator.pushNamed(context, OrderTagAndSignageView.name),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.themColor,
             disabledForegroundColor: AppColors.themColor.shade50,

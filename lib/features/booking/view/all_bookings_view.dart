@@ -39,7 +39,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
           scrolledUnderElevation: 0,
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Column(
             children: [
               Row(
