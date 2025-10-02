@@ -161,7 +161,7 @@ class _SignageViewState extends State<SignageView> {
                   ),
                   space(16),
                   _buildButton(
-                    onTap: () {},
+                    onTap: ()=>Navigator.pushNamed(context, OrderTagAndSignageView.name),
                     buttonName: 'Order Tags & Signage',
                   ),
                   space(16),

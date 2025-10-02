@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/booking/view/download_view.dart';
 import 'package:cenith_marchent/features/booking/view/past_view.dart';
 import 'package:cenith_marchent/features/booking/view/today_view.dart';
 import 'package:cenith_marchent/features/booking/view/upcoming_view.dart';
@@ -49,12 +50,14 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                   CustomCircleIcons(
                     icon: IconsPath.simpleToolIconSvg,
                     padding: 12.w,
-                    onTap: () {},
+                    onTap: () =>
+                        Navigator.pushNamed(context, DownloadView.name),
                   ),
                   CustomCircleIcons(
                     icon: IconsPath.downloadIconSvg,
                     padding: 12.w,
-                    onTap: () {},
+                    onTap: () =>
+                        Navigator.pushNamed(context, DownloadView.name),
                   ),
                 ],
               ),

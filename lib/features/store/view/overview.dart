@@ -2,6 +2,7 @@ import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
+import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
 import 'package:cenith_marchent/features/store/widgets/bottom_sheet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -156,15 +157,7 @@ class _OverviewState extends State<Overview> {
           )!.copyWith(fontWeight: FontWeight.w300, color: Colors.black),
         ),
         SizedBox(height: 20),
-        GestureDetector(
-          onTap: () {
-            buildModalButtonSection(context);
-          },
-          child: Text(
-            'Learn how to take good photos',
-            style: fontSize14(context),
-          ),
-        ),
+        Text('Learn how to take good photos', style: fontSize14(context)),
         SizedBox(height: 25),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -219,58 +212,6 @@ class _OverviewState extends State<Overview> {
           ),
         ),
       ],
-    );
-  }
-
-  Future<dynamic> buildModalButtonSection(BuildContext context) {
-    List bottomSheetCards = [
-      BottomSheetCard(title: 'AvoidCroppedPhotos'),
-      BottomSheetCard(title: 'AvoidCroppedPhotos'),
-      BottomSheetCard(title: 'Ensure your photo is bright enough'),
-      BottomSheetCard(title: 'Avoid too many elements'),
-    ];
-
-    RxInt selectedIndex = 0.obs;
-
-    return showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Obx(
-                () => Column(
-                  children: [
-                    bottomSheetCards[selectedIndex.value],
-                    SizedBox(height: 10.h),
-                    Text(
-                      '${selectedIndex.value} of ${bottomSheetCards.length}',
-                      style: fontSize14(
-                        context,
-                      )!.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 10.h),
-              ElevatedButton(
-                onPressed: () {
-                  if (selectedIndex.value != bottomSheetCards.length - 1) {
-                    selectedIndex + 1;
-                  } else {
-                    Navigator.pop(context);
-                  }
-                },
-                child: Text('Next'),
-              ),
-              SizedBox(height: 20.h),
-            ],
-          ),
-        );
-      },
     );
   }
 
@@ -533,12 +474,13 @@ class _OverviewState extends State<Overview> {
           style: fontSize20(context)!.copyWith(fontWeight: FontWeight.bold),
         ),
         OutlinedButton(
-          onPressed: () =>
-              Navigator.pushNamed(context, OrderTagAndSignageView.name),
+          onPressed: ()=>Navigator.pushNamed(context, PrintASignageView.name),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.themColor,
             disabledForegroundColor: AppColors.themColor.shade50,
+
             side: BorderSide(color: AppColors.themColor, width: 2),
+
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
