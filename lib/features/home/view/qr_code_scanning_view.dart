@@ -11,7 +11,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 class QrCodeScanningView extends StatefulWidget {
   const QrCodeScanningView({super.key});
 
-  static final String name = '/qrCode-scanning-screen';
+  static final String name = 'qrCode-scanning-screen';
 
   @override
   State<QrCodeScanningView> createState() => _QrCodeScanningViewState();

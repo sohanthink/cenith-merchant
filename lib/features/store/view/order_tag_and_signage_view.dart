@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/store/widgets/order_tag_and_signage_card.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,6 @@ class OrderTagAndSignageView extends StatefulWidget {
 }
 
 class _OrderTagAndSignageViewState extends State<OrderTagAndSignageView> {
-  final ImagePicker _imagePicker = ImagePicker();
-  final List<XFile>_pickedImages=[];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,64 +79,7 @@ class _OrderTagAndSignageViewState extends State<OrderTagAndSignageView> {
                 orderDescription:
                     'Reusable security tags to attach to bags from number 1 to 60.',
               ),
-              SizedBox(height: 16.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildUploadImage(
-                    context,
-                    uploadImageType: 'Add Photo Of Storefront', onPickedImage: _onTapImagePickedStoreFont,
-                  ),
-                  _buildUploadImage(
-                    context,
-                    uploadImageType: 'Add Photo Of \nBag Storage', onPickedImage: _onTapImagePickedBagStorage,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                spacing: 12.w,
-                children: [
-                  for (var image in _pickedImages!)
-                  Container(
-                    height: 80.h,
-                    width: 90.w,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(14.r),
-                      child:Image.file(
-                        File(image.path),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                 DottedBorder(
-                      options: RoundedRectDottedBorderOptions(
-                        radius: Radius.circular(14.r),
-                        strokeWidth: 2,
-                        dashPattern: [10,4],
-                        color: Colors.grey.withOpacity(0.5),
-                      ),
-                      child: Container(
-                        height: 80.h,
-                        width: 90.w,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(14.r),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: AppColors.themColor,
-                          size: 30.sp,
-                        ),
-                      ),
-                    ),
 
-                ],
-              ),
               SizedBox(height: 16.h),
               OrderTagAndSignageCard(
                 orderTagName: 'Reusable Tags',
@@ -146,73 +87,34 @@ class _OrderTagAndSignageViewState extends State<OrderTagAndSignageView> {
                 orderDescription:
                     'Reusable security tags to attach to bags from number 1 to 60.',
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUploadImage(
-    BuildContext context, {
-    required String uploadImageType,
-        required VoidCallback onPickedImage
-  }) {
-    return GestureDetector(
-      onTap: onPickedImage,
-      child: DottedBorder(
-        options: RoundedRectDottedBorderOptions(
-          strokeWidth: 2,
-          dashPattern: [10, 4],
-          radius: Radius.circular(14.r),
-          color: Colors.grey.withOpacity(0.5),
-        ),
-        child: Container(
-          height: 150.h,
-          width: 160.w,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(14.r),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 12.h),
-              Image.asset(ImagePaths.uploadImagePng, width: 50.w),
-              Padding(
-                padding: EdgeInsets.all(8.w),
-                child: Text(
-                  uploadImageType,
-                  textAlign: TextAlign.center,
-                  style: fontSize14(context)?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.1.sp,
-                  ),
+              SizedBox(height: 24.h),
+              ElevatedButton(onPressed: () {}, child: Text('Continue')),
+              SizedBox(height: 32.h),
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'Having issues ordering what you need?',
+                      style: fontSize12(context)?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.midLightBlue.shade400,
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    Text(
+                      'Contact our support team',
+                      style: fontSize12(
+                        context,
+                      )?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
+              SizedBox(height: 24.h,)
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<void> _onTapImagePickedStoreFont() async {
-    XFile? image = await _imagePicker.pickImage(source: ImageSource.camera);
-    if (image != null) {
-      _pickedImages?.add(image);
-      setState(() {});
-    }
-  }
-  Future<void>_onTapImagePickedBagStorage()async{
-    XFile? image=await _imagePicker.pickImage(source: ImageSource.camera);
-    if(image!=null){
-      _pickedImages?.add(image);
-      setState(() {
-
-      });
-    }
-
-
   }
 }

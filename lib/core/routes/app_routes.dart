@@ -15,9 +15,9 @@ import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
 import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
+import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/ready_to_link_view.dart';
 import 'package:flutter/material.dart';
-
 
 class AppRoutes {
   static Route<dynamic> routes(RouteSettings settings) {
@@ -51,12 +51,16 @@ class AppRoutes {
       screenWidget = DontHaveCameraView();
     } else if (settings.name == OrderTagAndSignageView.name) {
       screenWidget = OrderTagAndSignageView();
-    }else if (settings.name == AddExceptionView.name) {
+    } else if (settings.name == PrintASignageView.name) {
+      screenWidget = PrintASignageView();
+    } else if (settings.name == AddExceptionView.name) {
       screenWidget = AddExceptionView();
-    }else if (settings.name == AddNewStoreView.name) {
+    } else if (settings.name == AddNewStoreView.name) {
       screenWidget = AddNewStoreView();
-    }else if (settings.name == EditOpeningHoursView.name) {
+    } else if (settings.name == EditOpeningHoursView.name) {
       screenWidget = EditOpeningHoursView();
+    } else if (settings.name == AddNewStoreView.name) {
+      screenWidget = AddNewStoreView();
     }
     return MaterialPageRoute(builder: (context) => screenWidget);
   }
