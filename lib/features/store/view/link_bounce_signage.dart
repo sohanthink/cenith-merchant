@@ -1,13 +1,10 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
-import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/home/view/home_view.dart';
 import 'package:cenith_marchent/features/store/view/ready_to_link_view.dart';
 import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LinkBounceSignage extends StatefulWidget {
   const LinkBounceSignage({super.key});
@@ -32,12 +29,7 @@ class _LinkBounceSignageState extends State<LinkBounceSignage> {
             letterSpacing: 0.1.sp,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: _onTapPop,
-            icon: Icon(Icons.close, ),
-          ),
-        ],
+        actions: [IconButton(onPressed: _onTapPop, icon: Icon(Icons.close))],
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(

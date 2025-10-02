@@ -67,9 +67,9 @@ class _SignageViewState extends State<SignageView> {
     return _orders.where((order) {
       final matchDate =
           _selectedDate == null ||
-              (order['date'].day == _selectedDate!.day &&
-                  order['date'].month == _selectedDate!.month &&
-                  order['date'].year == _selectedDate!.year);
+          (order['date'].day == _selectedDate!.day &&
+              order['date'].month == _selectedDate!.month &&
+              order['date'].year == _selectedDate!.year);
       final matchStatus =
           _selectedStatus == null || order['status'] == _selectedStatus;
       return matchDate && matchStatus;
@@ -96,25 +96,24 @@ class _SignageViewState extends State<SignageView> {
                     style: fontSize16(context)?.copyWith(
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.1.sp,
-                      color: Colors.black
+                      color: Colors.black,
                     ),
                   ),
                   space(16),
                   RichText(
                     text: TextSpan(
-                      style: fontSize14(context)?.copyWith(
-                          color: Colors.black
-                      ),
+                      style: fontSize14(context)?.copyWith(color: Colors.black),
                       children: [
                         TextSpan(
                           text:
-                          'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                              'Start by scanning the QR code on your Bounce signage to link it to your store. ',
                         ),
                         TextSpan(
                           text: 'Benefits Of Linking Signage',
-                          style: fontSize14(
-                            context,
-                          )?.copyWith(fontWeight: FontWeight.bold,color: AppColors.themColor),
+                          style: fontSize14(context)?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.themColor,
+                          ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.pushNamed(
@@ -128,7 +127,10 @@ class _SignageViewState extends State<SignageView> {
                   ),
                   SizedBox(height: 32.h),
                   Center(
-                    child: Text('6 signs linked', style: fontSize14(context)?.copyWith(color: Colors.black)),
+                    child: Text(
+                      '6 signs linked',
+                      style: fontSize14(context)?.copyWith(color: Colors.black),
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   ElevatedButton(
@@ -138,16 +140,19 @@ class _SignageViewState extends State<SignageView> {
                   ),
                   space(16),
                   _buildButton(
-                    onTap: () =>
-                        Navigator.pushNamed(context, OrderTagAndSignageView.name),
+                    onTap: () => Navigator.pushNamed(
+                      context,
+                      OrderTagAndSignageView.name,
+                    ),
                     buttonName: 'Print A Signage',
                   ),
                   SizedBox(height: 24.h),
                   Text(
                     'Your orders',
-                    style: fontSize20(
-                      context,
-                    )?.copyWith(fontWeight: FontWeight.bold,color: Colors.black),
+                    style: fontSize20(context)?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                   space(16),
                   Text(
@@ -155,7 +160,10 @@ class _SignageViewState extends State<SignageView> {
                     style: fontSize14(context)?.copyWith(color: Colors.black),
                   ),
                   space(16),
-                  _buildButton(onTap: () {}, buttonName: 'Order Tags & Signage'),
+                  _buildButton(
+                    onTap: () {},
+                    buttonName: 'Order Tags & Signage',
+                  ),
                   space(16),
 
                   _buildSelectOrderDate(context),
@@ -215,8 +223,8 @@ class _SignageViewState extends State<SignageView> {
           hint: Text('Select Status', style: fontSize14(context)),
           items: _statusList.map((status) {
             return DropdownMenuItem(
-              child: Text(status, style: fontSize14(context)),
               value: status,
+              child: Text(status, style: fontSize14(context)),
             );
           }).toList(),
           onChanged: (value) {
@@ -254,9 +262,11 @@ class _SignageViewState extends State<SignageView> {
               ),
               child: Text(
                 'Signage and Status',
-                style: fontSize16(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp,color: Colors.black),
+                style: fontSize16(context)?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.1.sp,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -346,12 +356,12 @@ Widget _buildButton({required VoidCallback onTap, required String buttonName}) {
 }
 
 Widget _buildSignageAndStatus(
-    BuildContext context, {
-      required String signageTitle,
-      required String unit,
-      required String status,
-      required VoidCallback onTap,
-    }) {
+  BuildContext context, {
+  required String signageTitle,
+  required String unit,
+  required String status,
+  required VoidCallback onTap,
+}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.0.w),
     child: Row(
@@ -361,9 +371,11 @@ Widget _buildSignageAndStatus(
           children: [
             Text(
               signageTitle,
-              style: fontSize16(
-                context,
-              )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp,color: Colors.black),
+              style: fontSize16(context)?.copyWith(
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.1.sp,
+                color: Colors.black,
+              ),
             ),
             Text(unit, style: fontSize14(context)),
           ],
@@ -384,7 +396,7 @@ Widget _buildSignageAndStatus(
             status,
             style: fontSize14(
               context,
-            )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp,),
+            )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp),
           ),
         ),
         IconButton(onPressed: onTap, icon: Icon(Icons.arrow_forward_ios)),
