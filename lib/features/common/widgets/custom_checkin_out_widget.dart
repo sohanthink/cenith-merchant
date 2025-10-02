@@ -1,4 +1,3 @@
-import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

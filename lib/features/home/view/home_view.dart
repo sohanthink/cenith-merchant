@@ -1,6 +1,5 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
-import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,7 +18,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   ScrollController controller = ScrollController();
 
   @override
@@ -42,9 +40,9 @@ class _HomeViewState extends State<HomeView> {
                   children: [
                     Text(
                       'Track and manage your operations for the day.',
-                      style: TextTheme.of(
-                        context,
-                      ).headlineMedium!.copyWith(color: AppColors.themColor.shade500),
+                      style: TextTheme.of(context).headlineMedium!.copyWith(
+                        color: AppColors.themColor.shade500,
+                      ),
                     ),
                     SizedBox(height: 20.h),
                     Text(
@@ -62,14 +60,15 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
             ),
-            
           ],
         ),
       ),
-      floatingActionButton: CustomCheckInOutWidget(controller: controller, maxWidth: 0.92.sw,),
+      floatingActionButton: CustomCheckInOutWidget(
+        controller: controller,
+        maxWidth: 0.92.sw,
+      ),
     );
   }
-
 
   // it will removed and will adjusted with state management;
   int selectedIndex = 0;

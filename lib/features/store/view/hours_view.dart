@@ -5,7 +5,6 @@ import 'package:cenith_marchent/features/store/view/add_exception_view.dart';
 import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class HoursView extends StatefulWidget {
   const HoursView({super.key});
@@ -146,7 +145,6 @@ class _HoursViewState extends State<HoursView> {
     required bool isOpened,
   }) {
     return Container(
-
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300, width: 2.w),
         borderRadius: BorderRadius.circular(10.r),
@@ -193,7 +191,8 @@ class _HoursViewState extends State<HoursView> {
       ],
     );
   }
-  onTapAddException(){
+
+  onTapAddException() {
     Navigator.pushNamed(context, AddExceptionView.name);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/custom_mobile_scanner_widget.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,28 +64,18 @@ class _QrCodeScanningViewState extends State<QrCodeScanningView> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: MobileScanner(
-                  controller: mobileScannerController,
-                  overlayBuilder: (context, constraints) {
-                    return buildOverlaySection();
+                child: CustomMobileScannerWidget(
+                  onDetect: (result) {
+                    Logger().i(result);
                   },
-                  onDetect: (BarcodeCapture capture) {
-                    if (isScanning = true) {
-                      scannedData = capture.barcodes.first.rawValue;
-                    }
-
-                    if (scannedData != null) {
-                      setState(() {
-                        isScanning = false;
-                      });
-                    }
-                    mobileScannerController.stop();
-
-                    Logger().e(scannedData);
+                  controller: mobileScannerController,
+                  overLayBuilder: (context, constraints) {
+                    return buildOverlaySection();
                   },
                 ),
               ),
             ),
+
             Spacer(),
             Center(child: SvgPicture.asset(IconsPath.logWithoutBgSvg)),
             SizedBox(height: 100.h),
@@ -94,7 +85,7 @@ class _QrCodeScanningViewState extends State<QrCodeScanningView> {
     );
   }
 
-  Container buildOverlaySection() {
+  Widget buildOverlaySection() {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black26, width: 50),
@@ -109,4 +100,6 @@ class _QrCodeScanningViewState extends State<QrCodeScanningView> {
       ),
     );
   }
+
+
 }

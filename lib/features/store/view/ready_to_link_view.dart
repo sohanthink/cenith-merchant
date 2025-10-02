@@ -1,9 +1,13 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/custom_mobile_scanner_widget.dart';
 import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 class ReadyToLinkView extends StatefulWidget {
   const ReadyToLinkView({super.key});
@@ -15,6 +19,9 @@ class ReadyToLinkView extends StatefulWidget {
 }
 
 class _ReadyToLinkViewState extends State<ReadyToLinkView> {
+  final MobileScannerController mobileScannerController =
+      MobileScannerController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +34,7 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
             letterSpacing: 0.1.sp,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: _onTapPop,
-            icon: Icon(Icons.close, ),
-          ),
-        ],
+        actions: [IconButton(onPressed: _onTapPop, icon: Icon(Icons.close))],
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -45,7 +47,16 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
               width: 350.w,
               decoration: BoxDecoration(
                 color: Colors.grey.shade400,
-                borderRadius: BorderRadius.circular(14.r),
+                borderRadius: BorderRadius.circular(20.r),
+              ),
+              child: CustomMobileScannerWidget(
+                onDetect: (result) {
+                  Logger().i(result);
+                },
+                overLayBuilder: (_, __) {
+                  return buildOverlayBuilder();
+                },
+                controller: mobileScannerController,
               ),
             ),
             SizedBox(height: 32.h),
@@ -94,7 +105,8 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
                   ),
 
                   TextButton(
-                    onPressed: ()=>Navigator.pushNamed(context, DontHaveCameraView.name),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, DontHaveCameraView.name),
                     child: Text(
                       'Link Manually',
                       style: fontSize12(
@@ -112,8 +124,29 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
     );
   }
 
+  Container buildOverlayBuilder() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.symmetric(
+          vertical: BorderSide(width: 80.w, color: Color(0x3A818181)),
+          horizontal: BorderSide(width: 30.h, color: Color(0x3A818181)),
+        ),
+      ),
+      child: DottedBorder(
+        options: RectDottedBorderOptions(
+          color: AppColors.themColor,
+          dashPattern: [8, 5],
+        ),
+        child: Container(),
+      ),
+    );
+  }
+
   Widget _buildInstructionText(BuildContext context, {required String text}) {
-    return Text(text, style: fontSize14(context)!.copyWith(color: Colors.black));
+    return Text(
+      text,
+      style: fontSize14(context)!.copyWith(color: Colors.black),
+    );
   }
 
   void _onTapPop() {
@@ -122,5 +155,11 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
     } else {
       Navigator.pushReplacementNamed(context, LinkBounceSignage.name);
     }
+  }
+
+  @override
+  void dispose() {
+    mobileScannerController.dispose();
+    super.dispose();
   }
 }
