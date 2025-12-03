@@ -64,6 +64,7 @@ class _ProfileViewState extends State<ProfileView> {
                     buildUserInfo(context),
                     SizedBox(height: 48.h),
                     _buildBenefitsAndSettings(context),
+                    SizedBox(height: 10.h,)
                   ],
                 ),
               ),
