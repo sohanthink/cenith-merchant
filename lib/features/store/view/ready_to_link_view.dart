@@ -134,7 +134,7 @@ class _ReadyToLinkViewState extends State<ReadyToLinkView> {
       ),
       child: DottedBorder(
         options: RectDottedBorderOptions(
-          color: AppColors.themColor,
+          color: AppColors.themeColor,
           dashPattern: [8, 5],
         ),
         child: Container(),

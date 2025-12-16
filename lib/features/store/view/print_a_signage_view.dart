@@ -35,7 +35,7 @@ class _PrintASignageViewState extends State<PrintASignageView> {
         actions: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.close, color: AppColors.themColor),
+            icon: Icon(Icons.close, color: AppColors.themeColor),
           ),
         ],
         automaticallyImplyLeading: false,
@@ -131,7 +131,7 @@ class _PrintASignageViewState extends State<PrintASignageView> {
                       ),
                       child: Icon(
                         Icons.add,
-                        color: AppColors.themColor,
+                        color: AppColors.themeColor,
                         size: 30.sp,
                       ),
                     ),

@@ -7,12 +7,11 @@ import '../constants/app_colors.dart';
 class AppTheme {
   static ThemeData get themeData {
     return ThemeData(
-      colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.themColor),
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.themeColor),
       textTheme: textTheme,
       inputDecorationTheme: TextFormFieldTheme.textFormFieldTheme,
       elevatedButtonTheme: CustomButtonTheme.elevatedButtonThemeData(),
       scaffoldBackgroundColor: AppColors.scaffoldColor,
-
 
     );
   }

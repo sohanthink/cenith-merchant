@@ -128,7 +128,7 @@ class _AddNewStoreViewState extends State<AddNewStoreView> {
                         ),
                         Icon(
                           Icons.arrow_forward_ios_outlined,
-                          color: AppColors.themColor,
+                          color: AppColors.themeColor,
                           size: 20,
                           weight: 0.1,
                         ),
@@ -207,7 +207,7 @@ class _AddNewStoreViewState extends State<AddNewStoreView> {
                     'you can\'t add more than two numbers',
                     style: fontSize14(
                       context,
-                    )!.copyWith(color: AppColors.themColor.shade400),
+                    )!.copyWith(color: AppColors.themeColor.shade400),
                   );
           },
         ),

@@ -31,7 +31,7 @@ class _ProfileViewState extends State<ProfileView> {
               width: 280.w,
               height: 180.h,
               decoration: BoxDecoration(
-                color: AppColors.themColor, // Blue color
+                color: AppColors.themeColor, // Blue color
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.all(Radius.elliptical(300.r, 200.r)),
               ),
@@ -64,7 +64,7 @@ class _ProfileViewState extends State<ProfileView> {
                     buildUserInfo(context),
                     SizedBox(height: 48.h),
                     _buildBenefitsAndSettings(context),
-                    SizedBox(height: 10.h,)
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),
@@ -84,7 +84,7 @@ class _ProfileViewState extends State<ProfileView> {
           height: 80.h,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.themColor,
+            color: AppColors.themeColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -104,8 +104,8 @@ class _ProfileViewState extends State<ProfileView> {
             Text(
               'Donald',
               style: fontSize24(context)?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.themColor,
+                fontWeight: FontWeight.w500,
+                color: AppColors.themeColor,
                 letterSpacing: 0.1.sp,
               ),
             ),
@@ -218,21 +218,17 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Padding(
                 padding: EdgeInsets.only(bottom: 4.0.h),
-                child: SvgPicture.asset(icon, width: 25.w),
+                child: SvgPicture.asset(
+                  icon,
+                  width: 25.w,
+                  colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                ),
               ),
               SizedBox(width: 8.w),
-              Text(
-                title,
-                style: fontSize16(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold),
-              ),
+              Text(title, style: fontSize16(context)),
               Spacer(),
               if (Ticon != null)
-                IconButton(
-                  onPressed: onTapT,
-                  icon: Icon(Ticon, color: AppColors.midLightBlue),
-                ),
+                IconButton(onPressed: onTapT, icon: Icon(Ticon)),
             ],
           ),
         ),

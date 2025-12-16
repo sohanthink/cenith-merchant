@@ -33,7 +33,7 @@ class _OrderTagAndSignageViewState extends State<OrderTagAndSignageView> {
         actions: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.close, color: AppColors.themColor),
+            icon: Icon(Icons.close, color: AppColors.themeColor),
           ),
         ],
         automaticallyImplyLeading: false,

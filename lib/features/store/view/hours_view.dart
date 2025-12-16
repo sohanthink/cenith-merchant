@@ -16,19 +16,17 @@ class HoursView extends StatefulWidget {
 class _HoursViewState extends State<HoursView> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            children: [
-              buildHeaderSection(context),
-              SizedBox(height: 20.h),
-              buildHoursSection(context),
-              SizedBox(height: 15.h),
-              buildExceptionSection(context),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            buildHeaderSection(context),
+            SizedBox(height: 20.h),
+            buildHoursSection(context),
+            SizedBox(height: 15.h),
+            buildExceptionSection(context),
+          ],
         ),
       ),
     );
@@ -52,10 +50,8 @@ class _HoursViewState extends State<HoursView> {
         Image.asset(ImagePaths.clockImage, height: 150.h, width: 150.w),
         SizedBox(height: 12.h),
         Text(
-          'no hour exception yet',
-          style: fontSize24(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+          'No hour exception yet',
+          style: fontSize24(context)!.copyWith(color: Colors.black),
         ),
         SizedBox(height: 12.h),
         Text(
@@ -65,11 +61,14 @@ class _HoursViewState extends State<HoursView> {
           )!.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
         ),
         SizedBox(height: 25.h),
-        ElevatedButton(
-          onPressed: onTapAddException,
-          child: Text(
-            'Add Exception',
-            style: fontSize20(context)!.copyWith(color: Colors.white),
+        SizedBox(
+          width: 250,
+          child: ElevatedButton(
+            onPressed: onTapAddException,
+            child: Text(
+              'Add Exception',
+              style: fontSize14(context)!.copyWith(color: Colors.white),
+            ),
           ),
         ),
         SizedBox(height: 150.h),
@@ -95,7 +94,7 @@ class _HoursViewState extends State<HoursView> {
       padding: EdgeInsets.all(10.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(30.r),
       ),
       child: Column(
         children: [
@@ -178,15 +177,14 @@ class _HoursViewState extends State<HoursView> {
       children: [
         Text(
           'Opening hours',
-          style: fontSize20(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w700),
+          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500),
         ),
         SizedBox(height: 10.h),
         Text(
           textAlign: TextAlign.justify,
           'Opening hours are when your store is open to check bags in and out.'
           ' You can add exceptions for holidays or special closures.',
+          style: fontSize14(context),
         ),
       ],
     );

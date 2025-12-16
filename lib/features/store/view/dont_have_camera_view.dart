@@ -31,7 +31,7 @@ class _DontHaveCameraViewState extends State<DontHaveCameraView> {
         actions: [
           IconButton(
             onPressed: _onTapPop,
-            icon: Icon(Icons.close, color: AppColors.themColor),
+            icon: Icon(Icons.close, color: AppColors.themeColor),
           ),
         ],
         automaticallyImplyLeading: false,

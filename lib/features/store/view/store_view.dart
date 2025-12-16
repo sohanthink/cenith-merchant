@@ -31,7 +31,7 @@ class _StoreViewState extends State<StoreView> {
             SizedBox(height: 25.h),
             buildMenuSection(context),
             SizedBox(height: 20.h),
-            tabs[selectedIndex],
+            Expanded(child: tabs[selectedIndex]),
           ],
         ),
       ),
@@ -39,37 +39,43 @@ class _StoreViewState extends State<StoreView> {
   }
 
   Widget buildMenuSection(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((item) {
-          return GestureDetector(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((item) {
+        return Expanded(
+          child: GestureDetector(
             onTap: () {
               selectedIndex = item.key;
               //TODO: remove the setState when fetch the api
               setState(() {});
             },
             child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
                 color: item.key == selectedIndex
-                    ? AppColors.themColor
+                    ? AppColors.themeColor
                     : Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                child: Text(
-                  item.value,
-                  style: fontSize14(context)!.copyWith(
-                    color: item.key == selectedIndex ? Colors.white : null,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                  vertical: 10.h,
+                ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    item.value,
+                    style: fontSize14(context)!.copyWith(
+                      color: item.key == selectedIndex ? Colors.white : null,
+                    ),
                   ),
                 ),
               ),
             ),
-          );
-        }).toList(),
-      ),
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -83,15 +89,13 @@ class _StoreViewState extends State<StoreView> {
             'Lavaterilla',
             style: fontSize24(
               context,
-            )!.copyWith(fontWeight: FontWeight.w600, color: Colors.black),
+            )!.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
           ),
           TextButton(
             onPressed: onTapAddStore,
             child: Text(
               'Add Store +',
-              style: fontSize16(
-                context,
-              )!.copyWith(fontWeight: FontWeight.w600, fontFamily: 'Catamaran'),
+              style: fontSize16(context)!.copyWith(color: AppColors.themeColor),
             ),
           ),
         ],

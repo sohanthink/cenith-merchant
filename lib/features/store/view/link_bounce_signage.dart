@@ -97,7 +97,7 @@ class _LinkBounceSignageState extends State<LinkBounceSignage> {
             )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
           ),
           SizedBox(width: 3.w),
-          Icon(Icons.north_east_sharp, color: AppColors.themColor, size: 20.sp),
+          Icon(Icons.north_east_sharp, color: AppColors.themeColor, size: 20.sp),
         ],
       ),
     );

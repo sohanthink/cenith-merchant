@@ -22,12 +22,12 @@ class CustomCircleIcons extends StatelessWidget {
         margin: EdgeInsets.all(4.w),
         decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
         child: Padding(
-          padding: EdgeInsets.all(padding ?? 10.0.w),
+          padding: EdgeInsets.all(padding ?? 12.w),
           child: SvgPicture.asset(
             icon,
             width: 28.w,
             colorFilter: ColorFilter.mode(
-              AppColors.midLightBlue,
+              Colors.black,
               BlendMode.srcIn,
             ),
           ),

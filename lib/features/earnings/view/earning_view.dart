@@ -29,7 +29,7 @@ class _EarningViewState extends State<EarningView> {
               'Earning',
               style: fontSize24(
                 context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+              )
             ),
             SizedBox(height: 20),
             buildMenuSection(context),
@@ -48,28 +48,35 @@ class _EarningViewState extends State<EarningView> {
           .asMap()
           .entries
           .map((item) {
-            return GestureDetector(
-              onTap: () {
-                selectedIndex = item.key;
-                //TODO: remove the setState when fetch the api
-                setState(() {});
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: item.key == selectedIndex
-                      ? AppColors.themColor
-                      : Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
+            return Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  selectedIndex = item.key;
+                  //TODO: remove the setState when fetch the api
+                  setState(() {});
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    color: item.key == selectedIndex
+                        ? AppColors.themeColor
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(
-                    item.value,
-                    style: fontSize12(context)!.copyWith(
-                      color: item.key == selectedIndex ? Colors.white : null,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        item.value,
+                        style: fontSize12(context)!.copyWith(
+                          color: item.key == selectedIndex ? Colors.white : null,
+                        ),
+                      ),
                     ),
                   ),
                 ),

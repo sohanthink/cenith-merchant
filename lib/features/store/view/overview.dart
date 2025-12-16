@@ -4,6 +4,7 @@ import 'package:cenith_marchent/features/common/widgets/contact_support_text.dar
 import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
 import 'package:cenith_marchent/features/store/widgets/bottom_sheet_card.dart';
+import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,28 +23,26 @@ class Overview extends StatefulWidget {
 class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildHeaderSection(context),
-              SizedBox(height: 15.h),
-              buildStoreOverViewSection(context),
-              SizedBox(height: 30.h),
-              buildStoreCommissionSection(context),
-              SizedBox(height: 10.h),
-              walkinBookingCountCard(context),
-              SizedBox(height: 10.h),
-              buildContactInfoCard(context),
-              SizedBox(height: 10.h),
-              buildLocationPhotoSection(context),
-              SizedBox(height: 15),
-              buildReviewSection(context),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildHeaderSection(context),
+            SizedBox(height: 15.h),
+            buildStoreOverViewSection(context),
+            SizedBox(height: 30.h),
+            buildStoreCommissionSection(context),
+            SizedBox(height: 10.h),
+            walkInBookingCountCard(context),
+            SizedBox(height: 10.h),
+            buildContactInfoCard(context),
+            SizedBox(height: 10.h),
+            buildLocationPhotoSection(context),
+            SizedBox(height: 15),
+            buildReviewSection(context),
+          ],
         ),
       ),
     );
@@ -53,36 +52,33 @@ class _OverviewState extends State<Overview> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Reviews',
-          style: fontSize24(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-        ),
+        Text('Reviews', style: fontSize24(context)),
         SizedBox(height: 5.h),
         Text(
           '12 reviews',
           style: fontSize12(context)!.copyWith(color: Colors.black),
         ),
-        SizedBox(height: 8.h),
+        SizedBox(height: 12.h),
         reviewCard(
           context,
-          Name: 'Charise Wokes',
+          name: 'Charise Wokes',
           date: '3 days ago',
           stars: 5,
         ),
         SizedBox(height: 8.h),
         reviewCard(
           context,
-          Name: 'Charise Wokes',
+          name: 'Charise Wokes',
           date: '3 days ago',
-          stars: 5,
+          stars: 3,
         ),
 
         SizedBox(height: 20.h),
         Text(
+          textAlign: TextAlign.justify,
           'I think this is one of the best store where i leave'
-          'my bag,, the staff are very friendly and I bought some others thing where they make me a good price',
+          'my bag, the staff are very friendly and I bought some others thing where they make me a good price',
+          style: fontSize14(context),
         ),
         SizedBox(height: 40.h),
 
@@ -95,13 +91,16 @@ class _OverviewState extends State<Overview> {
 
   Container reviewCard(
     BuildContext context, {
-    required String Name,
+    required String name,
     required String date,
     required int stars,
   }) {
     return Container(
       padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
       child: Row(
         children: [
           CircleAvatar(
@@ -113,21 +112,23 @@ class _OverviewState extends State<Overview> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10.h),
               Text(
-                'Chris Wokes',
-                style: fontSize20(context)!.copyWith(color: Colors.black),
+                name,
+                style: fontSize16(context)!.copyWith(color: Colors.black),
               ),
-              Text('3 days ago'),
+              SizedBox(height: 5.h,),
+              Text(date,
+              style:  fontSize14(context),),
             ],
           ),
           Spacer(),
           Row(
+            spacing: 3,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: List.generate(5, (index) {
+            children: List.generate(stars, (index) {
               return SvgPicture.asset(
                 IconsPath.starIconSvg,
-                color: AppColors.themColor,
+                color: AppColors.themeColor,
               );
             }),
           ),
@@ -145,7 +146,7 @@ class _OverviewState extends State<Overview> {
           'Location Photos',
           style: fontSize20(
             context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w900),
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 10),
         Text(
@@ -157,18 +158,25 @@ class _OverviewState extends State<Overview> {
           )!.copyWith(fontWeight: FontWeight.w300, color: Colors.black),
         ),
         SizedBox(height: 20),
-        Text('Learn how to take good photos', style: fontSize14(context)),
+        Text(
+          'Learn how to take good photos',
+          style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
+        ),
         SizedBox(height: 25),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            GestureDetector(
-              onTap: () {},
-              child: uploadImageCard(context, 'Add photos of\nstorefront'),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {},
+                child: uploadImageCard(context, 'Add photos of\nstorefront'),
+              ),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: uploadImageCard(context, 'Add photos of\nBag store'),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {},
+                child: uploadImageCard(context, 'Add photos of\nBag store'),
+              ),
             ),
           ],
         ),
@@ -184,54 +192,76 @@ class _OverviewState extends State<Overview> {
                     margin: EdgeInsets.all(10),
                     height: 100,
                     width: 100,
-                    decoration: BoxDecoration(
+                    decoration: DottedDecoration(
+                      dash: [2, 4],
+                      strokeWidth: 2,
+                      shape: Shape.box,
                       borderRadius: BorderRadius.circular(10),
-                      color: AppColors.themColor.shade100,
                     ),
                     child: e.key == images.length - 1
-                        ? Center(child: Icon(Icons.add, size: 50))
-                        : null,
+                        ? Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                            child: Center(child: Icon(Icons.add, size: 50)),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
                   ),
                 )
                 .toList(),
           ),
         ),
         SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(IconsPath.downloadIconSvg, color: Colors.white),
-              SizedBox(width: 10),
-              Text(
-                'Earning Details',
-                style: fontSize16(context)!.copyWith(color: Colors.white),
-              ),
-            ],
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  IconsPath.downloadIconSvg,
+                  color: Colors.white,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Earning Details',
+                  style: fontSize16(context)!.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 
-  Container uploadImageCard(BuildContext context, String title) {
+  Widget uploadImageCard(BuildContext context, String title) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.themColor,
-          width: 2,
-          style: BorderStyle.solid,
-        ),
-        color: AppColors.themColor.shade50,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      decoration: DottedDecoration(
+        dash: [4, 5],
+        strokeWidth: 2,
+        shape: Shape.box,
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey,
       ),
-      child: Center(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(ImagePaths.uploadImagePng),
+            SvgPicture.asset(IconsPath.uploadIconSvg, width: 100),
             SizedBox(height: 10),
             Text(
               textAlign: TextAlign.center,
@@ -271,7 +301,12 @@ class _OverviewState extends State<Overview> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Edit store details', style: fontSize16(context)),
+                Text(
+                  'Edit store details',
+                  style: fontSize16(
+                    context,
+                  )!.copyWith(color: AppColors.themeColor),
+                ),
               ],
             ),
           ],
@@ -280,14 +315,14 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Card walkinBookingCountCard(BuildContext context) {
+  Card walkInBookingCountCard(BuildContext context) {
     return Card(
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Image.asset("assets/images/bag.png", height: 80, width: 80),
           ),
           SizedBox(width: 5),
@@ -299,28 +334,34 @@ class _OverviewState extends State<Overview> {
                 children: [
                   Text(
                     '1',
-                    style: fontSize20(context)!.copyWith(
+                    style: fontSize24(context)!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
                   Text(
                     'of 23',
-                    style: fontSize14(context)!.copyWith(color: Colors.black),
+                    style: fontSize16(context)!.copyWith(
+                      height: 2,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 6.h),
               Text(
                 'Walk-in bookings',
                 style: fontSize20(context)!.copyWith(color: Colors.black),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 8),
               GestureDetector(
                 onTap: () {},
                 child: Text(
                   'Get More Walk-ins',
-                  style: fontSize16(context)!.copyWith(),
+                  style: fontSize16(
+                    context,
+                  )!.copyWith(color: AppColors.themeColor),
                 ),
               ),
             ],
@@ -344,9 +385,7 @@ class _OverviewState extends State<Overview> {
           SizedBox(height: 10),
           Text(
             'Store Commission',
-            style: fontSize20(
-              context,
-            )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+            style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 10.h),
           storeCommissionRateCard(
@@ -355,21 +394,21 @@ class _OverviewState extends State<Overview> {
             rate: '€1.5 ',
             titleText: 'per small bag stored',
           ),
-          horizontalDevider(),
+          horizontalDivider(),
           storeCommissionRateCard(
             context,
             iconsPath: IconsPath.bagIconSvg,
             rate: '€3.50 ',
             titleText: 'per regular bag stored',
           ),
-          horizontalDevider(),
+          horizontalDivider(),
           storeCommissionRateCard(
             context,
             iconsPath: IconsPath.cycleIconSvg,
             rate: '€3.75 ',
             titleText: 'per odd size item stored',
           ),
-          horizontalDevider(),
+          horizontalDivider(),
           storeCommissionRateCard(
             context,
             iconsPath: IconsPath.walkWalkingIconSvg,
@@ -381,10 +420,10 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Container horizontalDevider() {
+  Container horizontalDivider() {
     return Container(
       width: double.infinity,
-      height: 1,
+      height: 0.5,
       color: Colors.grey.shade400,
     );
   }
@@ -401,7 +440,7 @@ class _OverviewState extends State<Overview> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SvgPicture.asset(iconsPath, height: 22, width: 22),
-          SizedBox(width: 6.w),
+          SizedBox(width: 8.w),
           Text(
             rate,
             style: fontSize16(
@@ -409,6 +448,7 @@ class _OverviewState extends State<Overview> {
             )!.copyWith(fontWeight: FontWeight.w600, color: Colors.black),
           ),
           //TODO: if The title i get from server then i have to make it dynamic by using textOverFlow
+          SizedBox(width: 5.w),
           Text(
             titleText,
             style: fontSize16(context)!.copyWith(color: Colors.black),
@@ -452,12 +492,14 @@ class _OverviewState extends State<Overview> {
               title,
               style: fontSize20(
                 context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w700),
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: 5),
             Text(
               subTitle,
-              style: fontSize16(context)!.copyWith(color: Colors.black),
+              style: fontSize14(
+                context,
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
             ),
           ],
         ),
@@ -471,15 +513,14 @@ class _OverviewState extends State<Overview> {
       children: [
         Text(
           'Overview',
-          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.bold),
+          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500),
         ),
         OutlinedButton(
-          onPressed: ()=>Navigator.pushNamed(context, PrintASignageView.name),
+          onPressed: () => Navigator.pushNamed(context, PrintASignageView.name),
           style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.themColor,
-            disabledForegroundColor: AppColors.themColor.shade50,
-
-            side: BorderSide(color: AppColors.themColor, width: 2),
+            foregroundColor: AppColors.themeColor,
+            disabledForegroundColor: AppColors.themeColor.shade50,
+            side: BorderSide(color: AppColors.themeColor, width: 1),
 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),

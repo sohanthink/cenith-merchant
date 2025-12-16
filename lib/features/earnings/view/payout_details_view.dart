@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/earnings/widgets/table_title_section_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +45,9 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
               onTap: () {},
               child: Row(
                 children: [
-                  Icon(Icons.arrow_back),
+                  Icon(Icons.arrow_back, size: 20),
                   SizedBox(width: 10.w),
-                  Text('Previous'),
+                  Text('Previous', style: fontSize14(context)),
                 ],
               ),
             ),
@@ -54,9 +55,9 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
               onTap: () {},
               child: Row(
                 children: [
-                  Text('Previous'),
+                  Text('Previous', style: fontSize14(context)),
                   SizedBox(width: 10.w),
-                  Icon(Icons.arrow_forward),
+                  Icon(Icons.arrow_forward, size: 20),
                 ],
               ),
             ),
@@ -68,11 +69,13 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
             children: [
               TextSpan(
                 text: 'To learn more about receipts please read our ',
-                style: TextStyle(color: Colors.black, fontSize: 14),
+                style: fontSize14(context),
               ),
               TextSpan(
                 text: 'FAQ page',
-                style: fontSize14(context),
+                style: fontSize14(
+                  context,
+                )!.copyWith(color: AppColors.themeColor),
                 recognizer: TapGestureRecognizer()..onTap = () {},
               ),
             ],
@@ -81,21 +84,7 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
 
         SizedBox(height: 200.h),
 
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'Have a question?  ',
-                style: fontSize14(context)!.copyWith(color: Colors.black),
-              ),
-              TextSpan(
-                text: 'Contact Out Support Team',
-                style: fontSize14(context),
-                recognizer: TapGestureRecognizer()..onTap = () {},
-              ),
-            ],
-          ),
-        ),
+        ContactSupportText.supportText(context, () {}),
         SizedBox(height: 25),
       ],
     );
@@ -139,8 +128,8 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
         ...card.asMap().entries.map((item) {
           return GestureDetector(
             //TODO: update with viewModel;
-            onTap: ()=>setState(() {
-              selectedIndex  = item.key;
+            onTap: () => setState(() {
+              selectedIndex = item.key;
             }),
             child: dashboardCard(
               context,
@@ -150,9 +139,12 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
             ),
           );
         }),
-
+        SizedBox(height: 10.h),
         Center(
-          child: Text('Visit Stripe Dashboard', style: fontSize16(context)),
+          child: Text(
+            'Visit Stripe Dashboard',
+            style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
+          ),
         ),
         SizedBox(height: 25.h),
         RichText(
@@ -165,12 +157,17 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
                     'on the way to your payout account.'
                     ' Payment of these values may carry-over for next payout.',
 
-                style: fontSize14(context)!.copyWith(color: Colors.black),
+                style: fontSize14(context),
               ),
               TextSpan(
                 text: ' Read more in our FAQs page >',
-                style: fontSize14(context),
-                recognizer: TapGestureRecognizer()..onTap = () {},
+                style: fontSize14(
+                  context,
+                )!.copyWith(color: AppColors.themeColor),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    //TODO: to open faq
+                  },
               ),
             ],
           ),
@@ -189,7 +186,7 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
       margin: EdgeInsets.only(bottom: 10.h),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.themColor : Colors.white,
+        color: isSelected ? AppColors.themeColor : Colors.white,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Padding(
@@ -200,15 +197,17 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
           children: [
             Text(
               title,
-              style: fontSize20(
+              style: fontSize14(
                 context,
-              )!.copyWith(color: isSelected? Colors.white: Colors.black, fontWeight: FontWeight.w400),
+              )!.copyWith(color: isSelected ? Colors.white : Colors.black),
             ),
+            SizedBox(height: 8.h),
             Text(
               amount,
-              style: fontSize24(
-                context,
-              )!.copyWith(color: isSelected? Colors.white: Colors.black, fontWeight: FontWeight.w900),
+              style: fontSize20(context)!.copyWith(
+                color: isSelected ? Colors.white : Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -222,20 +221,38 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(flex: 1, child: Text('1/31/25')),
               Expanded(
                 flex: 1,
-                child: Center(child: Text('POSTE ITALIANE \nS.P.A. 4341')),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 5.0),
+                  child: Text('1/31/25', style: fontSize14(context)),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      'POSTE ITALIANE S.P.A. 4341',
+                      style: fontSize14(context),
+                    ),
+                  ),
+                ),
               ),
               Expanded(
                 flex: 1,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('\$66.00'),
-                    SizedBox(width: 10.w),
+                    Text(
+                      '\$66.00',
+                      style: fontSize14(
+                        context,
+                      )!.copyWith(fontWeight: FontWeight.w600),
+                    ),
                     SvgPicture.asset(IconsPath.downloadIconSvg),
                   ],
                 ),

@@ -4,37 +4,49 @@ import '../constants/app_colors.dart';
 
 TextTheme get textTheme {
   return TextTheme(
-    titleLarge: TextStyle(fontSize: 26.sp, color: AppColors.midLightBlue),
-    headlineLarge: TextStyle(fontSize: 16.sp, color: AppColors.midLightBlue),
-    bodyLarge: TextStyle(fontSize: 20.sp, color: AppColors.midLightBlue),
+    titleLarge: TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 26.sp,
+      color: Colors.black,
+    ),
+    headlineLarge: TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 16.sp,
+      color: Colors.black,
+    ),
+    bodyLarge: TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 20.sp,
+      color: Colors.black,
+    ),
     titleMedium: TextStyle(
       fontSize: 24.sp,
-      fontWeight: FontWeight.normal,
-      color: AppColors.midLightBlue,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
     ),
     headlineMedium: TextStyle(
       fontSize: 12.sp,
-      fontWeight: FontWeight.normal,
-      color: AppColors.midLightBlue,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
     ),
     titleSmall: TextStyle(
       fontSize: 14.sp,
-      fontWeight: FontWeight.normal,
-      color: AppColors.midLightBlue,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
     ),
     headlineSmall: TextStyle(
       fontSize: 17.sp,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
     bodyMedium: TextStyle(
       fontSize: 18.sp,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
     bodySmall: TextStyle(
       fontSize: 19.sp,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
   );

@@ -32,7 +32,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
         appBar: AppBar(
           title: Text(
             'Booking',
-            style: fontSize12(context)!.copyWith(fontWeight: FontWeight.w700),
+            style: fontSize16(context)!.copyWith(fontWeight: FontWeight.w500),
           ),
           backgroundColor: Colors.grey.shade100,
           elevation: 0,
@@ -65,11 +65,12 @@ class _AllBookingsViewState extends State<AllBookingsView> {
               TabBar(
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
-                labelColor: AppColors.themColor,
+                labelColor: AppColors.themeColor,
+                unselectedLabelColor: Colors.black,
                 indicator: UnderlineTabIndicator(
                   borderSide: BorderSide(
                     width: 2.5,
-                    color: AppColors.themColor,
+                    color: AppColors.themeColor,
                   ),
                   insets: EdgeInsets.symmetric(
                     horizontal: 0,
@@ -78,29 +79,23 @@ class _AllBookingsViewState extends State<AllBookingsView> {
                 tabs: [
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Today',
-                      style: style.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Text('Today'),
                     ),
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Upcoming',
-                      style: style.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Text('Upcoming'),
                     ),
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'Past',
-                      style: style.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: Text('Past'),
                     ),
                   ),
                 ],
@@ -121,12 +116,13 @@ class _AllBookingsViewState extends State<AllBookingsView> {
   Widget buildSearchTextField(TextTheme style) {
     return Expanded(
       child: TextFormField(
+        style: fontSize14(context),
         controller: _searchTEController,
         decoration: InputDecoration(
           hintText: 'Search Bookings',
-          hintStyle: style.titleSmall,
+          hintStyle: fontSize14(context),
           prefixIcon: Padding(
-            padding: EdgeInsets.only(left: 10.0.w),
+            padding: EdgeInsets.only(left: 10.0.w, right: 6),
             child: SvgPicture.asset(
               IconsPath.searchIconSvg,
               height: 20.h,
