@@ -91,8 +91,8 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
             Switch(
               activeTrackColor: Colors.grey,
               inactiveTrackColor: Colors.grey,
-              thumbColor: MaterialStateProperty.resolveWith((state) {
-                if (state.contains(MaterialState.selected)) {
+              thumbColor: WidgetStateProperty.resolveWith((state) {
+                if (state.contains(WidgetState.selected)) {
                   return Colors.white;
                 } else {
                   return Colors.white;

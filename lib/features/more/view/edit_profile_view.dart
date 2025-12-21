@@ -320,7 +320,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           borderSide: BorderSide(color: Colors.red),
         ),
         contentPadding: EdgeInsets.symmetric(
-          vertical: 14.h, // text যাতে উপরে না উঠে
+          vertical: 14.h,
           horizontal: 12.w,
         ),
       ),

@@ -1,14 +1,9 @@
-import 'dart:io';
 
 import 'package:cenith_marchent/core/constants/app_colors.dart';
-import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/store/widgets/order_tag_and_signage_card.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
 class OrderTagAndSignageView extends StatefulWidget {
   const OrderTagAndSignageView({super.key});

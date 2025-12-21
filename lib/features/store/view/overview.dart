@@ -1,14 +1,10 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
-import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
-import 'package:cenith_marchent/features/store/widgets/bottom_sheet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
 

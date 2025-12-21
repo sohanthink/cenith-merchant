@@ -202,10 +202,10 @@ class _EditTimeTileState extends State<EditTimeTile> {
                           return Switch(
                             activeTrackColor: Colors.grey,
                             inactiveTrackColor: Colors.grey,
-                            thumbColor: MaterialStateProperty.resolveWith((
+                            thumbColor: WidgetStateProperty.resolveWith((
                               state,
                             ) {
-                              if (state.contains(MaterialState.selected)) {
+                              if (state.contains(WidgetState.selected)) {
                                 return Colors.white;
                               } else {
                                 return Colors.white;
