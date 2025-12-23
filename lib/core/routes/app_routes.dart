@@ -1,3 +1,6 @@
+import 'package:cenith_marchent/features/auth/view/auth_view.dart';
+import 'package:cenith_marchent/features/auth/view/confirmation_code_entry_view.dart';
+import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
 import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_details_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_view.dart';
@@ -10,7 +13,6 @@ import 'package:cenith_marchent/features/more/view/profile_view.dart';
 import 'package:cenith_marchent/features/store/view/add_exception_view.dart';
 import 'package:cenith_marchent/features/store/view/add_new_store_view.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
-
 import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
 import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
@@ -61,7 +63,14 @@ class AppRoutes {
       screenWidget = EditOpeningHoursView();
     } else if (settings.name == AddNewStoreView.name) {
       screenWidget = AddNewStoreView();
+    } else if (settings.name == AuthView.name) {
+      screenWidget = AuthView();
+    } else if (settings.name == TermsAndConditionView.name) {
+      screenWidget = TermsAndConditionView();
+    } else if (settings.name == ConfirmationCodeEntryView.name) {
+      screenWidget = ConfirmationCodeEntryView();
     }
+
     return MaterialPageRoute(builder: (context) => screenWidget);
   }
 }

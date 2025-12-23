@@ -10,6 +10,17 @@ class TextFormFieldTheme {
       filled: false,
       fillColor: Colors.white,
       outlineBorder: BorderSide.none,
+      hintStyle: TextStyle(
+        fontSize: 16.sp,
+        color: Colors.grey,
+        letterSpacing: 0.1.sp,
+        fontWeight: FontWeight.w400,
+      ),
+      errorStyle: TextStyle(
+        fontSize: 16.sp,
+        letterSpacing: 0.1.sp,
+        fontWeight: FontWeight.w400,
+      ),
     );
   }
 

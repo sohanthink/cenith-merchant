@@ -99,7 +99,7 @@ class _PrintASignageViewState extends State<PrintASignageView> {
               Row(
                 spacing: 12.w,
                 children: [
-                  for (var image in _pickedImages!)
+                  for (var image in _pickedImages)
                     Container(
                       height: 80.h,
                       width: 90.w,
@@ -200,14 +200,14 @@ class _PrintASignageViewState extends State<PrintASignageView> {
   Future<void> _onTapImagePickedStoreFont() async {
     XFile? image = await _imagePicker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      _pickedImages?.add(image);
+      _pickedImages.add(image);
       setState(() {});
     }
   }
   Future<void>_onTapImagePickedBagStorage()async{
     XFile? image=await _imagePicker.pickImage(source: ImageSource.camera);
     if(image!=null){
-      _pickedImages?.add(image);
+      _pickedImages.add(image);
       setState(() {
 
       });
