@@ -53,7 +53,7 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
                   Icon(
                     Icons.cloud_upload,
                     size: 45.sp,
-                    color: AppColors.themColor,
+                    color: AppColors.themeColor,
                   ),
                   Text(
                     'Tap to Upload photos or Browse',

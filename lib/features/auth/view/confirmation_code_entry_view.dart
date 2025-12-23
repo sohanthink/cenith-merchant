@@ -19,29 +19,31 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Terms & Condition',
-          style: fontSize20(
-            context,
-          )!.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
-        ),
-
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTopSection(context),
-            SizedBox(height: 32.h),
-            _buildPinCodeFieldsSection(context),
-            SizedBox(height: 32.h),
-            _buildConfirmBtttonSection(context),
-            SizedBox(height: 32.h),
-            _buildDidnotCodeSection(context),
-          ],
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Terms & Condition',
+      //     style: fontSize20(
+      //       context,
+      //     )!.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
+      //   ),
+      //
+      //   centerTitle: true,
+      // ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTopSection(context),
+              SizedBox(height: 32.h),
+              _buildPinCodeFieldsSection(context),
+              SizedBox(height: 32.h),
+              _buildConfirmBtttonSection(context),
+              SizedBox(height: 32.h),
+              _buildDidnotCodeSection(context),
+            ],
+          ),
         ),
       ),
     );
@@ -62,14 +64,14 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
             borderRadius: BorderRadius.circular(25.r),
             fieldHeight: 80.h,
             fieldWidth: 50.w,
-            activeFillColor: AppColors.themColor.shade300,
-            activeColor: AppColors.themColor.shade300,
+            activeFillColor: AppColors.themeColor.shade300,
+            activeColor: AppColors.themeColor.shade300,
             // disabledColor: Colors.white,
-            inactiveFillColor: AppColors.themColor.shade100,
+            inactiveFillColor: AppColors.themeColor.shade100,
             inactiveBorderWidth: 2.5.w,
-            selectedFillColor: AppColors.themColor.shade100,
-            selectedColor: AppColors.themColor,
-            inactiveColor: AppColors.themColor,
+            selectedFillColor: AppColors.themeColor.shade100,
+            selectedColor: AppColors.themeColor,
+            inactiveColor: AppColors.themeColor,
           ),
           animationDuration: Duration(milliseconds: 300),
           backgroundColor: Colors.transparent,
@@ -87,7 +89,7 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
           'Enter The Confirmation Code',
           style: TextStyle(
             fontSize: 30.sp,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600 ,
             letterSpacing: 0.1.sp,
             color: AppColors.darkBlue,
           ),
@@ -135,12 +137,12 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
     return Container(
       padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h, bottom: 8.h),
       decoration: BoxDecoration(
-        color: AppColors.themColor.shade100,
+        color: AppColors.themeColor.shade100,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: AppColors.themColor),
+          Icon(Icons.error_outline, color: AppColors.themeColor),
           SizedBox(width: 8.w),
           Text(
             "Didn't get the Code?",

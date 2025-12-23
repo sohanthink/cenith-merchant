@@ -30,15 +30,15 @@ class _YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
         key: _formKey,
         child: Column(
           children: [
-            SizedBox(height: 8.h),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {},
-                child: Text('Skip', style: style),
-              ),
-            ),
-            SizedBox(height: 8.h),
+            // SizedBox(height: 8.h),
+            // Align(
+            //   alignment: Alignment.bottomRight,
+            //   child: TextButton(
+            //     onPressed: () {},
+            //     child: Text('Skip', style: style),
+            //   ),
+            // ),
+            SizedBox(height: 16.h),
             TextFormField(
               style: style,
               decoration: InputDecoration(hintText: 'Business Name'),
@@ -86,6 +86,8 @@ class _YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
               validator: (v) => v == null || v.isEmpty ? 'Required' : null,
               onChanged: (_) => _checkFormValidity(),
             ),
+            SizedBox(height: 20.h,)
+
           ],
         ),
       ),

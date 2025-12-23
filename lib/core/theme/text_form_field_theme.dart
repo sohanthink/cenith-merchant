@@ -7,7 +7,10 @@ class TextFormFieldTheme {
       enabledBorder: outlineInputBorder(),
       focusedBorder: outlineInputBorder(),
       errorBorder: outlineInputBorder(),
-      filled: false,
+      focusedErrorBorder: outlineInputBorder(),
+      disabledBorder: outlineInputBorder(),
+      errorMaxLines: 2,
+      filled: true,
       fillColor: Colors.white,
       outlineBorder: BorderSide.none,
       hintStyle: TextStyle(
@@ -17,7 +20,7 @@ class TextFormFieldTheme {
         fontWeight: FontWeight.w400,
       ),
       errorStyle: TextStyle(
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         letterSpacing: 0.1.sp,
         fontWeight: FontWeight.w400,
       ),

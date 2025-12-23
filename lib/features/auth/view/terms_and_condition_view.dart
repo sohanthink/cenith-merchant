@@ -13,6 +13,7 @@ class TermsAndConditionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.scaffoldColor,
         title: Text(
           'Terms & Condition',
           style: fontSize20(
@@ -44,9 +45,12 @@ class TermsAndConditionView extends StatelessWidget {
                   context,
                 )!.copyWith(color: Colors.black87, fontWeight: FontWeight.w500),
               ),
+              SizedBox(height: 10.h),
               Text(
                 'Partner Terms and Condition.',
-                style: fontSize14(context)!.copyWith(fontWeight: FontWeight.w600),
+                style: fontSize14(
+                  context,
+                )!.copyWith(fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 16.h),
               _buildTermsAndConditionText(
@@ -54,7 +58,7 @@ class TermsAndConditionView extends StatelessWidget {
                 icon: Icons.money,
                 title: 'Commission.',
                 description:
-                    ' Bounce agree to pay a \ncommission on every reservation\ncompleted at your location',
+                    ' Bounce agree to pay a commission on every reservation completed at your location',
               ),
               SizedBox(height: 16.h),
               _buildTermsAndConditionText(
@@ -62,7 +66,7 @@ class TermsAndConditionView extends StatelessWidget {
                 icon: Icons.security,
                 title: 'Security.',
                 description:
-                    ' Securely store each bag.\nConfirm booking with the customers,\nattach Bounce bag tags,and keep them\nsafe until the customer returns',
+                    ' Securely store each bag. Confirm booking with the customers, attach Bounce bag tags,and keep them safe until the customer returns',
               ),
               SizedBox(height: 16.h),
               _buildTermsAndConditionText(
@@ -70,14 +74,15 @@ class TermsAndConditionView extends StatelessWidget {
                 icon: Icons.monetization_on_outlined,
                 title: 'Earnings.',
                 description:
-                    ' You will be paid monthly for\n your Bounce Storage revenue',
+                    ' You will be paid monthly for your Bounce Storage revenue',
               ),
               SizedBox(height: 16.h),
               RichText(
                 text: TextSpan(
-                  style: fontSize14(
-                    context,
-                  )!.copyWith(color: Colors.black87, fontWeight: FontWeight.w500),
+                  style: fontSize14(context)!.copyWith(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w500,
+                  ),
                   children: [
                     TextSpan(text: 'By proceeding you agree to our '),
                     TextSpan(
@@ -96,12 +101,8 @@ class TermsAndConditionView extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 32.h),
-              ElevatedButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, ConfirmationCodeEntryView.name),
-                child: Text('Accept and Continue'),
-              ),
+
+
             ],
           ),
         ),
@@ -123,20 +124,23 @@ class TermsAndConditionView extends StatelessWidget {
           child: Icon(icon, color: AppColors.darkBlue),
         ),
         SizedBox(width: 8.w),
-        RichText(
-          text: TextSpan(
-            style: fontSize14(
-              context,
-            )!.copyWith(color: Colors.black87, fontWeight: FontWeight.w500),
-            children: [
-              TextSpan(
-                text: title,
-                style: fontSize16(
-                  context,
-                )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              TextSpan(text: description),
-            ],
+        Expanded(
+          child: RichText(
+            textAlign: TextAlign.justify,
+            text: TextSpan(
+              style: fontSize14(
+                context,
+              )!.copyWith(color: Colors.black87, fontWeight: FontWeight.w500),
+              children: [
+                TextSpan(
+                  text: title,
+                  style: fontSize16(
+                    context,
+                  )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                TextSpan(text: description),
+              ],
+            ),
           ),
         ),
       ],
