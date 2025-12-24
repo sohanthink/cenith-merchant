@@ -5,6 +5,7 @@ import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.da
 import 'package:cenith_marchent/features/auth/view/sign_up_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
 import 'package:cenith_marchent/features/auth/view/your_business_details_view.dart';
+import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +23,9 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewState extends State<AuthView> {
+  final GlobalKey<SignUpViewState> signUpKey = GlobalKey<SignUpViewState>();
+  final GlobalKey<YourBusinessDetailsViewState> businessDetailsKey =
+      GlobalKey<YourBusinessDetailsViewState>();
   late final PageController _pageController;
   int _currentIndex = 0;
 
@@ -55,82 +59,113 @@ class _AuthViewState extends State<AuthView> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.w),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 16.h),
-                _buildTopSection(context),
-                SizedBox(
-                  height: 520,
-                  child: PageView(
-                    controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    onPageChanged: (index) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                    children: [
-                      SignUpView(
-                        onValidChanged: (isValid) {
-                          _pageValidation[0] = isValid;
-                          setState(() {});
-                        },
-                      ),
-                      DescribeYourBusinessView(
-                        onValidChanged: (isValid) {
-                          _pageValidation[1] = isValid;
-                          setState(() {});
-                        },
-                      ),
-                      YourBusinessDetailsView(
-                        onValidChanged: (isValid) {
-                          _pageValidation[2] = isValid;
-                          setState(() {});
-                        },
-                      ),
-                      ConfirmYourLocationView(
-                        onValidChanged: (isValid) {
-                          _pageValidation[3] = isValid;
-                          setState(() {});
-                        },
-                      ),
-                      AddYourBusinessHoursView(
-                        onValidChanged: (isValid) {
-                          _pageValidation[4] = isValid;
-                          setState(() {});
-                        },
-                      ),
-                      AddBusinessPhotosView(
-                        onValidChanged: (isValid) {
-                          _pageValidation[5] = isValid;
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  ),
+          child: Column(
+            children: [
+              _buildTopSection(context),
+              SizedBox(height: 10.h),
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  children: [
+                    SignUpView(
+                      key: signUpKey,
+                      onValidChanged: (isValid) {
+                        _pageValidation[0] = isValid;
+                        setState(() {});
+                      },
+                    ),
+                    DescribeYourBusinessView(
+                      onValidChanged: (isValid) {
+                        _pageValidation[1] = isValid;
+                        setState(() {});
+                      },
+                    ),
+                    YourBusinessDetailsView(
+                      key: businessDetailsKey,
+                      onValidChanged: (isValid) {
+                        _pageValidation[2] = isValid;
+                        setState(() {});
+                      },
+                    ),
+                    ConfirmYourLocationView(
+                      onValidChanged: (isValid) {
+                        _pageValidation[3] = isValid;
+                        setState(() {});
+                      },
+                    ),
+                    AddYourBusinessHoursView(
+                      onValidChanged: (isValid) {
+                        _pageValidation[4] = isValid;
+                        setState(() {});
+                      },
+                    ),
+                    AddBusinessPhotosView(
+                      onValidChanged: (isValid) {
+                        _pageValidation[5] = isValid;
+                        setState(() {});
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 32.h),
-                ElevatedButton(
-                  onPressed: _pageValidation[_currentIndex] == true
-                      ? () {
-                          if (_currentIndex < 5) {
+              ),
+
+              ElevatedButton(
+                onPressed: _pageValidation[_currentIndex] == true
+                    ? () {
+                        if (_currentIndex == 0) {
+                          final state = signUpKey.currentState;
+                          if (state != null) {
+                            state.submit();
+
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              if (_pageValidation[0] == true) {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            });
+                          }
+                          return;
+                        }
+                        if (_currentIndex == 2) {
+                          final state = businessDetailsKey.currentState;
+                          if (state != null) {
+                            state.submit();
+                            if (_pageValidation[2] == true) {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+
+                          }
+                          return;
+                        }
+                        if (_currentIndex < 5) {
+                          if (_pageValidation[_currentIndex] == true) {
                             _pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
                             );
-                          } else {
-                            Navigator.pushNamed(
-                              context,
-                              TermsAndConditionView.name,
-                            );
                           }
+                        } else {
+                          Navigator.pushNamed(
+                            context,
+                            TermsAndConditionView.name,
+                          );
                         }
-                      : null,
-                  child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
-                ),
-              ],
-            ),
+                      }
+                    : null,
+                child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
+              ),
+            ],
           ),
         ),
       ),
@@ -148,7 +183,7 @@ class _AuthViewState extends State<AuthView> {
           currentSteps['title'],
           style: TextStyle(
             fontSize: 30.sp,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             letterSpacing: 0.1.sp,
           ),
         ),
@@ -169,7 +204,46 @@ class _AuthViewState extends State<AuthView> {
             )!.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _currentIndex != 0
+                ? GestureDetector(
+                    onTap: () {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.grey,
+                        size: 20,
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
+            if (_currentIndex == 1)
+              TextButton(
+                onPressed: onTapToNextPage,
+                child: Text(
+                  'Skip',
+                  style: fontSize16(context)!.copyWith(color: Colors.black),
+                ),
+              ),
+          ],
+        ),
       ],
+    );
+  }
+
+  onTapToNextPage() {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
     );
   }
 }

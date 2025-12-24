@@ -3,6 +3,7 @@ import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class AddBusinessPhotosView extends StatefulWidget {
@@ -41,9 +42,7 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
             radius: Radius.circular(12.r),
           ),
           child: GestureDetector(
-            onTap: () {
-              _pickPhoto(source: ImageSource.camera);
-            },
+            onTap: _showAlertDialogue,
             child: Container(
               padding: EdgeInsets.all(16.w),
               width: double.infinity,
@@ -166,5 +165,73 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
 
   void _updateValidity() {
     widget.onValidChanged(_pickedImages.isNotEmpty);
+  }
+
+  void _showAlertDialogue() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 8.h),
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Icon(Icons.close),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildImageCategoryIcon(
+                      context,
+                      onTap: () {
+                        _pickPhoto(source: ImageSource.camera);
+                        Navigator.pop(context);
+                      },
+                      icon: Icons.camera_alt_outlined,
+                      typeText: 'Camera',
+                    ),
+
+                    _buildImageCategoryIcon(
+                      context,
+                      onTap: () {
+                        _pickPhoto(source: ImageSource.gallery);
+                        Navigator.pop(context);
+                      },
+                      icon: Icons.upload_file_outlined,
+                      typeText: 'Gallery',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildImageCategoryIcon(
+    BuildContext context, {
+    required VoidCallback onTap,
+    required IconData icon,
+    required String typeText,
+  }) {
+    return Column(
+      children: [
+        IconButton(
+          onPressed: onTap,
+          icon: Icon(icon, size: 40.sp, color: AppColors.themColor),
+        ),
+        Text(
+          typeText,
+          style: fontSize16(context)!.copyWith(fontWeight: FontWeight.w500),
+        ),
+      ],
+    );
   }
 }

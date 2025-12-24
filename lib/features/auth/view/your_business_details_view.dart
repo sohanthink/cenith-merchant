@@ -3,131 +3,207 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class YourBusinessDetailsView extends StatefulWidget {
-  const YourBusinessDetailsView({super.key, required this.onValidChanged});
+  const YourBusinessDetailsView({Key? key, required this.onValidChanged})
+    : super(key: key);
 
   static final String name = 'your-business-details-screen';
   final Function(bool isValid) onValidChanged;
 
   @override
   State<YourBusinessDetailsView> createState() =>
-      _YourBusinessDetailsViewState();
+      YourBusinessDetailsViewState();
 }
 
-class _YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
+class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
-  void _checkFormValidity() {
-    final isValid = _formKey.currentState?.validate() ?? false;
-    widget.onValidChanged(isValid);
+  bool _submitted = false;
+
+  final _businessNameController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _postalController = TextEditingController();
+  final _luggageLimitController = TextEditingController();
+
+  String? _legalBusinessName;
+  String? _vatNumber;
+  String? _businessPhone;
+  String? _businessAddress;
+
+  @override
+  void initState() {
+    super.initState();
+    _listen();
+  }
+
+  void _listen() {
+    for (final c in [
+      _businessNameController,
+      _cityController,
+      _postalController,
+      _luggageLimitController,
+    ]) {
+      c.addListener(_checkFilledOnly);
+    }
+  }
+
+  void _checkFilledOnly() {
+    final filled =
+        _businessNameController.text.isNotEmpty &&
+            _cityController.text.isNotEmpty &&
+            _postalController.text.isNotEmpty &&
+            _luggageLimitController.text.isNotEmpty &&
+            _legalBusinessName != null &&
+            _vatNumber != null &&
+            _businessPhone != null &&
+            _businessAddress != null;
+
+    widget.onValidChanged(filled);
+  }
+
+
+
+  void submit() {
+    setState(() => _submitted = true);
+
+    final valid = _formKey.currentState?.validate() ?? false;
+    widget.onValidChanged(valid);
+  }
+
+
+
+  @override
+  void dispose() {
+    _businessNameController.dispose();
+    _cityController.dispose();
+    _postalController.dispose();
+    _luggageLimitController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final style = fontSize16(context)!.copyWith(color: Colors.black);
+
     return SingleChildScrollView(
-      physics: ClampingScrollPhysics(),
       child: Form(
         key: _formKey,
+        autovalidateMode: _submitted
+            ? AutovalidateMode.always
+            : AutovalidateMode.disabled,
         child: Column(
           children: [
-            SizedBox(height: 8.h),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                onPressed: () {},
-                child: Text('Skip', style: style),
-              ),
-            ),
-            SizedBox(height: 8.h),
+            SizedBox(height: 16.h),
             TextFormField(
+              controller: _businessNameController,
+              textInputAction: TextInputAction.next,
               style: style,
-              decoration: InputDecoration(hintText: 'Business Name'),
+              decoration: const InputDecoration(hintText: 'Business Name'),
               validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-              onChanged: (_) => _checkFormValidity(),
             ),
             SizedBox(height: 10.h),
-            _dropdownField(
+            _dropdownFormField(
               hint: 'Legal Business Name',
               items: ['Name', 'Name1'],
-              onChanged: (value) {},
+              value: _legalBusinessName,
+              onChanged: (v) {
+                setState(() => _legalBusinessName = v);
+                _checkFilledOnly();
+              },
             ),
-            _dropdownField(
+            SizedBox(height: 10.h),
+            _dropdownFormField(
               hint: 'VAT Number/Tax Code',
-              items: [],
-              onChanged: (value) {},
+              items: ['1', '2'],
+              value: _vatNumber,
+              onChanged: (v) {
+                setState(() => _vatNumber = v);
+                _checkFilledOnly();
+              },
             ),
-            _dropdownField(
+            SizedBox(height: 10.h),
+            _dropdownFormField(
               hint: 'Business Phone Number',
-              items: [],
-              onChanged: (value) {},
+              items: ['+8801...', '+88017...'],
+              value: _businessPhone,
+              onChanged: (v) {
+                setState(() => _businessPhone = v);
+                _checkFilledOnly();
+              },
             ),
-            _dropdownField(
+            SizedBox(height: 10.h),
+            _dropdownFormField(
               hint: 'Business Address',
-              items: [],
-              onChanged: (value) {},
-            ),
-            TextFormField(
-              style: style,
-              decoration: InputDecoration(hintText: 'City'),
-              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-              onChanged: (_) => _checkFormValidity(),
+              items: ['Address1', 'Address2'],
+              value: _businessAddress,
+              onChanged: (v) {
+                setState(() => _businessAddress = v);
+                _checkFilledOnly();
+              },
             ),
             SizedBox(height: 10.h),
             TextFormField(
+              controller: _cityController,
+              textInputAction: TextInputAction.next,
               style: style,
-              decoration: InputDecoration(hintText: 'Postal Code(ZIP Code)'),
+              decoration: const InputDecoration(hintText: 'City'),
               validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-              onChanged: (_) => _checkFormValidity(),
             ),
             SizedBox(height: 10.h),
             TextFormField(
+              controller: _postalController,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
               style: style,
-              decoration: InputDecoration(hintText: 'Daily Luggage Limit'),
+              decoration: const InputDecoration(hintText: 'Postal Code (ZIP)'),
               validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-              onChanged: (_) => _checkFormValidity(),
             ),
+            SizedBox(height: 10.h),
+            TextFormField(
+              controller: _luggageLimitController,
+              style: style,
+              decoration: const InputDecoration(
+                hintText: 'Daily Luggage Limit',
+              ),
+              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+            ),
+            SizedBox(height: 20.h),
           ],
         ),
       ),
     );
   }
 
-  Widget _dropdownField({
+  Widget _dropdownFormField({
     required String hint,
     required List<String> items,
     String? value,
     required Function(String?) onChanged,
   }) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      height: 48.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey, width: 1.w),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          hint: Text(
-            hint,
-            style: fontSize16(
-              context,
-            )!.copyWith(color: Colors.grey, letterSpacing: 0.1.sp),
-          ),
-          isExpanded: true,
-          icon: const Icon(Icons.keyboard_arrow_down),
-          items: items
-              .map(
-                (e) => DropdownMenuItem<String>(
-                  value: e,
-                  child: Text(e, style: fontSize16(context)),
-                ),
-              )
-              .toList(),
-          onChanged: onChanged,
+    return DropdownButtonFormField<String>(
+      style: fontSize16(context),
+      icon: const Icon(Icons.keyboard_arrow_down_outlined),
+      value: value,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: fontSize16(
+          context,
+        )!.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14.r),
+          borderSide: BorderSide(color: Colors.grey),
         ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       ),
+      validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+      items: items
+          .map(
+            (e) => DropdownMenuItem<String>(
+              value: e,
+              child: Text(e, style: fontSize16(context)),
+            ),
+          )
+          .toList(),
+      onChanged: onChanged,
     );
   }
 }

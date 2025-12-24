@@ -15,18 +15,17 @@ class AddYourBusinessHoursView extends StatefulWidget {
 class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
   final List<DaySchedule> schedules = [
     DaySchedule(
-      day: "Monday",
+      day: "Saturday",
       isEnabled: true,
       isExpanded: true,
-      slots: [
-        TimeSlot(from: "09:00", to: "17:00"),
-      ],
+      slots: [TimeSlot(from: "09:00", to: "17:00")],
     ),
-    DaySchedule(
-      day: "Tuesday",
-      isEnabled: false,
-      slots: [],
-    ),
+    DaySchedule(day: "Sunday", isEnabled: false, slots: []),
+    DaySchedule(day: "Monday", isEnabled: false, slots: []),
+    DaySchedule(day: "Tuesday", isEnabled: false, slots: []),
+    DaySchedule(day: "Wednesday", isEnabled: false, slots: []),
+    DaySchedule(day: "Thursday", isEnabled: false, slots: []),
+    DaySchedule(day: "Friday", isEnabled: false, slots: []),
   ];
 
   void _updateAndValidate(VoidCallback action) {
@@ -35,9 +34,7 @@ class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
   }
 
   bool _isValidSchedule() {
-    return schedules.any(
-          (d) => d.isEnabled && d.slots.isNotEmpty,
-    );
+    return schedules.any((d) => d.isEnabled && d.slots.isNotEmpty);
   }
 
   @override
@@ -49,24 +46,18 @@ class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
 
         return DayTile(
           data: day,
-          onToggleEnabled: (v) =>
-              _updateAndValidate(() => day.isEnabled = v),
+          onToggleEnabled: (v) => _updateAndValidate(() => day.isEnabled = v),
           onToggleExpanded: () =>
               _updateAndValidate(() => day.isExpanded = !day.isExpanded),
-          onAddSlot: () => _updateAndValidate(() =>
-              day.slots.add(TimeSlot(from: "09:00", to: "17:00"))),
-          onRemoveSlot: (i) =>
-              _updateAndValidate(() => day.slots.removeAt(i)),
+          onAddSlot: () => _updateAndValidate(
+            () => day.slots.add(TimeSlot(from: "09:00", to: "17:00")),
+          ),
+          onRemoveSlot: (i) => _updateAndValidate(() => day.slots.removeAt(i)),
         );
       },
     );
   }
 }
-
-
-
-
-
 
 class TimeSlot {
   String from;
@@ -96,4 +87,3 @@ class DaySchedule {
     "slots": slots.map((e) => e.toJson()).toList(),
   };
 }
-

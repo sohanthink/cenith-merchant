@@ -15,10 +15,13 @@ class ConfirmYourLocationView extends StatefulWidget {
 class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+
   void _checkFormValidity() {
     final isValid = _formKey.currentState?.validate() ?? false;
     widget.onValidChanged(isValid);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 16.w),
                   ),
                   validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                  onChanged: (_) => _checkFormValidity(),
+                  onChanged:(v) =>_checkFormValidity(),
                 ),
                 SizedBox(height: 16.h),
                 TextFormField(
@@ -52,7 +55,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                   maxLines: 3,
                   decoration: InputDecoration(),
                   validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                  onChanged: (_) => _checkFormValidity(),
+                  onChanged:(v) =>_checkFormValidity(),
                 ),
                 SizedBox(height: 24.h),
                 Container(
