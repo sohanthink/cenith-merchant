@@ -24,11 +24,11 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      height: 50,
+      height: 40,
       width: (MediaQuery.of(context).size.width / 2) - 30,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.themColor.shade500),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
@@ -37,8 +37,8 @@ class _CustomDropDownMenuState extends State<CustomDropDownMenu> {
           style: fontSize16(context),
           icon: Icon(
             Icons.keyboard_arrow_down_sharp,
-            size: 30,
-            color: AppColors.themColor.shade500,
+            size: 20,
+            color: Colors.black,
           ),
           onChanged: (value) {
             //TODO: update with controller

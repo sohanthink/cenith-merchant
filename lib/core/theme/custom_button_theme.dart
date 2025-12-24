@@ -8,11 +8,10 @@ class CustomButtonTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         fixedSize: Size(350.w, 45.h),
-        backgroundColor: AppColors.themColor,
+        backgroundColor: AppColors.themeColor,
         foregroundColor: Colors.white,
         textStyle: TextStyle(
             fontSize: 14.sp,
-            fontWeight: FontWeight.bold,
             letterSpacing: 0.1.sp
         ),
       ),

@@ -26,7 +26,7 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
         padding:  EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
           children: [
-            SizedBox(height: 30.h),
+            SizedBox(height: 40.h),
             buildTitleSection(context),
             SizedBox(height: 10.h),
             Expanded(
@@ -70,7 +70,7 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
               'Edit opening hours',
               style: fontSize20(
                 context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w700),
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
             ),
             IconButton(
               onPressed: () {Navigator.pop(context);},
@@ -86,7 +86,7 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
               'Open 24/7',
               style: fontSize16(
                 context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+              )!.copyWith(color: Colors.black,),
             ),
             Switch(
               activeTrackColor: Colors.grey,

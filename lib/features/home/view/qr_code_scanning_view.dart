@@ -94,7 +94,7 @@ class _QrCodeScanningViewState extends State<QrCodeScanningView> {
         options: RectDottedBorderOptions(
           dashPattern: [8, 6],
           strokeWidth: 1,
-          color: AppColors.themColor,
+          color: AppColors.themeColor,
         ),
         child: Container(),
       ),

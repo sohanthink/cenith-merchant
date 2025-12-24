@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,7 @@ class ContactSupportText {
           TextSpan(text: 'Have question? '),
           TextSpan(
             text: 'Contact our support team',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
+            style: TextStyle(fontSize: 15.sp,color: AppColors.themeColor),
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ],

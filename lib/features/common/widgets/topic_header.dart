@@ -1,10 +1,10 @@
+import 'package:cenith_marchent/core/font_family/font_family.dart';
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constants/app_colors.dart';
-
-Widget topicHeader({
+Widget topicHeader(
+  context, {
   required String title,
   required String subTitle,
   CrossAxisAlignment? crossAxisAlignment,
@@ -14,19 +14,17 @@ Widget topicHeader({
     children: [
       Text(
         title,
-        style: TextStyle(
-          height: 0.7,
-          color: AppColors.midLightBlue,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
-        ),
+        style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500 ),
+
       ),
       Text(
         subTitle,
-        style: TextStyle(
+        style: fontSize14(context),
+
+        /*TextStyle(
           color: AppColors.midLightBlue.shade500,
           fontSize: 14.sp,
-        ),
+        ),*/
       ),
     ],
   );

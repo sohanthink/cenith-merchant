@@ -78,105 +78,110 @@ class _SignageViewState extends State<SignageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            space(16),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildCircleImage(),
-                  space(16),
-                  Text(
-                    'Get walk-in bonuses and more bookings by linking your signage',
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          space(16),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildCircleImage(),
+                space(16),
+                Center(
+                  child: Text(
+                    'Get walk-in bonuses and more bookings by\n linking your signage',
                     textAlign: TextAlign.center,
                     style: fontSize16(context)?.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       letterSpacing: 0.1.sp,
                       color: Colors.black,
                     ),
                   ),
-                  space(16),
-                  RichText(
-                    text: TextSpan(
-                      style: fontSize14(context)?.copyWith(color: Colors.black),
-                      children: [
-                        TextSpan(
-                          text:
-                              'Start by scanning the QR code on your Bounce signage to link it to your store. ',
-                        ),
-                        TextSpan(
-                          text: 'Benefits Of Linking Signage',
-                          style: fontSize14(context)?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.themColor,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushNamed(
-                                context,
-                                BenefitsOfLinkingSignageView.name,
-                              );
-                            },
-                        ),
-                      ],
-                    ),
+                ),
+                space(16),
+                RichText(
+                  text: TextSpan(
+                    style: fontSize14(context)?.copyWith(color: Colors.black),
+                    children: [
+                      TextSpan(
+                        text:
+                            'Start by scanning the QR code on your Bounce signage to link it to your store. ',
+                      ),
+                      TextSpan(
+                        text: 'Benefits Of Linking Signage',
+                        style: fontSize14(
+                          context,
+                        )?.copyWith(color: AppColors.themeColor),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(
+                              context,
+                              BenefitsOfLinkingSignageView.name,
+                            );
+                          },
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 32.h),
-                  Center(
-                    child: Text(
-                      '6 signs linked',
-                      style: fontSize14(context)?.copyWith(color: Colors.black),
-                    ),
+                ),
+                SizedBox(height: 32.h),
+                Center(
+                  child: Text(
+                    '6 signs linked',
+                    style: fontSize14(context)?.copyWith(color: Colors.black),
                   ),
-                  SizedBox(height: 16.h),
-                  ElevatedButton(
+                ),
+                SizedBox(height: 16.h),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, LinkBounceSignage.name),
                     child: Text('Link Cenith Signage'),
                   ),
-                  space(16),
-                  _buildButton(
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      OrderTagAndSignageView.name,
-                    ),
-                    buttonName: 'Print A Signage',
+                ),
+                space(16),
+                _buildButton(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    OrderTagAndSignageView.name,
                   ),
-                  SizedBox(height: 24.h),
-                  Text(
-                    'Your orders',
-                    style: fontSize20(context)?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                  buttonName: 'Print A Signage',
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  'Your orders',
+                  style: fontSize20(context)?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
                   ),
-                  space(16),
-                  Text(
-                    'Check the status of recent orders, manage returns, and create new orders.',
-                    style: fontSize14(context)?.copyWith(color: Colors.black),
+                ),
+                space(16),
+                Text(
+                  'Check the status of recent orders, manage returns, and create new orders.',
+                  style: fontSize14(context)?.copyWith(color: Colors.black),
+                ),
+                space(16),
+                _buildButton(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    OrderTagAndSignageView.name,
                   ),
-                  space(16),
-                  _buildButton(
-                    onTap: ()=>Navigator.pushNamed(context, OrderTagAndSignageView.name),
-                    buttonName: 'Order Tags & Signage',
-                  ),
-                  space(16),
+                  buttonName: 'Order Tags & Signage',
+                ),
+                space(16),
 
-                  _buildSelectOrderDate(context),
-                  space(16),
-                  _buildSelectStatus(context),
-                ],
-              ),
+                _buildSelectOrderDate(context),
+                space(16),
+                _buildSelectStatus(context),
+              ],
             ),
-            SizedBox(height: 24.h),
-            _buildSignateAndStatus(context),
-            _buildPagination(context),
-          ],
-        ),
+          ),
+          SizedBox(height: 24.h),
+          _buildSignateAndStatus(context),
+          _buildPagination(context),
+        ],
       ),
     );
   }
@@ -189,8 +194,8 @@ class _SignageViewState extends State<SignageView> {
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(25.r),
-          border: Border.all(color: AppColors.themColor, width: 1.5.w),
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: Colors.grey),
         ),
         child: Text(
           _selectedDate == null
@@ -209,17 +214,15 @@ class _SignageViewState extends State<SignageView> {
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(25.r),
-        border: Border.all(color: AppColors.themColor, width: 1.5.w),
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(color: Colors.grey, width: 0.5),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: _selectedStatus,
           isExpanded: true,
-          icon: Icon(
-            Icons.keyboard_arrow_down_sharp,
-            color: AppColors.themColor,
-          ),
+          iconDisabledColor: Colors.white,
+          iconEnabledColor: Colors.white,
           hint: Text('Select Status', style: fontSize14(context)),
           items: _statusList.map((status) {
             return DropdownMenuItem(
@@ -263,7 +266,7 @@ class _SignageViewState extends State<SignageView> {
               child: Text(
                 'Signage and Status',
                 style: fontSize16(context)?.copyWith(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   letterSpacing: 0.1.sp,
                   color: Colors.black,
                 ),
@@ -343,15 +346,18 @@ Widget buildCircleImage() {
 }
 
 Widget _buildButton({required VoidCallback onTap, required String buttonName}) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: AppColors.themColor,
-      side: BorderSide(color: AppColors.themColor, width: 1.6.w),
-      elevation: 0,
+  return SizedBox(
+    width: double.infinity,
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.themeColor,
+        side: BorderSide(color: AppColors.themeColor, width: 1.6.w),
+        elevation: 0,
+      ),
+      onPressed: onTap,
+      child: Text(buttonName),
     ),
-    onPressed: onTap,
-    child: Text(buttonName),
   );
 }
 
@@ -372,7 +378,7 @@ Widget _buildSignageAndStatus(
             Text(
               signageTitle,
               style: fontSize16(context)?.copyWith(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
                 letterSpacing: 0.1.sp,
                 color: Colors.black,
               ),
@@ -394,9 +400,7 @@ Widget _buildSignageAndStatus(
           ),
           child: Text(
             status,
-            style: fontSize14(
-              context,
-            )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp),
+            style: fontSize14(context)?.copyWith(letterSpacing: 0.1.sp),
           ),
         ),
         IconButton(onPressed: onTap, icon: Icon(Icons.arrow_forward_ios)),

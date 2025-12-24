@@ -37,7 +37,7 @@ class BenefitCard extends StatelessWidget {
             CircleAvatar(
               radius: 25,
               backgroundColor: AppColors.midLightBlue.withOpacity(0.2),
-              child: Icon(benefits['icon'], color: AppColors.themColor),
+              child: Icon(benefits['icon'], color: AppColors.themeColor),
             ),
             SizedBox(width: 16.w),
             Expanded(

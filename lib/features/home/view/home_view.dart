@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/font_family/font_family.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 10),
             buildHeaderSection(context),
             Expanded(
               child: SingleChildScrollView(
@@ -40,20 +42,20 @@ class _HomeViewState extends State<HomeView> {
                   children: [
                     Text(
                       'Track and manage your operations for the day.',
-                      style: TextTheme.of(context).headlineMedium!.copyWith(
-                        color: AppColors.themColor.shade500,
+                      style: fontSize14(context)!.copyWith(
+                        // color: AppColors.themColor.shade500,
                       ),
                     ),
                     SizedBox(height: 20.h),
                     Text(
                       'Your Dashboard',
-                      style: fontSize26(
+                      style: fontSize20(
                         context,
-                      )!.copyWith(fontWeight: FontWeight.w900),
+                      )!.copyWith(fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 20.h),
                     HeaderButtonWidget(),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: 20.h),
                     buildDashBoardSection(),
                     SizedBox(height: 10.h),
                   ],
@@ -121,16 +123,26 @@ class _HomeViewState extends State<HomeView> {
         SizedBox(height: 35.h),
         Row(
           children: [
-            topicHeader(title: 'Hello Ashraful!', subTitle: 'good morning'),
+            topicHeader(
+              context,
+              title: 'Hello Ashraful!',
+              subTitle: 'Good Morning',
+            ),
             Spacer(),
             CircleAvatar(
               backgroundColor: Colors.white,
-              child: SvgPicture.asset(IconsPath.messageIconSvg),
+              child: SvgPicture.asset(
+                IconsPath.messageIconSvg,
+                colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcATop),
+              ),
             ),
             SizedBox(width: 8.w),
             CircleAvatar(
               backgroundColor: Colors.white,
-              child: SvgPicture.asset(IconsPath.iButtonIconSvg),
+              child: SvgPicture.asset(
+                IconsPath.iButtonIconSvg,
+                colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcATop),
+              ),
             ),
           ],
         ),
@@ -155,26 +167,33 @@ class _HeaderButtonWidgetState extends State<HeaderButtonWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: ['Today', 'Upcoming', 'Past'].asMap().entries.map((item) {
-        return GestureDetector(
-          onTap: () {
-            selectedIndex = item.key;
-            setState(() {});
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: item.key == selectedIndex
-                  ? AppColors.themColor
-                  : Colors.white,
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-              child: Text(
-                item.value,
-                style: TextStyle(
-                  color: item.key == selectedIndex
-                      ? Colors.white
-                      : AppColors.themColor,
+        return Expanded(
+          child: GestureDetector(
+            onTap: () {
+              selectedIndex = item.key;
+              setState(() {});
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: item.key == selectedIndex
+                    ? AppColors.themeColor
+                    : Colors.white,
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 25.w),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    item.value,
+                    style: fontSize14(context)!.copyWith(
+                      color: item.key == selectedIndex
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
                 ),
               ),
             ),

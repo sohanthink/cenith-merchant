@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -49,7 +50,7 @@ class _CustomCheckInOutWidgetState extends State<CustomCheckInOutWidget> {
                 onPressed: () =>
                     widget.onTap ??
                     Navigator.pushNamed(context, QrCodeScanningView.name),
-                child: Text('Check in/out'),
+                child: Text('Check in/out',style: fontSize14(context)!.copyWith(color: Colors.white,fontWeight: FontWeight.w700),),
               )
             : FloatingActionButton(
                 onPressed: () =>

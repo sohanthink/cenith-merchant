@@ -26,9 +26,9 @@ class _OverviewState extends State<Overview> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SortingSectionWidget(),
-            SizedBox(height: 5.h),
+            SizedBox(height: 10.h),
             buildEarningListSection(),
-            SizedBox(height: 5.h),
+            SizedBox(height: 10.h),
             buildChartSection(context),
           ],
         ),
@@ -78,7 +78,7 @@ class _OverviewState extends State<Overview> {
             'Yearly earnings',
             style: fontSize20(
               context,
-            )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+            )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
           ),
           AspectRatio(
             aspectRatio: 3.5,
@@ -109,7 +109,7 @@ class _OverviewState extends State<Overview> {
                   LineChartBarData(
                     spots: spots,
                     isCurved: true,
-                    color: AppColors.themColor,
+                    color: AppColors.themeColor,
                     barWidth: 3,
                     isStrokeCapRound: true,
                     dotData: FlDotData(
@@ -120,7 +120,7 @@ class _OverviewState extends State<Overview> {
                           maxValueIndex = index;
                           return FlDotCirclePainter(
                             radius: 5,
-                            color: AppColors.themColor,
+                            color: AppColors.themeColor,
                             strokeWidth: 4,
                             strokeColor: Colors.white,
                           );
@@ -131,7 +131,7 @@ class _OverviewState extends State<Overview> {
                     belowBarData: BarAreaData(
                       show: true,
                       gradient: LinearGradient(
-                        colors: [AppColors.themColor, Colors.white],
+                        colors: [AppColors.themeColor, Colors.white],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -142,7 +142,7 @@ class _OverviewState extends State<Overview> {
                   verticalLines: [
                     VerticalLine(
                       x: maxValueIndex.toDouble(),
-                      color: AppColors.themColor.shade100,
+                      color: AppColors.themeColor.shade100,
                       strokeWidth: 20,
                       strokeCap: StrokeCap.round,
                     ),
@@ -201,7 +201,7 @@ class _OverviewState extends State<Overview> {
             earning: cardList[index]['earning'],
             isIncrease: cardList[index]['isIncrease'],
             inDecreaseAmount: cardList[index]['inDecreaseAmt'],
-            isSelected: selectedIndex == index
+            isSelected: selectedIndex == index,
           ),
         );
       },
@@ -217,12 +217,12 @@ class _OverviewState extends State<Overview> {
     required bool isSelected,
   }) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 8.h),
+      padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.sp, vertical: 4.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.sp, vertical: 10.h),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: isSelected? AppColors.themColor:Colors.white,
+          color: isSelected ? AppColors.themeColor : Colors.white,
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: Column(
@@ -230,32 +230,42 @@ class _OverviewState extends State<Overview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Total earning',
-              style: fontSize12(context)!.copyWith(color: Colors.white),
+              title,
+              style: fontSize12(
+                context,
+              )!.copyWith(color: isSelected ? Colors.white : Colors.black),
             ),
             Text(
               '\$$earning',
-              style: fontSize20(
-                context,
-              )!.copyWith(color: isSelected? Colors.white:Colors.black, fontWeight: FontWeight.w600),
+              style: fontSize20(context)!.copyWith(
+                color: isSelected ? Colors.white : Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             Row(
               children: [
                 isIncrease == null
                     ? SizedBox.shrink()
                     : isIncrease == true
-                    ? Icon(Icons.auto_graph, color:isSelected? Colors.white:Colors.black)
-                    : SvgPicture.asset(IconsPath.lowGraphIconSvg,color: Colors.red,),
-                SizedBox(width: 10.w),
+                    ? Icon(
+                        Icons.auto_graph,
+                        color: isSelected ? Colors.white : Colors.black,
+                      )
+                    : SvgPicture.asset(
+                        IconsPath.lowGraphIconSvg,
+                        color: Colors.red,
+                      ),
+                isIncrease == null ? SizedBox.shrink() : SizedBox(width: 8.w),
                 Text(
                   isIncrease == null
                       ? 'No Changes on last month'
                       : isIncrease == true
                       ? 'Increase of \$$inDecreaseAmount from last month'
                       : 'Decrease of \$$inDecreaseAmount from last month',
-                  style: fontSize12(
-                    context,
-                  )!.copyWith(fontWeight: FontWeight.w300, color: isSelected? Colors.white:Colors.black),
+                  style: fontSize12(context)!.copyWith(
+                    fontWeight: FontWeight.w300,
+                    color: isSelected ? Colors.white : Colors.black,
+                  ),
                 ),
               ],
             ),

@@ -20,24 +20,24 @@ class TableTitleSectionWidget extends StatelessWidget {
           topLeft: Radius.circular(20.r),
           topRight: Radius.circular(20.r),
         ),
-        color: AppColors.themColor,
+        color: AppColors.themeColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             title1,
-            style: fontSize16(context)!.copyWith(color: Colors.white),
+            style: fontSize14(context)!.copyWith(color: Colors.white),
           ),
           devider(),
           Text(
             title2,
-            style: fontSize16(context)!.copyWith(color: Colors.white),
+            style: fontSize14(context)!.copyWith(color: Colors.white),
           ),
           devider(),
           Text(
             title3,
-            style: fontSize16(context)!.copyWith(color: Colors.white),
+            style: fontSize14(context)!.copyWith(color: Colors.white),
           ),
         ],
       ),
@@ -47,9 +47,9 @@ class TableTitleSectionWidget extends StatelessWidget {
   Container devider() {
     return Container(
           height: 60.h,
-          width: 2.w,
+          width: 1.w,
           decoration: BoxDecoration(
-            color: Colors.white38,
+            color: Colors.white54,
             borderRadius: BorderRadius.circular(10),
           ),
         );

@@ -48,28 +48,32 @@ class _BenefitsOfLinkingSignageViewState
         actions: [
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.close, color: AppColors.themColor),
+            icon: Icon(Icons.close,),
           ),
         ],
       ),
       body: Column(
         children: [
+          SizedBox(height: 10),
           Expanded(
             child: ListView.separated(
               itemCount: _benefits.length,
               itemBuilder: (context, index) {
-                return BenefitCard(context: context, benefits: _benefits[index]);
+                return BenefitCard(
+                  context: context,
+                  benefits: _benefits[index],
+                );
               },
               separatorBuilder: (context, index) => SizedBox(height: 12.h),
             ),
           ),
-          ElevatedButton(onPressed: ()=> Navigator.pop(context), child: Text('Ok')),
-          SizedBox(height: 40.h,)
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Ok'),
+          ),
+          SizedBox(height: 40.h),
         ],
       ),
     );
   }
-
 }
-
-

@@ -33,8 +33,8 @@ class _MainBottomNavViewState extends State<MainBottomNavView> {
             onDestinationSelected: (int index) {
               controller.onchange(index);
             },
-            unSelectedColor: AppColors.themColor.shade300,
-            selectedColor: AppColors.themColor,
+            unSelectedColor: Colors.black,
+            selectedColor: AppColors.themeColor,
           );
         },
       ),

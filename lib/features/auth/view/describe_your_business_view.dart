@@ -38,16 +38,18 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
       child: Column(
         children: [
           SizedBox(height: 8.h),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Skip',
-                style: fontSize16(context)!.copyWith(color: Colors.black),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.bottomRight,
+          //   child: TextButton(
+          //     onPressed: () {
+          //
+          //     },
+          //     child: Text(
+          //       'Skip',
+          //       style: fontSize16(context)!.copyWith(color: Colors.black),
+          //     ),
+          //   ),
+          // ),
           SizedBox(height: 8.h),
           Wrap(
             runSpacing: 10,
@@ -75,7 +77,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: isSelected
-                              ? AppColors.themColor
+                              ? AppColors.themeColor
                               : Colors.grey.shade300,
                           boxShadow: [
                             BoxShadow(

@@ -102,7 +102,7 @@ class _EditTimeTileState extends State<EditTimeTile> {
                         ? Center(
                             child: Icon(
                               Icons.done,
-                              color: AppColors.themColor,
+                              color: AppColors.themeColor,
                               size: 20.sp,
                             ),
                           )
@@ -116,7 +116,7 @@ class _EditTimeTileState extends State<EditTimeTile> {
               widget.day,
               style: fontSize20(
                 context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w700),
+              )!.copyWith(color: Colors.black,),
             ),
             Spacer(),
             Text(
@@ -142,11 +142,7 @@ class _EditTimeTileState extends State<EditTimeTile> {
             ? Column(
                 children: [
                   SizedBox(height: 20.h),
-                  Container(
-                    height: 1.h,
-                    color: Colors.grey.shade500,
-                    width: double.infinity,
-                  ),
+                  Divider(thickness: .4,color: Colors.grey,)
                 ],
               )
             : SizedBox.shrink(),

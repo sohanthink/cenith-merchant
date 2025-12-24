@@ -64,7 +64,7 @@ class CustomNavBar extends StatelessWidget {
                   selectedIndex == item.key
                       ? CircleAvatar(
                           radius: 4.r,
-                          backgroundColor: AppColors.themColor,
+                          backgroundColor: AppColors.themeColor,
                         )
                       : SizedBox.shrink(),
                 ],

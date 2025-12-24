@@ -1,4 +1,4 @@
-class IconsPath{
+class IconsPath {
   static const String _basePath = 'assets/icons';
   static const String messageIconSvg = '$_basePath/message_icon.svg';
   static const String iButtonIconSvg = '$_basePath/i_button.svg';
@@ -8,7 +8,8 @@ class IconsPath{
   static const String arrowBackIconSvg = '$_basePath/arrow_back_icon.svg';
   static const String arrowNextIconSvg = '$_basePath/arrow_next_icon.svg';
   static const String backIconSvg = '$_basePath/back_icon.svg';
-  static const String bookingCalenderIconSvg = '$_basePath/booking_calender_icon.svg';
+  static const String bookingCalenderIconSvg =
+      '$_basePath/booking_calender_icon.svg';
   static const String calenderIconSvg = '$_basePath/calender_icon.svg';
   static const String callPhoneIconSvg = '$_basePath/call_phone_icon.svg';
   static const String cancelIconSvg = '$_basePath/cancel_icon.svg';
@@ -28,7 +29,8 @@ class IconsPath{
   static const String bagIconSvg = '$_basePath/bag_icon.svg';
   static const String peopleStaffIconSvg = '$_basePath/people_staff_icon.svg';
   static const String phoneIconSvg = '$_basePath/phone_icon.svg';
-  static const String questionRoundIconSvg = '$_basePath/question_round_icon.svg';
+  static const String questionRoundIconSvg =
+      '$_basePath/question_round_icon.svg';
   static const String rewardIconSvg = '$_basePath/reward_icon.svg';
   static const String saveTagIconSvg = '$_basePath/save_tag_icon.svg';
   static const String searchIconSvg = '$_basePath/search_icons.svg';
@@ -47,9 +49,6 @@ class IconsPath{
   static const String lowGraphIconSvg = 'assets/icons/low_graph.svg';
   static const String downArrowSvg = '$_basePath/down_arrow.svg';
   static const String logWithoutBgSvg = '$_basePath/logo_without_bg.svg';
-
-
-
-
-
+  static const String copyIconSvg = '$_basePath/copy_icon.svg';
+  static const String uploadIconSvg = '$_basePath/upload_icon.svg';
 }

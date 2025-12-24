@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,8 @@ class BuildDashboardCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.count,
-    required this.isSelected, this.subTitle,
+    required this.isSelected,
+    this.subTitle,
   });
 
   final String title;
@@ -19,16 +21,19 @@ class BuildDashboardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 125.h,
+      height: 120.h,
+      margin: EdgeInsets.only(bottom: 10),
       width: double.infinity,
       decoration: BoxDecoration(
-        boxShadow: [BoxShadow(
-          color: Colors.black12,
-          blurRadius: 4.r,
-          offset: Offset(0, 3),
-        ),],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 4.r,
+            offset: Offset(0, 3),
+          ),
+        ],
         borderRadius: BorderRadius.circular(10.r),
-        color: isSelected ? AppColors.themColor : Colors.white,
+        color: isSelected ? AppColors.themeColor : Colors.white,
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.r),
@@ -39,26 +44,23 @@ class BuildDashboardCard extends StatelessWidget {
               top: 25.h,
               child: Text(
                 title,
-                style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.themColor,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: fontSize16(
+                  context,
+                )!.copyWith(color: isSelected ? Colors.white : Colors.black),
               ),
             ),
             Positioned(
               left: 20.w,
-              top: 50.h,
+              top: 45.h,
               child: Text(
                 count.toString(),
                 style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.themColor,
-                  fontSize: 36.sp,
-                  fontWeight: FontWeight.bold,
+                  color: isSelected ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 32.sp,
                 ),
               ),
             ),
-
             isSelected
                 ? Positioned(
                     left: 280.w,
@@ -84,7 +86,8 @@ class BuildDashboardCard extends StatelessWidget {
                     bottom: 6.h,
                     left: 105.w,
                     child: GestureDetector(
-                      onTap: ()=>Navigator.pushNamed(context, AllBookingsView.name),
+                      onTap: () =>
+                          Navigator.pushNamed(context, AllBookingsView.name),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -92,25 +95,30 @@ class BuildDashboardCard extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
+                            horizontal: 12,
+                            vertical: 10,
                           ),
                           child: Text(
                             'View All Bookings',
-                            style: TextStyle(
-                              color: AppColors.themColor,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: fontSize16(
+                              context,
+                            )!.copyWith(color: AppColors.themeColor),
                           ),
                         ),
                       ),
                     ),
                   )
                 : SizedBox.shrink(),
-            !isSelected && subTitle != null? Positioned(
-              top: 98.h,
-                left: 20.w,
-                child: Text(subTitle!,style: TextTheme.of(context).titleSmall!.copyWith(color: AppColors.themColor.shade500),)):SizedBox.shrink()
+            !isSelected && subTitle != null
+                ? Positioned(
+                    top: 90.h,
+                    left: 20.w,
+                    child: Text(
+                      subTitle!,
+                      style: TextTheme.of(context).titleSmall!.copyWith(),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ),

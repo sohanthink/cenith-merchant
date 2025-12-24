@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/features/booking/view_moel/booking_view_model.dart';
 import 'package:cenith_marchent/features/main_bottom_nav/view_model/main_bottm_nav_view_model.dart';
 import 'package:cenith_marchent/features/store/view_model/add_new_store_view_model.dart';
 import 'package:cenith_marchent/features/store/view_model/edit_hour_view_model.dart';
@@ -9,5 +10,6 @@ class ControllerBindings extends Bindings {
     Get.put(AddNewStoreViewModel());
     Get.put(MainBottomNavViewModel());
     Get.put(EditHourViewModel());
+    Get.put(BookingViewModel());
   }
 }
