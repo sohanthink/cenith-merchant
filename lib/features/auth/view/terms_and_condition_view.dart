@@ -132,7 +132,7 @@ class _TermsAndConditionViewState extends State<TermsAndConditionView> {
                 onPressed: _isChecked
                     ? () {
                         if (_isChecked == true) {
-                          AppColors.themColor;
+                          AppColors.themeColor;
                         } else {
                           Colors.grey;
                         }

@@ -225,7 +225,7 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
       children: [
         IconButton(
           onPressed: onTap,
-          icon: Icon(icon, size: 40.sp, color: AppColors.themColor),
+          icon: Icon(icon, size: 40.sp, color: AppColors.themeColor),
         ),
         Text(
           typeText,

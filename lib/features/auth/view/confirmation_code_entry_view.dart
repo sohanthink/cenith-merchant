@@ -115,13 +115,13 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
             borderRadius: BorderRadius.circular(25.r),
             fieldHeight: 80.h,
             fieldWidth: 50.w,
-            activeFillColor: AppColors.themColor,
-            activeColor: AppColors.themColor,
+            activeFillColor: AppColors.themeColor,
+            activeColor: AppColors.themeColor,
             inactiveFillColor: Colors.grey.shade100,
             inactiveBorderWidth: 1.w,
             activeBorderWidth: 1.w,
             // selectedFillColor: AppColors.themeColor.shade100,
-            selectedColor: AppColors.themColor,
+            selectedColor: AppColors.themeColor,
             inactiveColor: Colors.grey.shade400,
           ),
           animationDuration: Duration(milliseconds: 300),
@@ -186,12 +186,12 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
     return Container(
       padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h, bottom: 8.h),
       decoration: BoxDecoration(
-        color: AppColors.themColor.shade100,
+        color: AppColors.themeColor.shade100,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: AppColors.themColor),
+          Icon(Icons.error_outline, color: AppColors.themeColor),
           SizedBox(width: 8.w),
           Text(
             "Didn't get the Code?",
