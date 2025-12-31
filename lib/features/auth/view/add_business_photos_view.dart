@@ -1,10 +1,15 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/learn_how_to_take_good_photo_widget.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:image_picker/image_picker.dart';
+
+import '../../../core/constants/asstes_path/icons_path.dart';
 
 class AddBusinessPhotosView extends StatefulWidget {
   const AddBusinessPhotosView({super.key, required this.onValidChanged});
@@ -30,126 +35,64 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 16.h),
-        DottedBorder(
-          options: RoundedRectDottedBorderOptions(
-            color: Colors.grey,
-            strokeWidth: 1,
-            dashPattern: [6, 4],
-            radius: Radius.circular(12.r),
-          ),
-          child: GestureDetector(
-            onTap: _showAlertDialogue,
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              width: double.infinity,
-              decoration: BoxDecoration(color: Colors.grey.shade200),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.cloud_upload,
-                    size: 45.sp,
-                    color: AppColors.themeColor,
-                  ),
-                  Text(
-                    'Tap to Upload photos or Browse',
-                    style: fontSize16(context)!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  Text(
-                    'Support:JPG,JPEG2000,PNG',
-                    style: fontSize14(context)!.copyWith(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 16.h),
+          buildLocationPhotoSection(context),
+          SizedBox(height: 8.h),
+        ],
+      ),
+    );
+  }
 
-        SizedBox(height: 32.h),
-        Text(
-          'Photo Guidelines',
-          style: fontSize18(
-            context,
-          )!.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        SizedBox(height: 8.h),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            spacing: 10,
-            children: [
-              _buildPhotoGuidelinesCard(context),
-              _buildPhotoGuidelinesCard(context),
-              _buildPhotoGuidelinesCard(context),
-            ],
-          ),
-        ),
+  Row buildUploadPhotoSection() {
+    return Row(
+      spacing: 13,
+      children: [
+        buildPhotoSectionWidget('Add photo of storefront'),
+        buildPhotoSectionWidget('Add photo of bag storage'),
       ],
     );
   }
 
-  Widget _buildPhotoGuidelinesCard(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 7)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                height: 90.h,
-                width: 70.w,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    bottomLeft: Radius.circular(8.r),
-                  ),
+  Widget buildPhotoSectionWidget(String title) {
+    return Expanded(
+      child: DottedBorder(
+        options: RoundedRectDottedBorderOptions(
+          color: Colors.grey,
+          strokeWidth: 1,
+          dashPattern: [6, 4],
+          radius: Radius.circular(12.r),
+        ),
+        child: GestureDetector(
+          onTap: _showAlertDialogue,
+          child: Container(
+            padding: EdgeInsets.all(16.w),
+
+            decoration: BoxDecoration(color: Colors.grey.shade200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(Icons.cloud_upload, size: 45.sp, color: Colors.black),
+                SizedBox(height: 8.h),
+                Text(
+                  textAlign: TextAlign.center,
+                  title,
+                  style: fontSize16(
+                    context,
+                  )!.copyWith(color: AppColors.themeColor),
                 ),
-              ),
-              SizedBox(width: 4.w),
-              Container(
-                height: 90.h,
-                width: 70.w,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
-                  ),
+                SizedBox(height: 6.h),
+                Text(
+                  'Support:JPG,JPEG2000,PNG',
+                  style: fontSize14(context)!.copyWith(color: Colors.grey),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            'Avoid Cropped Photos',
-            style: fontSize12(
-              context,
-            )!.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            '''Show where your business is\n relative to its surrounding''',
-            style: TextStyle(
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w700,
-              color: Colors.black54,
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -177,35 +120,38 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 8.h),
+                  padding: const EdgeInsets.only(top: 20),
                   child: GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Icon(Icons.close),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildImageCategoryIcon(
-                      context,
-                      onTap: () {
-                        _pickPhoto(source: ImageSource.camera);
-                        Navigator.pop(context);
-                      },
-                      icon: Icons.camera_alt_outlined,
-                      typeText: 'Camera',
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildImageCategoryIcon(
+                        context,
+                        onTap: () {
+                          _pickPhoto(source: ImageSource.camera);
+                          Navigator.pop(context);
+                        },
+                        icon: Icons.camera_alt_outlined,
+                        typeText: 'Camera',
+                      ),
 
-                    _buildImageCategoryIcon(
-                      context,
-                      onTap: () {
-                        _pickPhoto(source: ImageSource.gallery);
-                        Navigator.pop(context);
-                      },
-                      icon: Icons.upload_file_outlined,
-                      typeText: 'Gallery',
-                    ),
-                  ],
+                      _buildImageCategoryIcon(
+                        context,
+                        onTap: () {
+                          _pickPhoto(source: ImageSource.gallery);
+                          Navigator.pop(context);
+                        },
+                        icon: Icons.cloud_upload_rounded,
+                        typeText: 'Gallery',
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -231,6 +177,100 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
           typeText,
           style: fontSize16(context)!.copyWith(fontWeight: FontWeight.w500),
         ),
+      ],
+    );
+  }
+
+  Widget buildLocationPhotoSection(BuildContext context) {
+    List<dynamic> images = [1, 2, 3];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Location Photos',
+          style: fontSize20(
+            context,
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Partners with storefront photos are preferred by '
+          'customers and receive higher reviews on average. '
+          'Add yours to help increase bookings.',
+          style: fontSize14(
+            context,
+          )!.copyWith(fontWeight: FontWeight.w300, color: Colors.black),
+        ),
+        SizedBox(height: 20),
+        GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return Container(
+                  height: MediaQuery.of(context).size.height*0.72,
+                  decoration: BoxDecoration(
+
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: LearnHowToTakeGoodPhotoWidget(),
+                  ),
+
+                );
+              },
+            );
+          },
+          child: Text(
+            'Learn how to take good photos',
+            style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
+          ),
+        ),
+        SizedBox(height: 25),
+        buildUploadPhotoSection(),
+        SizedBox(height: 25),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: images
+                .asMap()
+                .entries
+                .map(
+                  (e) => Container(
+                    margin: EdgeInsets.all(10),
+                    height: 100,
+                    width: 100,
+                    decoration: DottedDecoration(
+                      dash: [2, 4],
+                      strokeWidth: 2,
+                      shape: Shape.box,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: e.key == images.length - 1
+                        ? Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                            child: Center(child: Icon(Icons.add, size: 50)),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+        SizedBox(height: 20),
       ],
     );
   }

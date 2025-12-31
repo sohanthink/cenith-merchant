@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/features/auth/view/Search_and_pick_location.dart';
 import 'package:cenith_marchent/features/auth/view/auth_view.dart';
 import 'package:cenith_marchent/features/auth/view/confirmation_code_entry_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
@@ -5,6 +6,7 @@ import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_details_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_view.dart';
 import 'package:cenith_marchent/features/booking/view/download_view.dart';
+import 'package:cenith_marchent/features/common/widgets/learn_how_to_take_good_photo_widget.dart';
 import 'package:cenith_marchent/features/home/view/home_view.dart';
 import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
@@ -69,6 +71,12 @@ class AppRoutes {
       screenWidget = TermsAndConditionView();
     } else if (settings.name == ConfirmationCodeEntryView.name) {
       screenWidget = ConfirmationCodeEntryView();
+    }else if (settings.name == ConfirmationCodeEntryView.name) {
+      screenWidget = ConfirmationCodeEntryView();
+    }else if (settings.name == SearchAndPickLocation.name) {
+      screenWidget = SearchAndPickLocation();
+    }else if (settings.name == LearnHowToTakeGoodPhotoWidget.name) {
+      screenWidget = LearnHowToTakeGoodPhotoWidget();
     }
 
     return MaterialPageRoute(builder: (context) => screenWidget);

@@ -16,7 +16,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  get: ^4.7.2
+  get: ^4.7.3
   hive: ^2.2.3
   flutter_svg: ^2.2.0
   flutter_screenutil: ^5.9.3
@@ -32,6 +32,12 @@ dependencies:
   pdf: ^3.11.3
   path_provider: ^2.1.5
   dotted_decoration: ^2.0.0
+  google_maps_flutter: ^2.14.0
+  geolocator: ^14.0.2
+  google_places_flutter: ^2.1.1
+  geocoding: ^4.0.0
+  dio: ^5.9.0
+
 
 
 dev_dependencies:
