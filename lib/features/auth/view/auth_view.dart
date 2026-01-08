@@ -118,6 +118,7 @@ class _AuthViewState extends State<AuthView> {
               ElevatedButton(
                 onPressed: _pageValidation[_currentIndex] == true
                     ? () {
+                        FocusScope.of(context).unfocus();
                         if (_currentIndex == 0) {
                           final state = signUpKey.currentState;
                           if (state != null) {
@@ -139,12 +140,11 @@ class _AuthViewState extends State<AuthView> {
                           if (state != null) {
                             state.submit();
                             if (_pageValidation[2] == true) {
-                                _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-
+                              _pageController.nextPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              );
+                            }
                           }
                           return;
                         }

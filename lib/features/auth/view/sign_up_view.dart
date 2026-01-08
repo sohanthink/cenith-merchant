@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUpView extends StatefulWidget {
@@ -155,19 +156,104 @@ class SignUpViewState extends State<SignUpView> {
 
   Widget _buildPhoneNumberField() {
     return IntlPhoneField(
+      countries: [
+        Country(
+          name: "United States",
+          nameTranslations: {
+            "en": "United States",
+            "bn": "মার্কিন যুক্তরাষ্ট্র",
+          },
+          flag: "🇺🇸",
+          code: "US",
+          dialCode: "1",
+          minLength: 10,
+          maxLength: 10,
+        ),
+        Country(
+          name: "United Kingdom",
+          nameTranslations: {"en": "United Kingdom", "bn": "যুক্তরাজ্য"},
+          flag: "🇬🇧",
+          code: "GB",
+          dialCode: "44",
+          minLength: 10,
+          maxLength: 10,
+        ),
+        Country(
+          name: "Italy",
+          nameTranslations: {"en": "Italy", "bn": "ইতালি"},
+          flag: "🇮🇹",
+          code: "IT",
+          dialCode: "39",
+          minLength: 10,
+          maxLength: 10,
+        ),
+        Country(
+          name: "France",
+          nameTranslations: {"en": "France", "bn": "ফ্রান্স"},
+          flag: "🇫🇷",
+          code: "FR",
+          dialCode: "33",
+          minLength: 9,
+          maxLength: 9,
+        ),
+        // Switzerland
+        Country(
+          name: "Switzerland",
+          nameTranslations: {"en": "Switzerland", "bn": "সুইজারল্যান্ড"},
+          flag: "🇨🇭",
+          code: "CH",
+          dialCode: "41",
+          minLength: 9,
+          maxLength: 9,
+        ),
+        // Austria
+        Country(
+          name: "Austria",
+          nameTranslations: {"en": "Austria", "bn": "অস্ট্রিয়া"},
+          flag: "🇦🇹",
+          code: "AT",
+          dialCode: "43",
+          minLength: 10,
+          maxLength: 13,
+        ),
+        // Germany
+        Country(
+          name: "Germany",
+          nameTranslations: {"en": "Germany", "bn": "জার্মানি"},
+          flag: "🇩🇪",
+          code: "DE",
+          dialCode: "49",
+          minLength: 10,
+          maxLength: 11,
+        ),
+        // Spain
+        Country(
+          name: "Spain",
+          nameTranslations: {"en": "Spain", "bn": "স্পেন"},
+          flag: "🇪🇸",
+          code: "ES",
+          dialCode: "34",
+          minLength: 9,
+          maxLength: 9,
+        ),
+      ],
+
       style: fontSize16(context),
       controller: _phoneTEController,
       keyboardType: TextInputType.phone,
       textInputAction: TextInputAction.next,
       dropdownIcon: const Icon(Icons.keyboard_arrow_down),
-      initialCountryCode: 'BD',
+      initialCountryCode: 'IT',
       validator: (phone) {
-        if (phone == null || phone.number.isEmpty) return 'Phone number required';
+        if (phone == null || phone.number.isEmpty) {
+          return 'Phone number required';
+        }
         final regex = RegExp(r'^\+?[1-9]\d{1,14}$');
-        if (!regex.hasMatch(phone.completeNumber)) return 'Invalid phone number';
+        if (!regex.hasMatch(phone.completeNumber)) {
+          return 'Invalid phone number';
+        }
         return null;
-      }
-      ,
+      },
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14.r),

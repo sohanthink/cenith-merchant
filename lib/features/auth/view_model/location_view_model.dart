@@ -10,6 +10,9 @@ import '../../../core/services/locatin_service/location_services.dart';
 class LocationViewModel extends GetxController {
   bool isShowDeopDown = true;
 
+  final TextEditingController landMarkTEController =
+      TextEditingController(); // to delete if not work
+
   Set<Marker> markers = {
     Marker(position: LatLng(22.886861, 89.941040), markerId: MarkerId('value')),
   };
@@ -18,6 +21,7 @@ class LocationViewModel extends GetxController {
 
   LatLng target = LatLng(37.4219983, -122.084);
   GoogleMapController? primaryMapController;
+  Position? rowPosition;
 
   Position? currentLocation;
 
@@ -92,7 +96,7 @@ class LocationViewModel extends GetxController {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(currentLocation!.latitude, currentLocation!.longitude),
-          zoom: 8,
+          zoom: 14,
         ),
       ),
     );
@@ -122,15 +126,52 @@ class LocationViewModel extends GetxController {
     update();
   }
 
+  // updateName(LatLng latLng) async {
+  //   try {
+  //     Placemark? placemark = await LocationServices.locationName(latLng);
+  //     if (placemark != null) {
+  //       name = '${placemark.name}, ${placemark.street}, ${placemark.country}';
+  //       update(['landmark']);
+  //     }
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
   updateName(LatLng latLng) async {
     try {
       Placemark? placemark = await LocationServices.locationName(latLng);
       if (placemark != null) {
         name = '${placemark.name}, ${placemark.street}, ${placemark.country}';
+        landMarkTEController.text = name;
         update(['landmark']);
       }
     } catch (e) {
       debugPrint(e.toString());
     }
   }
+
+  Future onLandMarkChange(
+    String locationName,
+    GoogleMapController controller,
+  ) async {
+    try {
+      LatLng latLng = await LocationServices.placeNameToLatLng(
+        placeName: locationName,
+        onFailed: () {},
+      );
+      await addMarker(latLng);
+      await controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(latLng.latitude, latLng.longitude),
+            zoom: 14,
+          ),
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
 }

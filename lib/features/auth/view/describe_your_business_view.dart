@@ -18,11 +18,16 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
   final List<Map<String, dynamic>> _businessTypeCard = [
     {'business-name': 'Bar', 'Icon': Icons.local_bar_rounded},
     {'business-name': 'Cafe', 'Icon': Icons.coffee},
-    {'business-name': 'Car Rental', 'Icon': Icons.drive_eta_outlined},
+    {'business-name': 'Barber Shop', 'Icon': Icons.cut},
+    {'business-name': 'Car Rental', 'Icon': Icons.directions_bike_outlined},
     {'business-name': 'Office', 'Icon': Icons.home_work_outlined},
+    {'business-name': 'Convenience Store', 'Icon': Icons.storefront},
     {'business-name': 'Restaurant', 'Icon': Icons.restaurant},
     {'business-name': 'Fitness Center', 'Icon': Icons.fitness_center},
     {'business-name': 'Hotel', 'Icon': Icons.hotel},
+    {'business-name': 'Dessert Shop', 'Icon': Icons.local_dining_outlined},
+    {'business-name': 'Dry Cleaner', 'Icon': Icons.cookie_outlined},
+    {'business-name': 'Restaurant', 'Icon': Icons.restaurant_rounded},
     {'business-name': 'Pharmacy', 'Icon': Icons.local_pharmacy_outlined},
   ];
 

@@ -1,4 +1,3 @@
-import 'package:cenith_marchent/core/services/locatin_service/location_services.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/auth/view/Search_and_pick_location.dart';
 import 'package:cenith_marchent/features/auth/view_model/location_view_model.dart';
@@ -10,6 +9,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ConfirmYourLocationView extends StatefulWidget {
   const ConfirmYourLocationView({super.key, required this.onValidChanged});
+
+  static const name = 'confirm your location view';
 
   final Function(bool isValid) onValidChanged;
 
@@ -28,11 +29,11 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
 
   GoogleMapController? _mapController;
 
-  final TextEditingController landMarkTEController = TextEditingController();
+
   final TextEditingController additionalTEController = TextEditingController();
 
   setLanMark() {
-    landMarkTEController.text = Get.find<LocationViewModel>().name;
+
     Get.find<LocationViewModel>().update();
   }
 
@@ -58,8 +59,12 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
   @override
   void initState() {
     super.initState();
-    setLanMark();
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      setLanMark();
+      FocusScope.of(context).unfocus();
+    });
     animateCameraIfCurrentPositionNotNull();
+
   }
 
   @override
@@ -81,41 +86,68 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
               ),
               child: Column(
                 children: [
+                  // GetBuilder<LocationViewModel>(
+                  //   id: 'landmark',
+                  //   builder: (controller) {
+                  //     updateTextFieldWithMarker(controller);
+                  //     return TextFormField(
+                  //       enabled: true,
+                  //       style: style,
+                  //       controller: landMarkTEController,
+                  //       decoration: InputDecoration(
+                  //         hintText: 'Land mark',
+                  //         hintStyle: fontSize14(
+                  //           context,
+                  //         )!.copyWith(color: Colors.grey.shade400),
+                  //         contentPadding: EdgeInsets.symmetric(
+                  //           horizontal: 16.w,
+                  //         ),
+                  //       ),
+                  //       validator: (v) =>
+                  //           v == null || v.isEmpty ? 'Required' : null,
+                  //       onChanged: (v) {
+                  //         _checkFormValidity();
+                  //         onTextFieldChange(v);
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                   GetBuilder<LocationViewModel>(
                     id: 'landmark',
                     builder: (controller) {
-                      WidgetsBinding.instance.addPostFrameCallback((
-                        Duration duration,
-                      ) {
-                        landMarkTEController.text = controller.name;
-                      });
-
                       return TextFormField(
-                        enabled: false,
+                        textInputAction: TextInputAction.go,
                         style: style,
-                        controller: landMarkTEController,
+                        // ViewModel থেকে কন্ট্রোলারটি ব্যবহার করুন
+                        controller: controller.landMarkTEController,
                         decoration: InputDecoration(
                           hintText: 'Land mark',
-                          hintStyle: fontSize14(
-                            context,
-                          )!.copyWith(color: Colors.grey.shade400),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                          ),
+                          // ...
                         ),
                         validator: (v) =>
                             v == null || v.isEmpty ? 'Required' : null,
-                        onChanged: (v) => _checkFormValidity(),
+                        onChanged: (v) {
+                          _checkFormValidity();
+                          // টাইপ করার সময় ম্যাপ আপডেট করার দরকার নেই,
+                          // এতে ইউজার শান্তিতে টাইপ করতে পারবে।
+                        },
+                        onFieldSubmitted: (value) {
+                          onTextFieldChange(value);
+                        },
+                        onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                        },
                       );
                     },
                   ),
                   SizedBox(height: 16.h),
                   TextFormField(
+                    textInputAction: TextInputAction.done,
                     controller: additionalTEController,
                     style: style,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Additional infromation...',
+                      hintText: 'Additional information...',
                       hintStyle: fontSize14(
                         context,
                       )!.copyWith(color: Colors.grey.shade400),
@@ -123,6 +155,12 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                     validator: (v) =>
                         v == null || v.isEmpty ? 'Required' : null,
                     onChanged: (v) => _checkFormValidity(),
+                    onFieldSubmitted: (value) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    onEditingComplete: () {
+                      FocusScope.of(context).unfocus();
+                    },
                   ),
                   SizedBox(height: 24.h),
                   Container(
@@ -186,4 +224,18 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
       ),
     );
   }
+
+  Future onTextFieldChange(String? value) async {
+    try {
+      if (value != null && _mapController != null) {
+        await Get.find<LocationViewModel>().onLandMarkChange(
+          value,
+          _mapController!,
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
 }

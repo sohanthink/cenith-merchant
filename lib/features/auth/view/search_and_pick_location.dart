@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/keys/api_key.dart';
 import 'package:cenith_marchent/core/services/locatin_service/location_services.dart';
+import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.dart';
 import 'package:cenith_marchent/features/auth/view_model/location_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,11 +56,8 @@ class _SearchAndPickLocationState extends State<SearchAndPickLocation> {
               builder: (stateController) {
                 return GoogleMap(
                   myLocationButtonEnabled: true,
-                  myLocationEnabled: true,
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height - 250,
-                    right: 8,
-                  ),
+                  // myLocationEnabled: true,
+
                   onMapCreated: (controller) {
                     _mapController = controller;
                   },
@@ -183,13 +181,16 @@ class _SearchAndPickLocationState extends State<SearchAndPickLocation> {
                 },
                 inputDecoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(vertical: 15),
-                  prefixIcon: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColors.themeColor,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.themeColor,
+                      ),
                     ),
                   ),
                   border: OutlineInputBorder(
@@ -204,38 +205,42 @@ class _SearchAndPickLocationState extends State<SearchAndPickLocation> {
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      FocusScope.of(context).unfocus();
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: IconButton(
+                      onPressed: () async {
+                        FocusScope.of(context).unfocus();
 
-                      if (searchSuggestionTETionController.text
-                          .trim()
-                          .isEmpty) {
-                        return;
-                      }
+                        if (searchSuggestionTETionController.text
+                            .trim()
+                            .isEmpty) {
+                          return;
+                        }
 
-                      LatLng latLng = await LocationServices.placeNameToLatLng(
-                        placeName: searchSuggestionTETionController.text,
-                        onFailed: (e) {
-                          onFailed(e);
-                        },
-                      );
+                        LatLng latLng =
+                            await LocationServices.placeNameToLatLng(
+                              placeName: searchSuggestionTETionController.text,
+                              onFailed: (e) {
+                                onFailed(e);
+                              },
+                            );
 
-                      await Get.find<LocationViewModel>()
-                          .updateCurrentLocationAndCameraPosition(
-                            _mapController!,
-                            latLng,
-                          );
-                      Get.find<LocationViewModel>().updateName(latLng);
+                        await Get.find<LocationViewModel>()
+                            .updateCurrentLocationAndCameraPosition(
+                              _mapController!,
+                              latLng,
+                            );
+                        Get.find<LocationViewModel>().updateName(latLng);
 
-                      Get.find<LocationViewModel>().updateViewDorpDownStatus(
-                        false,
-                      );
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      color: AppColors.themeColor,
-                      size: 30,
+                        Get.find<LocationViewModel>().updateViewDorpDownStatus(
+                          false,
+                        );
+                      },
+                      icon: Icon(
+                        Icons.search,
+                        color: AppColors.themeColor,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
@@ -243,7 +248,19 @@ class _SearchAndPickLocationState extends State<SearchAndPickLocation> {
                 googleAPIKey: ApiKey.googleMapApiKey,
               ),
             ),
+            Positioned(
+                left: 10,
+                bottom: 20 ,
+                child: Card(child: IconButton(onPressed: (){
+                  Get.find<LocationViewModel>().getLocation(_mapController);
+                }, icon: Icon(Icons.my_location))))
           ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),
+          child: ElevatedButton(onPressed: (){
+            Navigator.pop(context);
+          }, child: Text('Confirm Location')),
         ),
       ),
     );

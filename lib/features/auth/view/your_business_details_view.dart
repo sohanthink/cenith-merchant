@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class YourBusinessDetailsView extends StatefulWidget {
-  const YourBusinessDetailsView({Key? key, required this.onValidChanged})
-    : super(key: key);
+  const YourBusinessDetailsView({super.key, required this.onValidChanged});
 
   static final String name = 'your-business-details-screen';
   final Function(bool isValid) onValidChanged;
@@ -23,6 +22,10 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
   final _cityController = TextEditingController();
   final _postalController = TextEditingController();
   final _luggageLimitController = TextEditingController();
+  final _legalBusinessNameTEController = TextEditingController();
+  final _vatTEController = TextEditingController();
+  final _businessPhoneNumberTEController = TextEditingController();
+  final _businessAddressTEController = TextEditingController();
 
   String? _legalBusinessName;
   String? _vatNumber;
@@ -41,6 +44,10 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
       _cityController,
       _postalController,
       _luggageLimitController,
+      _legalBusinessNameTEController,
+      _vatTEController,
+      _businessPhoneNumberTEController,
+      _businessAddressTEController,
     ]) {
       c.addListener(_checkFilledOnly);
     }
@@ -49,27 +56,24 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
   void _checkFilledOnly() {
     final filled =
         _businessNameController.text.isNotEmpty &&
-            _cityController.text.isNotEmpty &&
-            _postalController.text.isNotEmpty &&
-            _luggageLimitController.text.isNotEmpty &&
-            _legalBusinessName != null &&
-            _vatNumber != null &&
-            _businessPhone != null &&
-            _businessAddress != null;
+        _cityController.text.isNotEmpty &&
+        _postalController.text.isNotEmpty &&
+        _luggageLimitController.text.isNotEmpty &&
+        _legalBusinessNameTEController.text.isNotEmpty &&
+        _vatTEController.text.isNotEmpty &&
+        _businessPhoneNumberTEController.text.isNotEmpty &&
+        _legalBusinessNameTEController.text.isNotEmpty;
 
     widget.onValidChanged(filled);
   }
 
-
-
   void submit() {
     setState(() => _submitted = true);
+    FocusScope.of(context).unfocus();
 
     final valid = _formKey.currentState?.validate() ?? false;
     widget.onValidChanged(valid);
   }
-
-
 
   @override
   void dispose() {
@@ -77,6 +81,11 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
     _cityController.dispose();
     _postalController.dispose();
     _luggageLimitController.dispose();
+    _legalBusinessNameTEController.dispose();
+    _vatTEController.dispose();
+    _businessPhoneNumberTEController.dispose();
+    _businessAddressTEController.dispose();
+
     super.dispose();
   }
 
@@ -101,45 +110,44 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
               validator: (v) => v == null || v.isEmpty ? 'Required' : null,
             ),
             SizedBox(height: 10.h),
-            _dropdownFormField(
-              hint: 'Legal Business Name',
-              items: ['Name', 'Name1'],
-              value: _legalBusinessName,
-              onChanged: (v) {
-                setState(() => _legalBusinessName = v);
-                _checkFilledOnly();
-              },
+            TextFormField(
+              controller: _legalBusinessNameTEController,
+              textInputAction: TextInputAction.next,
+              style: style,
+              decoration: const InputDecoration(
+                hintText: 'Legal Business Name',
+              ),
+              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
             ),
             SizedBox(height: 10.h),
-            _dropdownFormField(
-              hint: 'VAT Number/Tax Code',
-              items: ['1', '2'],
-              value: _vatNumber,
-              onChanged: (v) {
-                setState(() => _vatNumber = v);
-                _checkFilledOnly();
-              },
+            TextFormField(
+              controller: _vatTEController,
+              textInputAction: TextInputAction.next,
+              style: style,
+              decoration: const InputDecoration(
+                hintText: 'VAT Number/Tax Code',
+              ),
+              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
             ),
             SizedBox(height: 10.h),
-            _dropdownFormField(
-              hint: 'Business Phone Number',
-              items: ['+8801...', '+88017...'],
-              value: _businessPhone,
-              onChanged: (v) {
-                setState(() => _businessPhone = v);
-                _checkFilledOnly();
-              },
+            TextFormField(
+              controller: _businessPhoneNumberTEController,
+              textInputAction: TextInputAction.next,
+              style: style,
+              decoration: const InputDecoration(
+                hintText: 'Business Phone Number',
+              ),
+              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
             ),
             SizedBox(height: 10.h),
-            _dropdownFormField(
-              hint: 'Business Address',
-              items: ['Address1', 'Address2'],
-              value: _businessAddress,
-              onChanged: (v) {
-                setState(() => _businessAddress = v);
-                _checkFilledOnly();
-              },
+            TextFormField(
+              controller: _businessAddressTEController,
+              textInputAction: TextInputAction.next,
+              style: style,
+              decoration: const InputDecoration(hintText: 'Business Address'),
+              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
             ),
+
             SizedBox(height: 10.h),
             TextFormField(
               controller: _cityController,
