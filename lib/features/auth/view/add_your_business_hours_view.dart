@@ -1,11 +1,15 @@
-import 'package:cenith_marchent/features/auth/widgets/day_tile.dart';
+import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/auth/controllers/business_hours_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import '../widgets/day_tile.dart';
+import '../widgets/time_picker_box.dart';
 
 class AddYourBusinessHoursView extends StatefulWidget {
   const AddYourBusinessHoursView({super.key, required this.onValidChanged});
 
-  static final String name = 'add-your-business-hours-screen';
-  final Function(bool isValid) onValidChanged;
+  final Function(bool) onValidChanged;
 
   @override
   State<AddYourBusinessHoursView> createState() =>
@@ -13,77 +17,132 @@ class AddYourBusinessHoursView extends StatefulWidget {
 }
 
 class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
-  final List<DaySchedule> schedules = [
-    DaySchedule(
-      day: "Saturday",
-      isEnabled: true,
-      isExpanded: true,
-      slots: [TimeSlot(from: "09:00", to: "17:00")],
-    ),
-    DaySchedule(day: "Sunday", isEnabled: false, slots: []),
-    DaySchedule(day: "Monday", isEnabled: false, slots: []),
-    DaySchedule(day: "Tuesday", isEnabled: false, slots: []),
-    DaySchedule(day: "Wednesday", isEnabled: false, slots: []),
-    DaySchedule(day: "Thursday", isEnabled: false, slots: []),
-    DaySchedule(day: "Friday", isEnabled: false, slots: []),
-  ];
+  late final BusinessHoursController controller;
 
-  void _updateAndValidate(VoidCallback action) {
-    setState(action);
-    widget.onValidChanged(_isValidSchedule());
-  }
+  @override
+  void initState() {
+    super.initState();
 
-  bool _isValidSchedule() {
-    return schedules.any((d) => d.isEnabled && d.slots.isNotEmpty);
+    controller = Get.put(BusinessHoursController());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onValidChanged(controller.isValid);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: schedules.length,
-      itemBuilder: (context, index) {
-        final day = schedules[index];
+    return GetBuilder<BusinessHoursController>(
+      builder: (c) {
+        return ListView(
+          children: [
+            Card(
+              margin: EdgeInsets.symmetric(vertical: 6.h),
+              child: Padding(
+                padding: EdgeInsets.all(12.w),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 8.w),
+                          child: Text(
+                            "24 Hours / All Day",
+                            style: fontSize18(
+                              context,
+                            )!.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Switch(
+                          inactiveTrackColor: Colors.grey.shade300,
+                          value: c.isAllDay,
+                          onChanged: (v) {
+                            c.toggleAllDay(v);
+                            widget.onValidChanged(c.isValid);
+                          },
+                        ),
+                      ],
+                    ),
 
-        return DayTile(
-          data: day,
-          onToggleEnabled: (v) => _updateAndValidate(() => day.isEnabled = v),
-          onToggleExpanded: () =>
-              _updateAndValidate(() => day.isExpanded = !day.isExpanded),
-          onAddSlot: () => _updateAndValidate(
-            () => day.slots.add(TimeSlot(from: "09:00", to: "17:00")),
-          ),
-          onRemoveSlot: (i) => _updateAndValidate(() => day.slots.removeAt(i)),
+                    if (c.isAllDay) SizedBox(height: 12.h),
+
+                    if (c.isAllDay)
+                      Row(
+                        children: [
+                          TimePickerBox(
+                            label: "From",
+                            time: c.allDayFrom,
+                            onTap: () async {
+                              final t = await _pickTime(context);
+                              if (t != null) {
+                                c.setAllDayFrom(t);
+                                widget.onValidChanged(c.isValid);
+                              }
+                            },
+                          ),
+                          SizedBox(width: 12.h),
+                          TimePickerBox(
+                            label: "To",
+                            time: c.allDayTo,
+                            onTap: () async {
+                              final t = await _pickTime(context);
+                              if (t != null) {
+                                c.setAllDayTo(t);
+                                widget.onValidChanged(c.isValid);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
+            ),
+
+            if (!c.isAllDay)
+              ...c.schedules.map(
+                (day) => DayTile(
+                  data: day,
+                  onToggleEnabled: (v) {
+                    c.toggleDayEnabled(day, v);
+                    widget.onValidChanged(c.isValid);
+                  },
+                  onToggleExpanded: () => c.toggleExpanded(day),
+                  onAddSlot: () {
+                    c.addSlot(day);
+                    widget.onValidChanged(c.isValid);
+                  },
+                  onRemoveSlot: (i) {
+                    c.removeSlot(day, i);
+                    widget.onValidChanged(c.isValid);
+                  },
+                  onPickTime: (int index, bool isFrom) async {
+                    final t = await _pickTime(context);
+                    if (t != null) {
+                      c.updateSlotTime(
+                        day: day,
+                        index: index,
+                        isFrom: isFrom,
+                        time: t,
+                      );
+                      widget.onValidChanged(c.isValid);
+                    }
+                  },
+                ),
+              ),
+          ],
         );
       },
     );
   }
-}
 
-class TimeSlot {
-  String from;
-  String to;
-
-  TimeSlot({required this.from, required this.to});
-
-  Map<String, dynamic> toJson() => {"from": from, "to": to};
-}
-
-class DaySchedule {
-  String day;
-  bool isEnabled;
-  bool isExpanded;
-  List<TimeSlot> slots;
-
-  DaySchedule({
-    required this.day,
-    this.isEnabled = false,
-    this.isExpanded = false,
-    required this.slots,
-  });
-
-  Map<String, dynamic> toJson() => {
-    "day": day,
-    "enabled": isEnabled,
-    "slots": slots.map((e) => e.toJson()).toList(),
-  };
+  Future<String?> _pickTime(BuildContext context) async {
+    final t = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (t == null) return null;
+    return "${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}";
+  }
 }
