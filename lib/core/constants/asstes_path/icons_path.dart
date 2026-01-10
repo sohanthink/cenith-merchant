@@ -51,4 +51,7 @@ class IconsPath {
   static const String logWithoutBgSvg = '$_basePath/logo_without_bg.svg';
   static const String copyIconSvg = '$_basePath/copy_icon.svg';
   static const String uploadIconSvg = '$_basePath/upload_icon.svg';
+  static const String googleIconSvg = '$_basePath/google_icon.svg';
+  static const String appleIconSvg = '$_basePath/apple_icon.svg';
+  static const String appLogoSvg = '$_basePath/app_logo.svg';
 }

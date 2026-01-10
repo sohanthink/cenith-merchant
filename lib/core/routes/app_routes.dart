@@ -2,6 +2,8 @@ import 'package:cenith_marchent/features/auth/view/Search_and_pick_location.dart
 import 'package:cenith_marchent/features/auth/view/auth_view.dart';
 import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.dart';
 import 'package:cenith_marchent/features/auth/view/confirmation_code_entry_view.dart';
+import 'package:cenith_marchent/features/auth/view/log_in_view.dart';
+import 'package:cenith_marchent/features/auth/view/login_or_signup_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
 import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_details_view.dart';
@@ -78,6 +80,10 @@ class AppRoutes {
       screenWidget = SearchAndPickLocation();
     }else if (settings.name == LearnHowToTakeGoodPhotoWidget.name) {
       screenWidget = LearnHowToTakeGoodPhotoWidget();
+    }else if (settings.name == LogInView.name) {
+      screenWidget = LogInView();
+    }else if (settings.name == LoginOrSignupView.name) {
+      screenWidget = LoginOrSignupView();
     }
 
     return MaterialPageRoute(builder: (context) => screenWidget);

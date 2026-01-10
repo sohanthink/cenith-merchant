@@ -1,30 +1,26 @@
-import 'package:cenith_marchent/features/auth/view/add_your_business_hours_view.dart';
+import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/auth/controllers/business_hours_controller.dart';
 import 'package:cenith_marchent/features/auth/view_model/business_hours_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class DayTile extends StatelessWidget {
   final DaySchedule data;
   final ValueChanged<bool> onToggleEnabled;
-  final VoidCallback onToggleExpanded;
-  final VoidCallback onAddSlot;
-  final ValueChanged<int> onRemoveSlot;
-  final void Function(int index, bool isFrom) onPickTime;
+  final void Function(bool isFrom, String currentTime) onPickTime;
 
   const DayTile({
     super.key,
     required this.data,
     required this.onToggleEnabled,
-    required this.onToggleExpanded,
-    required this.onAddSlot,
-    required this.onRemoveSlot,
     required this.onPickTime,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin:  EdgeInsets.symmetric(vertical: 6.h),
+      margin: EdgeInsets.symmetric(vertical: 6.h),
       child: Column(
         children: [
           ListTile(
@@ -34,50 +30,45 @@ class DayTile extends StatelessWidget {
               onChanged: onToggleEnabled,
             ),
             title: Text(data.day),
-            trailing: IconButton(
-              icon: Icon(
-                data.isExpanded
-                    ? Icons.keyboard_arrow_up
-                    : Icons.keyboard_arrow_down,
-              ),
-              onPressed: onToggleExpanded,
-            ),
           ),
 
-          if (data.isExpanded && data.isEnabled)
+          if (data.isEnabled)
             Padding(
-              padding:  EdgeInsets.all(12.w),
+              padding: EdgeInsets.all(12.w),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...data.slots.asMap().entries.map((e) {
-                    final index = e.key;
-                    final slot = e.value;
-
-                    return Row(
-                      children: [
-                        _timeBox(
-                          slot.from,
-                          onTap: () => onPickTime(index, true),
-                        ),
-                        const Text("  to  "),
-                        _timeBox(
-                          slot.to,
-                          onTap: () => onPickTime(index, false),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => onRemoveSlot(index),
-                        ),
-                      ],
-                    );
-                  }),
-
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      icon: const Icon(Icons.add_circle),
-                      onPressed: onAddSlot,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildTimeCard(
+                        context,
+                        title: 'Start',
+                        time: data.slots.from,
+                        onTap: () {
+                          onPickTime(true, data.slots.from);
+                        },
+                      ),
+                      SizedBox(width: 20.w),
+                      buildTimeCard(
+                        context,
+                        title: 'End',
+                        time: data.slots.to,
+                        onTap: () {
+                          onPickTime(false, data.slots.to);
+                        },
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                  Switch(
+                    inactiveTrackColor: Colors.grey.shade300,
+                    value: Get.find<BusinessHoursController>().isSameForAllDay,
+                    onChanged: (value) {
+                      Get.find<BusinessHoursController>().changeStatusForAllDay(
+                        DaySchedule(day: data.day, slots: data.slots),value
+                      );
+                    },
                   ),
                 ],
               ),
@@ -87,16 +78,35 @@ class DayTile extends StatelessWidget {
     );
   }
 
-  Widget _timeBox(String text, {required VoidCallback onTap}) {
-    return InkWell(
+  Widget buildTimeCard(
+    BuildContext context, {
+    required String title,
+    required String time,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding:  EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(8.r),
-        ),
-        child: Text(text),
+      child: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            margin: EdgeInsets.only(top: 6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(style: BorderStyle.solid),
+            ),
+            child: Text(time),
+          ),
+          Positioned(
+            left: 7,
+            top: -4,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              color: Colors.white,
+              child: Text(title, style: fontSize14(context)),
+            ),
+          ),
+        ],
       ),
     );
   }

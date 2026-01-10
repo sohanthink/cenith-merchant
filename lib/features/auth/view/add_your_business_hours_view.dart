@@ -33,7 +33,7 @@ class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BusinessHoursController>(
-      builder: (c) {
+      builder: (controller) {
         return ListView(
           children: [
             Card(
@@ -48,85 +48,42 @@ class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
                         Padding(
                           padding: EdgeInsets.only(left: 8.w),
                           child: Text(
-                            "24 Hours / All Day",
-                            style: fontSize18(
-                              context,
-                            )!.copyWith(fontWeight: FontWeight.w600),
+                            "Open 24/7",
+                            style: fontSize18(context)!.copyWith(),
                           ),
                         ),
                         Switch(
                           inactiveTrackColor: Colors.grey.shade300,
-                          value: c.isAllDay,
+                          value: controller.isAllDay,
                           onChanged: (v) {
-                            c.toggleAllDay(v);
-                            widget.onValidChanged(c.isValid);
+                            controller.toggleAllDay(v);
+                            widget.onValidChanged(controller.isValid);
                           },
                         ),
                       ],
                     ),
-
-                    if (c.isAllDay) SizedBox(height: 12.h),
-
-                    if (c.isAllDay)
-                      Row(
-                        children: [
-                          TimePickerBox(
-                            label: "From",
-                            time: c.allDayFrom,
-                            onTap: () async {
-                              final t = await _pickTime(context);
-                              if (t != null) {
-                                c.setAllDayFrom(t);
-                                widget.onValidChanged(c.isValid);
-                              }
-                            },
-                          ),
-                          SizedBox(width: 12.h),
-                          TimePickerBox(
-                            label: "To",
-                            time: c.allDayTo,
-                            onTap: () async {
-                              final t = await _pickTime(context);
-                              if (t != null) {
-                                c.setAllDayTo(t);
-                                widget.onValidChanged(c.isValid);
-                              }
-                            },
-                          ),
-                        ],
-                      ),
                   ],
                 ),
               ),
             ),
 
-            if (!c.isAllDay)
-              ...c.schedules.map(
+            if (!controller.isAllDay)
+              ...controller.schedules.map(
                 (day) => DayTile(
                   data: day,
                   onToggleEnabled: (v) {
-                    c.toggleDayEnabled(day, v);
-                    widget.onValidChanged(c.isValid);
+                    controller.toggleDayEnabled(day, v);
+                    widget.onValidChanged(controller.isValid);
                   },
-                  onToggleExpanded: () => c.toggleExpanded(day),
-                  onAddSlot: () {
-                    c.addSlot(day);
-                    widget.onValidChanged(c.isValid);
-                  },
-                  onRemoveSlot: (i) {
-                    c.removeSlot(day, i);
-                    widget.onValidChanged(c.isValid);
-                  },
-                  onPickTime: (int index, bool isFrom) async {
-                    final t = await _pickTime(context);
-                    if (t != null) {
-                      c.updateSlotTime(
+                  onPickTime: (bool isFrom, String currentTime) async {
+                    final time = await _pickTime(currentTime: currentTime);
+                    if (time != null) {
+                      controller.updateSlotTime(
                         day: day,
-                        index: index,
                         isFrom: isFrom,
-                        time: t,
+                        time: time,
                       );
-                      widget.onValidChanged(c.isValid);
+                      widget.onValidChanged(controller.isValid);
                     }
                   },
                 ),
@@ -137,12 +94,20 @@ class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
     );
   }
 
-  Future<String?> _pickTime(BuildContext context) async {
-    final t = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
+  Future<String?> _pickTime({required String currentTime}) async {
+    List<String> spilledTime = currentTime.split(':');
+    int? currentHour = int.tryParse(spilledTime[0]);
+    int? currentMinute = int.tryParse(spilledTime[1]);
+    DateTime now = DateTime.now();
+    TimeOfDay processedInitialTime = TimeOfDay(
+      hour: currentHour!,
+      minute: currentMinute!,
     );
-    if (t == null) return null;
-    return "${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}";
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: processedInitialTime,
+    );
+    if (pickedTime == null) return null;
+    return "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
   }
 }

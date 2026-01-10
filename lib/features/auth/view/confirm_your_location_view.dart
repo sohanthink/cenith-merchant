@@ -238,4 +238,10 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
     }
   }
 
+
+  @override
+  void dispose() {
+    _mapController?.dispose();
+    super.dispose();
+  }
 }
