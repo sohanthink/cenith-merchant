@@ -64,6 +64,12 @@ TextStyle? fontSize20(context) {
   return TextTheme.of(context).bodyLarge;
 }
 
+TextStyle? fontSize22(context) {
+  return TextTheme.of(context).bodyLarge!.copyWith(
+    fontSize: 23
+  );
+}
+
 TextStyle? fontSize24(context) {
   return TextTheme.of(context).titleMedium;
 }

@@ -23,37 +23,50 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
     final item = Get.find<EditHourViewModel>().dayList;
     return Scaffold(
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10.w),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: [
             SizedBox(height: 40.h),
             buildTitleSection(context),
-            SizedBox(height: 10.h),
-            Expanded(
-              child: ListView.builder(
-                itemCount: item.length,
-                itemBuilder: (context, index) {
-                  final itemIndex = item[index];
-                  return GetBuilder<EditHourViewModel>(
-                    builder: (context) {
-                      return Column(
-                        children: [
-                          EditTimeTile(
-                            day: itemIndex['day'],
-                            startTime: itemIndex['startTime'],
-                            endTime: itemIndex['endTime'],
-                            isOpened: itemIndex['isOpened'],
-                            is24hrs: itemIndex['isOpen24Hrs'],
-                            index:  index,
-                          ),
-                          SizedBox(height: 20.h,)
-                        ],
-                      );
-                    }
-                  );
-                },
+            // SizedBox(height: 10.h),
+            !isOn
+                ? Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.only(top: 10),
+                      itemCount: item.length,
+                      itemBuilder: (context, index) {
+                        final itemIndex = item[index];
+                        return GetBuilder<EditHourViewModel>(
+                          builder: (controller) {
+                            return Column(
+                              children: [
+                                EditTimeTile(
+                                  day: itemIndex['day'],
+                                  startTime: itemIndex['startTime'],
+                                  endTime: itemIndex['endTime'],
+                                  isOpened: itemIndex['isOpened'],
+                                  is24hrs: itemIndex['isOpen24Hrs'],
+                                  index: index,
+                                ),
+                                SizedBox(height: 0.h),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  )
+                : Expanded(child: SizedBox()),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Save',
+                style: fontSize16(context)!.copyWith(color: Colors.white),
               ),
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -72,9 +85,12 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
                 context,
               )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
             ),
-            IconButton(
-              onPressed: () {Navigator.pop(context);},
-              icon: Icon(Icons.close, size: 30.sp),
+
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.close, size: 30.sp),
             ),
           ],
         ),
@@ -84,9 +100,9 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
           children: [
             Text(
               'Open 24/7',
-              style: fontSize16(
+              style: fontSize20(
                 context,
-              )!.copyWith(color: Colors.black,),
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
             ),
             Switch(
               activeTrackColor: Colors.grey,

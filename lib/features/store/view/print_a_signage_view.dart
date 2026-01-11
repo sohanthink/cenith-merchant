@@ -1,13 +1,4 @@
-import 'dart:io';
-
-import 'package:cenith_marchent/core/constants/app_colors.dart';
-import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
-import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/store/widgets/order_tag_and_signage_card.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PrintASignageView extends StatefulWidget {
   const PrintASignageView({super.key});
@@ -19,200 +10,248 @@ class PrintASignageView extends StatefulWidget {
 }
 
 class _PrintASignageViewState extends State<PrintASignageView> {
-  final ImagePicker _imagePicker = ImagePicker();
-  final List<XFile>_pickedImages=[];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+      // --- Updated AppBar ---
       appBar: AppBar(
-        title: Text(
-          'Order Tags & Signage',
-          style: fontSize16(
-            context,
-          )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
+        title: const Text(
+          "Print Signage",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.close, color: AppColors.themeColor),
-          ),
-        ],
-        automaticallyImplyLeading: false,
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16.h),
-              Text(
-                'You can select more than 1 signage type.',
-                style: fontSize14(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0.1.sp),
-              ),
-              SizedBox(height: 16.h),
-              OrderTagAndSignageCard(
-                orderTagName: 'Reusable Tags',
-                orderLength: '60 Per Year',
-                orderDescription:
-                'Reusable security tags to attach to bags from number 1 to 60.',
-              ),
-              SizedBox(height: 16.h),
-              OrderTagAndSignageCard(
-                orderTagName: 'Reusable Tags',
-                orderLength: '60 Per Year',
-                orderDescription:
-                'Reusable security tags to attach to bags from number 1 to 60.',
-              ),
-              SizedBox(height: 16.h),
-              OrderTagAndSignageCard(
-                orderTagName: 'Reusable Tags',
-                orderLength: '60 Per Year',
-                orderDescription:
-                'Reusable security tags to attach to bags from number 1 to 60.',
-              ),
-              SizedBox(height: 16.h),
-              OrderTagAndSignageCard(
-                orderTagName: 'Reusable Tags',
-                orderLength: '60 Per Year',
-                orderDescription:
-                'Reusable security tags to attach to bags from number 1 to 60.',
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildUploadImage(
-                    context,
-                    uploadImageType: 'Add Photo Of Storefront', onPickedImage: _onTapImagePickedStoreFont,
-                  ),
-                  _buildUploadImage(
-                    context,
-                    uploadImageType: 'Add Photo Of \nBag Storage', onPickedImage: _onTapImagePickedBagStorage,
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Row(
-                spacing: 12.w,
-                children: [
-                  for (var image in _pickedImages)
-                    Container(
-                      height: 80.h,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(14.r),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: Container(
+                    width: 350,
+                    height: 520, // Height ektu bariyechi layout adjust korar jonno
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFF3498db), Color(0xFF1abc9c)],
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(14.r),
-                        child:Image.file(
-                          File(image.path),
-                          fit: BoxFit.cover,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 15,
+                          offset: const Offset(0, 8),
                         ),
-                      ),
+                      ],
                     ),
-                  DottedBorder(
-                    options: RoundedRectDottedBorderOptions(
-                      radius: Radius.circular(14.r),
-                      strokeWidth: 2,
-                      dashPattern: [10,4],
-                      color: Colors.grey.withOpacity(0.5),
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        storeNameandSiteSection(),
+                        const SizedBox(height: 25),
+                        discriptionSection(),
+                        const SizedBox(height: 15),
+                        const Text(
+                          "SCAN QR CODE TO BOOK IT",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        qrCodeSection(), // Method name fix korechi
+                        const Spacer(),
+                        // Footer
+                        const Text(
+                          "DOWNLOAD THE APP",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Text(
+                          "RADICAL - LUGGAGE STORAGE",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            _buildStoreButton(Icons.apple, "App Store"),
+                            const SizedBox(width: 10),
+                            _buildStoreButton(Icons.play_arrow, "Google Play"),
+                          ],
+                        ),
+                      ],
                     ),
-                    child: Container(
-                      height: 80.h,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(14.r),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: AppColors.themeColor,
-                        size: 30.sp,
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-              SizedBox(height: 16.h),
-              OrderTagAndSignageCard(
-                orderTagName: 'Reusable Tags',
-                orderLength: '60 Per Year',
-                orderDescription:
-                'Reusable security tags to attach to bags from number 1 to 60.',
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUploadImage(
-      BuildContext context, {
-        required String uploadImageType,
-        required VoidCallback onPickedImage
-      }) {
-    return GestureDetector(
-      onTap: onPickedImage,
-      child: DottedBorder(
-        options: RoundedRectDottedBorderOptions(
-          strokeWidth: 2,
-          dashPattern: [10, 4],
-          radius: Radius.circular(14.r),
-          color: Colors.grey.withOpacity(0.5),
-        ),
-        child: Container(
-          height: 150.h,
-          width: 160.w,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(14.r),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 12.h),
-              Image.asset(ImagePaths.uploadImagePng, width: 50.w),
-              Padding(
-                padding: EdgeInsets.all(8.w),
-                child: Text(
-                  uploadImageType,
-                  textAlign: TextAlign.center,
-                  style: fontSize14(context)?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.1.sp,
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+
+          // --- Bottom Print Button Section ---
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, -2))
+              ],
+            ),
+            child: SafeArea(
+              child: ElevatedButton(
+                onPressed: () {
+                  // Print logic ekhane hobe
+                  print("Printing Signage...");
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF3498db),
+                  minimumSize: const Size(double.infinity, 55),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.print, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      "Print Signage",
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Future<void> _onTapImagePickedStoreFont() async {
-    XFile? image = await _imagePicker.pickImage(source: ImageSource.camera);
-    if (image != null) {
-      _pickedImages.add(image);
-      setState(() {});
-    }
+  // --- UI Methods ---
+
+  Widget qrCodeSection() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(Icons.qr_code_2, size: 110, color: Colors.black),
+        ),
+        const SizedBox(width: 15),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildFeatureRow(Icons.star_outline, "over 2 Million bags\nsafely stored"),
+              const SizedBox(height: 12),
+              _buildFeatureRow(Icons.star_outline, "Luggage guarantee\nof \$,€,£ 3,000"),
+              const SizedBox(height: 12),
+              _buildFeatureRow(Icons.star_outline, "24/7 instant\nsupport"),
+            ],
+          ),
+        ),
+      ],
+    );
   }
-  Future<void>_onTapImagePickedBagStorage()async{
-    XFile? image=await _imagePicker.pickImage(source: ImageSource.camera);
-    if(image!=null){
-      _pickedImages.add(image);
-      setState(() {
 
-      });
-    }
+  Row discriptionSection() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Expanded(
+          child: Text(
+            "STORE\nYOUR\nLUGGAGE\nHERE",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 36,
+              fontWeight: FontWeight.w900,
+              height: 1.1,
+            ),
+          ),
+        ),
+        Opacity(
+          opacity: 0.3,
+          child: const Icon(Icons.shopping_bag_outlined, size: 90, color: Colors.white),
+        ),
+      ],
+    );
+  }
 
+  Row storeNameandSiteSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.luggage, color: Colors.white, size: 22),
+            const SizedBox(width: 8),
+            const Text(
+              "Radical Storage",
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+          ],
+        ),
+        const Text(
+          "radicalstorage.com",
+          style: TextStyle(color: Colors.white70, fontSize: 10),
+        ),
+      ],
+    );
+  }
 
+  Widget _buildFeatureRow(IconData icon, String text) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: Colors.white, size: 16),
+        const SizedBox(width: 6),
+        Flexible(
+          child: Text(
+            text,
+            style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w500),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStoreButton(IconData icon, String store) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.white, size: 16),
+          const SizedBox(width: 6),
+          Text(store, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
   }
 }

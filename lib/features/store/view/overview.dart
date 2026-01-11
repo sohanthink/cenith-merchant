@@ -2,10 +2,12 @@ import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
+import 'package:cenith_marchent/features/store/view_model/overview_view_model.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
 
@@ -112,9 +114,8 @@ class _OverviewState extends State<Overview> {
                 name,
                 style: fontSize16(context)!.copyWith(color: Colors.black),
               ),
-              SizedBox(height: 5.h,),
-              Text(date,
-              style:  fontSize14(context),),
+              SizedBox(height: 5.h),
+              Text(date, style: fontSize14(context)),
             ],
           ),
           Spacer(),
@@ -325,13 +326,14 @@ class _OverviewState extends State<Overview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 8),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     '1',
-                    style: fontSize24(context)!.copyWith(
-                      fontWeight: FontWeight.bold,
+                    style: fontSize22(context)!.copyWith(
+                      fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
                   ),
@@ -339,7 +341,7 @@ class _OverviewState extends State<Overview> {
                     'of 23',
                     style: fontSize16(context)!.copyWith(
                       height: 2,
-                      color: Colors.black,
+                      color: Colors.black54,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -348,7 +350,7 @@ class _OverviewState extends State<Overview> {
               SizedBox(height: 6.h),
               Text(
                 'Walk-in bookings',
-                style: fontSize20(context)!.copyWith(color: Colors.black),
+                style: fontSize18(context)!.copyWith(color: Colors.black),
               ),
               SizedBox(height: 8),
               GestureDetector(
@@ -367,52 +369,84 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Container buildStoreCommissionSection(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(12),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.black12,
-        borderRadius: BorderRadius.circular(10.r),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 10),
-          Text(
-            'Store Commission',
-            style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500),
+  Widget buildStoreCommissionSection(BuildContext context) {
+    return GetBuilder<OverviewViewModel>(
+      builder: (controller) {
+        return Container(
+          padding: EdgeInsets.all(12),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.black12,
+            borderRadius: BorderRadius.circular(10.r),
           ),
-          SizedBox(height: 10.h),
-          storeCommissionRateCard(
-            context,
-            iconsPath: IconsPath.smallBagIconSvg,
-            rate: '€1.5 ',
-            titleText: 'per small bag stored',
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.r),
+            child: InkWell(
+              onTap: () {
+                Get.find<OverviewViewModel>().changeExpandedStatus();
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Store Commission',
+                        style: fontSize20(
+                          context,
+                        )!.copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      AnimatedRotation(
+                        turns: controller.isExpanded ? 0.5 : 00,
+                        duration: Duration(milliseconds: 300),
+                        child: Icon(Icons.keyboard_arrow_down_rounded),
+                      ),
+                    ],
+                  ),
+                  AnimatedSize(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.fastEaseInToSlowEaseOut,
+                    child: controller.isExpanded
+                        ? Column(
+                            children: [
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.smallBagIconSvg,
+                                rate: '€1.5 ',
+                                titleText: 'per small bag stored',
+                              ),
+                              horizontalDivider(),
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.bagIconSvg,
+                                rate: '€3.50 ',
+                                titleText: 'per regular bag stored',
+                              ),
+                              horizontalDivider(),
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.cycleIconSvg,
+                                rate: '€3.75 ',
+                                titleText: 'per odd size item stored',
+                              ),
+                              horizontalDivider(),
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.walkWalkingIconSvg,
+                                rate: '€100 ',
+                                titleText: 'per 20 walk-in bookings',
+                              ),
+                            ],
+                          )
+                        : SizedBox.shrink(),
+                  ),
+                ],
+              ),
+            ),
           ),
-          horizontalDivider(),
-          storeCommissionRateCard(
-            context,
-            iconsPath: IconsPath.bagIconSvg,
-            rate: '€3.50 ',
-            titleText: 'per regular bag stored',
-          ),
-          horizontalDivider(),
-          storeCommissionRateCard(
-            context,
-            iconsPath: IconsPath.cycleIconSvg,
-            rate: '€3.75 ',
-            titleText: 'per odd size item stored',
-          ),
-          horizontalDivider(),
-          storeCommissionRateCard(
-            context,
-            iconsPath: IconsPath.walkWalkingIconSvg,
-            rate: '€100 ',
-            titleText: 'per 20 walk-in bookings',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -486,11 +520,11 @@ class _OverviewState extends State<Overview> {
           children: [
             Text(
               title,
-              style: fontSize20(
+              style: fontSize18(
                 context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 1),
             Text(
               subTitle,
               style: fontSize14(

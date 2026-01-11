@@ -23,16 +23,19 @@ class _StoreViewState extends State<StoreView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 10.h),
-            buildHeaderSection(context),
-            SizedBox(height: 25.h),
-            buildMenuSection(context),
-            SizedBox(height: 20.h),
-            Expanded(child: tabs[selectedIndex]),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 10.h),
+              buildHeaderSection(context),
+              SizedBox(height: 25.h),
+              buildMenuSection(context),
+              SizedBox(height: 20.h),
+              Expanded(child: tabs[selectedIndex]),
+            ],
+          ),
         ),
       ),
     );

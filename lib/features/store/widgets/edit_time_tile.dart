@@ -29,9 +29,8 @@ class EditTimeTile extends StatefulWidget {
   State<EditTimeTile> createState() => _EditTimeTileState();
 }
 
-class _EditTimeTileState extends State<EditTimeTile> {
+class _EditTimeTileState extends State<EditTimeTile> with SingleTickerProviderStateMixin {
   RxBool isExpanded = false.obs;
-
   TimeOfDay initialTime = TimeOfDay.now();
 
   Future setTime(Function(String) updateTime) async {
@@ -56,191 +55,198 @@ class _EditTimeTileState extends State<EditTimeTile> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Container(
-        padding: isExpanded.value
-            ? EdgeInsets.symmetric(horizontal: 10, vertical: 20)
-            : EdgeInsets.zero,
+          () => AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn,
+        margin: EdgeInsets.only(bottom: 10.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: isExpanded.value == true ? Colors.white : null,
+          borderRadius: BorderRadius.circular(15.r),
+          color: isExpanded.value ? Colors.white : Colors.transparent,
+          boxShadow: isExpanded.value
+              ? [BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4))]
+              : [],
         ),
-
-        //main widget tree
-        child: Column(
-          children: [
-            buildNormalTileView(context),
-            SizedBox(height: 15.h),
-            buildTimeButtonSection(),
-          ],
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.r),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              buildNormalTileView(context),
+              AnimatedSize(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.fastOutSlowIn,
+                alignment: Alignment.topCenter,
+                child: isExpanded.value
+                    ? Padding(
+                  padding: EdgeInsets.fromLTRB(15.w, 0, 15.w, 20.h),
+                  child: buildTimeButtonSection(),
+                )
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget buildNormalTileView(BuildContext context) {
-    return Column(
-      children: [
-        Row(
+    return InkWell(
+      onTap: () => isExpanded.value = !isExpanded.value,
+      borderRadius: BorderRadius.circular(15.r),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 15.w),
+        child: Column(
           children: [
-            GestureDetector(
-              onTap: () {
-                Get.find<EditHourViewModel>().updateOpenStatus(widget.index);
-              },
-              child: GetBuilder<EditHourViewModel>(
-                builder: (controller) {
-                  return Container(
-                    height: 25.h,
-                    width: 25.w,
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.find<EditHourViewModel>().updateOpenStatus(widget.index);
+                  },
+                  child: Container(
+                    height: 22.h,
+                    width: 22.w,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        width: 1.w,
-                        color: Colors.grey.shade700,
+                        width: 1.5.w,
+                        color: widget.isOpened ? AppColors.themeColor : Colors.grey,
                       ),
-                      borderRadius: BorderRadiusGeometry.circular(2.r),
+                      borderRadius: BorderRadius.circular(4.r),
+                      color: widget.isOpened ? AppColors.themeColor.withOpacity(0.1) : Colors.transparent,
                     ),
                     child: widget.isOpened
                         ? Center(
-                            child: Icon(
-                              Icons.done,
-                              color: AppColors.themeColor,
-                              size: 20.sp,
-                            ),
-                          )
-                        : SizedBox(),
-                  );
-                },
+                      child: Icon(
+                        Icons.done,
+                        color: AppColors.themeColor,
+                        size: 16.sp,
+                      ),
+                    )
+                        : null,
+                  ),
+                ),
+                SizedBox(width: 15.w),
+                Text(
+                  widget.day,
+                  style: fontSize20(context)!.copyWith(
+                    color: Colors.black,
+                    fontWeight: isExpanded.value ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  Get.find<EditHourViewModel>().dayList[widget.index]['isOpen24Hrs']
+                      ? '24 Hour'
+                      : '${widget.startTime} - ${widget.endTime}',
+                  style: fontSize16(context)!.copyWith(color: Colors.black54),
+                ),
+                SizedBox(width: 10.w),
+                AnimatedRotation(
+                  turns: isExpanded.value ? 0.5 : 0.0,
+                  duration: const Duration(milliseconds: 400),
+                  child: SvgPicture.asset(
+                    IconsPath.downArrowSvg,
+                    height: 20.h,
+                    width: 20.w,
+                    colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                  ),
+                ),
+              ],
+            ),
+            if (!isExpanded.value)
+              Padding(
+                padding: EdgeInsets.only(top: 15.h),
+                child: const Divider(thickness: .4, color: Colors.grey, height: 0),
               ),
-            ),
-            SizedBox(width: 15.w),
-            Text(
-              widget.day,
-              style: fontSize20(
-                context,
-              )!.copyWith(color: Colors.black,),
-            ),
-            Spacer(),
-            Text(
-              Get.find<EditHourViewModel>().dayList[widget.index]['isOpen24Hrs']
-                  ? '24 Hour'
-                  : '${widget.startTime} - ${widget.endTime}',
-              style: fontSize16(context)!.copyWith(color: Colors.black),
-            ),
-            SizedBox(width: 12.h),
-            GestureDetector(
-              onTap: () {
-                isExpanded.value = !isExpanded.value;
-              },
-              child: SvgPicture.asset(
-                IconsPath.downArrowSvg,
-                height: 25.h,
-                width: 25.w,
-              ),
-            ),
           ],
         ),
-        isExpanded.value == false
-            ? Column(
-                children: [
-                  SizedBox(height: 20.h),
-                  Divider(thickness: .4,color: Colors.grey,)
-                ],
-              )
-            : SizedBox.shrink(),
-      ],
+      ),
     );
   }
 
   Widget buildTimeButtonSection() {
-    return isExpanded.value == true
-        ? GetBuilder<EditHourViewModel>(
-            builder: (controller) {
-              return Column(
+    return GetBuilder<EditHourViewModel>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Divider(thickness: .4, color: Colors.grey),
+            SizedBox(height: 15.h),
+            if (!widget.is24hrs)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  !widget.is24hrs
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            buildTimeButton(
-                              time: widget.startTime,
-                              onTap: () {
-                                setTime((time) {
-                                  controller.updateStartTime(
-                                    widget.index,
-                                    time,
-                                  );
-                                });
-                              },
-                            ),
-                            buildTimeButton(
-                              time: widget.endTime,
-                              onTap: () {
-                                setTime((time) {
-                                  controller.updateEndTime(widget.index, time);
-                                });
-                              },
-                            ),
-                          ],
-                        )
-                      : SizedBox.shrink(),
-                  SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      Text(
-                        'Open 24',
-                        style: fontSize16(
-                          context,
-                        )!.copyWith(color: Colors.black),
-                      ),
-                      SizedBox(width: 10.w),
-
-                      GetBuilder<EditHourViewModel>(
-                        builder: (controller) {
-                          return Switch(
-                            activeTrackColor: Colors.grey,
-                            inactiveTrackColor: Colors.grey,
-                            thumbColor: WidgetStateProperty.resolveWith((
-                              state,
-                            ) {
-                              if (state.contains(WidgetState.selected)) {
-                                return Colors.white;
-                              } else {
-                                return Colors.white;
-                              }
-                            }),
-                            value: widget.is24hrs,
-                            onChanged: (value) {
-                              controller.update24HoursOpen(widget.index);
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                  buildTimeButton(
+                    label: "Start Time",
+                    time: widget.startTime,
+                    onTap: () {
+                      setTime((time) => controller.updateStartTime(widget.index, time));
+                    },
+                  ),
+                  buildTimeButton(
+                    label: "End Time",
+                    time: widget.endTime,
+                    onTap: () {
+                      setTime((time) => controller.updateEndTime(widget.index, time));
+                    },
                   ),
                 ],
-              );
-            },
-          )
-        : SizedBox.shrink();
+              ),
+            SizedBox(height: 20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Open 24 hour',
+                  style: fontSize16(context)!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                ),
+                Switch(
+                  activeThumbColor: AppColors.themeColor,
+                  inactiveThumbColor: Colors.grey,
+                  inactiveTrackColor: Colors.grey.shade300,
+                  value: widget.is24hrs,
+                  onChanged: (value) {
+                    controller.update24HoursOpen(widget.index);
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Widget buildTimeButton({required String time, required VoidCallback onTap}) {
-    return Container(
-      width: 150.w,
-      padding: EdgeInsets.all(10.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(width: 1.w, color: Colors.black),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(time, style: fontSize14(context)!.copyWith(color: Colors.black)),
-          GestureDetector(
-            onTap: onTap,
-            child: SvgPicture.asset(IconsPath.downArrowSvg),
+  Widget buildTimeButton({required String label, required String time, required VoidCallback onTap}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: fontSize12(context)!.copyWith(color: Colors.grey)),
+        SizedBox(height: 5.h),
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: 145.w,
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(width: 1.w, color: Colors.grey.shade300),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  time,
+                  style: fontSize14(context)!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                Icon(Icons.access_time, size: 18.sp, color: Colors.grey),
+              ],
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
+

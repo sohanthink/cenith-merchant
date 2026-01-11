@@ -4,6 +4,7 @@ import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
+import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -143,19 +144,16 @@ class _SignageViewState extends State<SignageView> {
                 ),
                 space(16),
                 _buildButton(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    OrderTagAndSignageView.name,
-                  ),
+                  onTap: () =>
+                      Navigator.pushNamed(context, PrintASignageView.name),
                   buttonName: 'Print A Signage',
                 ),
                 SizedBox(height: 24.h),
                 Text(
                   'Your orders',
-                  style: fontSize20(context)?.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                  style: fontSize20(
+                    context,
+                  )?.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
                 ),
                 space(16),
                 Text(
@@ -164,10 +162,8 @@ class _SignageViewState extends State<SignageView> {
                 ),
                 space(16),
                 _buildButton(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    OrderTagAndSignageView.name,
-                  ),
+                  onTap: () =>
+                      Navigator.pushNamed(context, OrderTagAndSignageView.name),
                   buttonName: 'Order Tags & Signage',
                 ),
                 space(16),
