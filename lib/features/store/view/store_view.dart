@@ -42,43 +42,46 @@ class _StoreViewState extends State<StoreView> {
   }
 
   Widget buildMenuSection(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((item) {
-        return Expanded(
-          child: GestureDetector(
-            onTap: () {
-              selectedIndex = item.key;
-              //TODO: remove the setState when fetch the api
-              setState(() {});
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 4),
-              decoration: BoxDecoration(
-                color: item.key == selectedIndex
-                    ? AppColors.themeColor
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.w,
-                  vertical: 10.h,
+    return Padding(
+      padding: const EdgeInsets.all(6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: ['Overview', 'Hours', 'Signage'].asMap().entries.map((item) {
+          return Expanded(
+            child: GestureDetector(
+              onTap: () {
+                selectedIndex = item.key;
+                //TODO: remove the setState when fetch the api
+                setState(() {});
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  color: item.key == selectedIndex
+                      ? AppColors.themeColor
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    item.value,
-                    style: fontSize14(context)!.copyWith(
-                      color: item.key == selectedIndex ? Colors.white : null,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 10.h,
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      item.value,
+                      style: fontSize14(context)!.copyWith(
+                        color: item.key == selectedIndex ? Colors.white : null,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 

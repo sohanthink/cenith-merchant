@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
+import '../widgets/bottom_sheet_card.dart';
 
 class Overview extends StatefulWidget {
   const Overview({super.key});
@@ -23,7 +24,7 @@ class _OverviewState extends State<Overview> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,11 +33,11 @@ class _OverviewState extends State<Overview> {
             buildStoreOverViewSection(context),
             SizedBox(height: 30.h),
             buildStoreCommissionSection(context),
-            SizedBox(height: 10.h),
+            SizedBox(height: 15.h),
             walkInBookingCountCard(context),
-            SizedBox(height: 10.h),
+            SizedBox(height: 15.h),
             buildContactInfoCard(context),
-            SizedBox(height: 10.h),
+            SizedBox(height: 20.h),
             buildLocationPhotoSection(context),
             SizedBox(height: 15),
             buildReviewSection(context),
@@ -125,7 +126,10 @@ class _OverviewState extends State<Overview> {
             children: List.generate(stars, (index) {
               return SvgPicture.asset(
                 IconsPath.starIconSvg,
-                color: AppColors.themeColor,
+                colorFilter: ColorFilter.mode(
+                  AppColors.themeColor,
+                  BlendMode.srcIn,
+                ),
               );
             }),
           ),
@@ -150,43 +154,40 @@ class _OverviewState extends State<Overview> {
           'Partners with storefront photos are preferred by '
           'customers and receive higher reviews on average. '
           'Add yours to help increase bookings.',
+          textAlign: TextAlign.justify,
           style: fontSize14(
             context,
           )!.copyWith(fontWeight: FontWeight.w300, color: Colors.black),
         ),
-        SizedBox(height: 20),
-        Text(
-          'Learn how to take good photos',
-          style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
+        SizedBox(height: 10),
+        GestureDetector(
+          onTap: () {},
+          child: Text(
+            'Learn how to take good photos',
+            style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
+          ),
         ),
         SizedBox(height: 25),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          spacing: 20.w,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: () {},
-                child: uploadImageCard(context, 'Add photos of\nstorefront'),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {},
-                child: uploadImageCard(context, 'Add photos of\nBag store'),
-              ),
-            ),
+            uploadImageCard(context, 'Add photos of\nstorefront'),
+            uploadImageCard(context, 'Add photos of\nBag store')
           ],
         ),
-        SizedBox(height: 25),
+        SizedBox(height: 15),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
+            spacing: 12,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: images
                 .asMap()
                 .entries
                 .map(
                   (e) => Container(
-                    margin: EdgeInsets.all(10),
+                    // margin: EdgeInsets.all(10),
                     height: 100,
                     width: 100,
                     decoration: DottedDecoration(
@@ -224,7 +225,7 @@ class _OverviewState extends State<Overview> {
               children: [
                 SvgPicture.asset(
                   IconsPath.downloadIconSvg,
-                  color: Colors.white,
+                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
                 SizedBox(width: 10),
                 Text(
@@ -240,32 +241,34 @@ class _OverviewState extends State<Overview> {
   }
 
   Widget uploadImageCard(BuildContext context, String title) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      decoration: DottedDecoration(
-        dash: [4, 5],
-        strokeWidth: 2,
-        shape: Shape.box,
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey,
-      ),
+    return Expanded(
       child: Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+        // margin: EdgeInsets.symmetric(horizontal: 10),
+        decoration: DottedDecoration(
+          dash: [4, 5],
+          strokeWidth: 2,
+          shape: Shape.box,
           borderRadius: BorderRadius.circular(10),
+          color: Colors.grey,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(IconsPath.uploadIconSvg, width: 100),
-            SizedBox(height: 10),
-            Text(
-              textAlign: TextAlign.center,
-              title,
-              style: fontSize16(context),
-            ),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(IconsPath.uploadIconSvg, width: 100),
+              SizedBox(height: 10),
+              Text(
+                textAlign: TextAlign.center,
+                title,
+                style: fontSize16(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -273,6 +276,7 @@ class _OverviewState extends State<Overview> {
 
   Card buildContactInfoCard(BuildContext context) {
     return Card(
+      margin: EdgeInsets.all(0),
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -312,8 +316,9 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Card walkInBookingCountCard(BuildContext context) {
+  Widget walkInBookingCountCard(BuildContext context) {
     return Card(
+      margin: EdgeInsets.all(0),
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -559,6 +564,60 @@ class _OverviewState extends State<Overview> {
           child: Text('Print A Signage'),
         ),
       ],
+    );
+  }
+
+  Future<dynamic> buildModalButtonSection(BuildContext context) {
+    List bottomSheetCards = [
+      LearnHowToTakeGoodPhotoWidget(title: 'AvoidCroppedPhotos'),
+      LearnHowToTakeGoodPhotoWidget(title: 'AvoidCroppedPhotos'),
+      LearnHowToTakeGoodPhotoWidget(
+        title: 'Ensure your photo is bright enough',
+      ),
+      LearnHowToTakeGoodPhotoWidget(title: 'Avoid too many elements'),
+    ];
+
+    RxInt selectedIndex = 0.obs;
+
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Obx(
+                () => Column(
+                  children: [
+                    bottomSheetCards[selectedIndex.value],
+                    SizedBox(height: 10.h),
+                    Text(
+                      '${selectedIndex.value} of ${bottomSheetCards.length}',
+                      style: fontSize14(
+                        context,
+                      )!.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 10.h),
+              ElevatedButton(
+                onPressed: () {
+                  if (selectedIndex.value != bottomSheetCards.length - 1) {
+                    selectedIndex + 1;
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Next'),
+              ),
+              SizedBox(height: 20.h),
+            ],
+          ),
+        );
+      },
     );
   }
 }

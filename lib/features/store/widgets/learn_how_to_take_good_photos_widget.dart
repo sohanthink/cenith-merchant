@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/text_theme.dart';
 
-class LearnHowToTakeGoodPhotoWidget extends StatelessWidget {
-  const LearnHowToTakeGoodPhotoWidget({super.key, required this.title});
+class BottomSheetCard extends StatelessWidget {
+  const BottomSheetCard({super.key, required this.title});
 
   final String title;
 
