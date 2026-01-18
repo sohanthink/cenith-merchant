@@ -1,126 +1,102 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
+import 'package:cenith_marchent/features/auth/view/auth_view.dart';
+import 'package:cenith_marchent/features/auth/view/sign_up_view.dart';
 import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-
 import '../../../core/theme/text_theme.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({super.key});
 
-  static const name = 'Log in view';
+  static const name = 'logInView';
 
   @override
   State<LogInView> createState() => _LogInViewState();
 }
 
 class _LogInViewState extends State<LogInView> {
-  final TextEditingController _phoneTEController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Color(0xFFF0F5FA), Color(0xFFE8F0F8)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SafeArea(
           child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 80.h),
+                SizedBox(height: 130.h),
+                SvgPicture.asset(IconsPath.appLogoSvg, height: 120, width: 120),
+                SizedBox(height: 20.h),
                 Text(
-                  'Sign in',
-                  style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                  'Luggage storage near you',
+                  style: fontSize16(
+                    context,
+                  )!.copyWith(color: Colors.grey, letterSpacing: 1),
                 ),
-                SizedBox(height: 20),
-                Text(
-                  'We will a confirmation otp to your phone.',
-                  style: fontSize16(context)!.copyWith(color: Colors.black54),
-                ),
-                SizedBox(height: 8),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                    children: [
-                      TextSpan(text: 'Sign in with '),
-                      TextSpan(
-                        text: 'Email',
-                        style: TextStyle(color: AppColors.themeColor),
-                      ),
-                    ],
-                  ),
+                SizedBox(height: 100.h),
+                _buildTextField(hint: 'hello@example.com'),
+                SizedBox(height: 20.h),
+                _buildTextField(hint: '••••••••', isPassword: true),
+                SizedBox(height: 40.h),
+                buildCustomButon(
+                  title: 'Log in',
+                  onTap: () {
+                    Navigator.pushNamed(context, MainBottomNavView.name);
+                  },
+                  backgroundColor: AppColors.themeColor,
+                  foregroundColor: Colors.white,
                 ),
 
-                SizedBox(height: 100),
-                Text(
-                  'Phone number',
-                  style: fontSize14(context)!.copyWith(color: Colors.black54),
-                ),
-                SizedBox(height: 8),
-                Form(child: _buildPhoneNumberField()),
-                SizedBox(height: 30),
-                buildActionButton(
-                  child: Text(
-                    'Login',
-                    style: fontSize16(context)!.copyWith(color: Colors.white),
-                  ),
-                  onTap: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      MainBottomNavView.name,
-                      (predicate) => false,
-                    );
-                  },
-                ),
-                SizedBox(height: 50),
+                SizedBox(height: 50.h),
+
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Divider(thickness: 1, color: Colors.grey.shade400),
+                    Text(
+                      "Don't have an account? ",
+                      style: TextStyle(color: Colors.grey, fontSize: 14.sp),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AuthView.name);
+                      },
                       child: Text(
-                        'or continue with',
-                        style: fontSize14(
-                          context,
-                        )!.copyWith(color: Colors.grey.shade500),
+                        "Sign Up",
+                        style: TextStyle(
+                          color: AppColors.themeColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Divider(thickness: 1, color: Colors.grey.shade400),
                     ),
                   ],
                 ),
-                SizedBox(height: 50),
-                buildActionButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(IconsPath.googleIconSvg, height: 30),
-                      SizedBox(width: 10),
-                      Text('Login with google'),
-                    ],
+                SizedBox(height: 20.h),
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        color: AppColors.themeColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.sp,
+                      ),
+                    ),
                   ),
-                  onTap: () {},
-                ),
-
-                SizedBox(height: 12),
-
-                buildActionButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(IconsPath.appleIconSvg, height: 30),
-                      SizedBox(width: 10),
-                      Text('Log in with apple'),
-                    ],
-                  ),
-                  onTap: () {},
                 ),
               ],
             ),
@@ -130,143 +106,49 @@ class _LogInViewState extends State<LogInView> {
     );
   }
 
-  Widget _buildPhoneNumberField() {
-    return IntlPhoneField(
-      countries: [
-        Country(
-          name: "United States",
-          nameTranslations: {
-            "en": "United States",
-            "bn": "মার্কিন যুক্তরাষ্ট্র",
-          },
-          flag: "🇺🇸",
-          code: "US",
-          dialCode: "1",
-          minLength: 10,
-          maxLength: 10,
-        ),
-        Country(
-          name: "United Kingdom",
-          nameTranslations: {"en": "United Kingdom", "bn": "যুক্তরাজ্য"},
-          flag: "🇬🇧",
-          code: "GB",
-          dialCode: "44",
-          minLength: 10,
-          maxLength: 10,
-        ),
-        Country(
-          name: "Italy",
-          nameTranslations: {"en": "Italy", "bn": "ইতালি"},
-          flag: "🇮🇹",
-          code: "IT",
-          dialCode: "39",
-          minLength: 10,
-          maxLength: 10,
-        ),
-        Country(
-          name: "France",
-          nameTranslations: {"en": "France", "bn": "ফ্রান্স"},
-          flag: "🇫🇷",
-          code: "FR",
-          dialCode: "33",
-          minLength: 9,
-          maxLength: 9,
-        ),
-        // Switzerland
-        Country(
-          name: "Switzerland",
-          nameTranslations: {"en": "Switzerland", "bn": "সুইজারল্যান্ড"},
-          flag: "🇨🇭",
-          code: "CH",
-          dialCode: "41",
-          minLength: 9,
-          maxLength: 9,
-        ),
-        // Austria
-        Country(
-          name: "Austria",
-          nameTranslations: {"en": "Austria", "bn": "অস্ট্রিয়া"},
-          flag: "🇦🇹",
-          code: "AT",
-          dialCode: "43",
-          minLength: 10,
-          maxLength: 13,
-        ),
-        // Germany
-        Country(
-          name: "Germany",
-          nameTranslations: {"en": "Germany", "bn": "জার্মানি"},
-          flag: "🇩🇪",
-          code: "DE",
-          dialCode: "49",
-          minLength: 10,
-          maxLength: 11,
-        ),
-        // Spain
-        Country(
-          name: "Spain",
-          nameTranslations: {"en": "Spain", "bn": "স্পেন"},
-          flag: "🇪🇸",
-          code: "ES",
-          dialCode: "34",
-          minLength: 9,
-          maxLength: 9,
-        ),
-      ],
-
-      style: fontSize16(context),
-      controller: _phoneTEController,
-      keyboardType: TextInputType.phone,
-      textInputAction: TextInputAction.next,
-      dropdownIcon: const Icon(Icons.keyboard_arrow_down),
-      initialCountryCode: 'IT',
-      validator: (phone) {
-        if (phone == null || phone.number.isEmpty) {
-          return 'Phone number required';
-        }
-        final regex = RegExp(r'^\+?[1-9]\d{1,14}$');
-        if (!regex.hasMatch(phone.completeNumber)) {
-          return 'Invalid phone number';
-        }
-        return null;
-      },
+  Widget _buildTextField({required String hint, bool isPassword = false}) {
+    return TextField(
+      obscureText: isPassword,
       decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.r),
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.r),
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.r),
-          borderSide: BorderSide(color: Colors.red),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
+        hintText: hint,
+        hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15.sp),
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       ),
-      dropdownTextStyle: fontSize16(context)?.copyWith(color: Colors.black),
-      disableLengthCheck: true,
     );
   }
 
-  Widget buildActionButton({
-    required Widget child,
+  Widget buildCustomButon({
+    required String title,
     required VoidCallback onTap,
+    required Color backgroundColor,
+    required Color foregroundColor,
   }) {
-    return SizedBox(
-      width: double.infinity,
-      height: 60,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.themeColor,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadiusGeometry.circular(35),
-          ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 45.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(15.r),
+          boxShadow: [
+            if (backgroundColor == Colors.white)
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4.r,
+                offset: const Offset(0, 2),
+              ),
+          ],
         ),
-        onPressed: onTap,
-        child: child,
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: fontSize18(
+            context,
+          )!.copyWith(color: foregroundColor, fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }

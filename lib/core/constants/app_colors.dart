@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class AppColors{
 
-  static final Color _themeColor = const Color(0xFF0082E0);
-  static final Color _darkBlue = const Color(0xFF141D3F);
-  static final Color _midLightBlue = const Color(0xFF40A1E8);
-  static final Color _lightBlue = const Color(0xFFBFE0F7);
-  static final Color _scaffoldColor = const Color(0xFFF4F4F7);
-  static final Color _greenShade = const Color(0xFF37F222);
-  static final Color _black = const Color(0xFFE8E7EC);
+  static const Color _themeColor = const Color(0xFF0082E0);
+  static const Color _darkBlue = const Color(0xFF141D3F);
+  static const Color _midLightBlue = const Color(0xFF40A1E8);
+  static const Color _lightBlue = const Color(0xFFBFE0F7);
+  static const Color _scaffoldColor = const Color(0xFFF4F4F7);
+  static const Color _greenShade = const Color(0xFF37F222);
+  static const Color _black = const Color(0xFFE8E7EC);
 
   static MaterialColor themeColor = getMaterialColor(_themeColor);
   static MaterialColor darkBlue = getMaterialColor(_darkBlue);
