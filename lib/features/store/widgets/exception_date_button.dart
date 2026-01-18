@@ -5,17 +5,21 @@ import '../../../core/constants/asstes_path/icons_path.dart';
 import '../../../core/theme/text_theme.dart';
 
 class ExceptionDateButton extends StatelessWidget {
-  const ExceptionDateButton({super.key, required this.time});
+  const ExceptionDateButton({
+    super.key,
+    required this.time,
+    required this.onTap,
+  });
 
   final String time;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width/2.4,
-        // margin: EdgeInsets.symmetric(horizontal: 10),
+        width: MediaQuery.of(context).size.width / 2.4,
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade500, width: 1),

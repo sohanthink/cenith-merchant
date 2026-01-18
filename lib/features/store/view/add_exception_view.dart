@@ -1,9 +1,14 @@
+import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/core/utils/custom_snackbar.dart';
+import 'package:cenith_marchent/features/store/view_model/add_exception_view_model.dart';
 import 'package:cenith_marchent/features/store/widgets/exception_date_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AddExceptionView extends StatefulWidget {
   const AddExceptionView({super.key});
@@ -15,9 +20,8 @@ class AddExceptionView extends StatefulWidget {
 }
 
 class _AddExceptionViewState extends State<AddExceptionView> {
-  bool isOn = true;
   int maxLine = 1;
-  final TextEditingController _resonTEController = TextEditingController();
+  final TextEditingController _reasonTEController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,71 +45,107 @@ class _AddExceptionViewState extends State<AddExceptionView> {
     );
   }
 
-  Column buildExceptionSetupSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget buildExceptionSetupSection(BuildContext context) {
+    return GetBuilder<AddExceptionViewModel>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ExceptionDateButton(time: 'Thu, 2/6'),
-            Text('To'),
-            ExceptionDateButton(time: 'Thu, 2/6'),
-          ],
-        ),
-        SizedBox(height: 25.h),
-        Row(
-          children: [
-            Switch(
-              value: isOn,
-              onChanged: (value) {
-                setState(() {
-                  isOn = !isOn;
-                });
-              },
-              activeTrackColor: Colors.grey,
-              inactiveTrackColor: Colors.grey,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ExceptionDateButton(
+                  time: dateShortNer(controller.startDate),
+                  onTap: () {
+                    onChangeDate(
+                      controller: controller,
+                      dateType: DateType.startDate,
+                    );
+                  },
+                ),
+                Text('To'),
+                ExceptionDateButton(
+                  time: dateShortNer(controller.endDate),
+                  onTap: () {
+                    onChangeDate(
+                      controller: controller,
+                      dateType: DateType.endDate,
+                    );
+                  },
+                ),
+              ],
             ),
-            SizedBox(width: 10.w),
+            SizedBox(height: 25.h),
+            Row(
+              children: [
+                Switch(
+                  value: controller.isClose,
+                  onChanged: (value) {
+                    controller.onSwitchChange(value);
+                  },
+                  activeTrackColor: AppColors.themeColor,
+                  inactiveTrackColor: Colors.grey,
+                ),
+                SizedBox(width: 10.w),
+                Text(
+                  'Close All Day',
+                  style: fontSize20(
+                    context,
+                  )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.h),
             Text(
-              'Close All Day',
-              style: fontSize20(
-                context,
-              )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+              'Open Hours',
+              style: fontSize16(context)!.copyWith(color: Colors.black),
+            ),
+            SizedBox(height: 15.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buildTimeCard(
+                  time: timeShortNer(controller.startTime),
+                  onTap: () {
+                    onChangeTime(
+                      controller: controller,
+                      time: controller.startTime,
+                      timeType: TimeType.startTime,
+                    );
+                  },
+                ),
+                Text('To'),
+                buildTimeCard(
+                  time: timeShortNer(controller.endTime),
+                  onTap: () {
+                    onChangeTime(
+                      controller: controller,
+                      time: controller.endTime,
+                      timeType: TimeType.endTime,
+                    );
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 15.h),
+            Text('Reason'),
+            SizedBox(height: 15.h),
+            TextFormField(
+              controller: _reasonTEController,
+              style: TextStyle(color: Colors.black, fontSize: 15),
+              maxLines: 5,
+              maxLength: 100,
+              decoration: InputDecoration(
+                fillColor: Colors.grey.shade300,
+                border: buildOutlineInputBorder(),
+                focusedBorder: buildOutlineInputBorder(),
+                disabledBorder: buildOutlineInputBorder(),
+                enabledBorder: buildOutlineInputBorder(),
+              ),
             ),
           ],
-        ),
-        SizedBox(height: 20.h),
-        Text(
-          'Open Hours',
-          style: fontSize16(context)!.copyWith(color: Colors.black),
-        ),
-        SizedBox(height: 15.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            buildTimeCard(context, '09.00'),
-            Text('To'),
-            buildTimeCard(context, '09.00'),
-          ],
-        ),
-        SizedBox(height: 15.h),
-        Text('Reason'),
-        SizedBox(height: 15.h),
-        TextFormField(
-          controller: _resonTEController,
-          style: TextStyle(color: Colors.black, fontSize: 15),
-          maxLines: 5,
-          maxLength: 100,
-          decoration: InputDecoration(
-            fillColor: Colors.grey.shade300,
-            border: buildOutlineInputBorder(),
-            focusedBorder: buildOutlineInputBorder(),
-            disabledBorder: buildOutlineInputBorder(),
-            enabledBorder: buildOutlineInputBorder(),
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -116,23 +156,29 @@ class _AddExceptionViewState extends State<AddExceptionView> {
     );
   }
 
-  Container buildTimeCard(BuildContext context, String time) {
-    return Container(
-      width: MediaQuery.of(context).size.width / 2.4,
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: 1),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(time, style: fontSize16(context)!.copyWith(color: Colors.black)),
-          GestureDetector(
-            onTap: () {},
-            child: SvgPicture.asset(IconsPath.downArrowSvg),
-          ),
-        ],
+  Widget buildTimeCard({required String time, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2.4,
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black, width: 1),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              time,
+              style: fontSize16(context)!.copyWith(color: Colors.black),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: SvgPicture.asset(IconsPath.downArrowSvg),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -154,16 +200,17 @@ class _AddExceptionViewState extends State<AddExceptionView> {
         ),
         SizedBox(height: 30.h),
         Text(
-          'add exception',
+          'Add exception',
           style: fontSize24(
             context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
         ),
-        SizedBox(height: 15.h),
+        SizedBox(height: 12.h),
         Text(
           textAlign: TextAlign.justify,
           'Specify when your store is open to receive customers.'
           ' It will be closed outside of these times.',
+          style: fontSize14(context),
         ),
         SizedBox(height: 20.h),
         Text('Dates'),
@@ -175,9 +222,64 @@ class _AddExceptionViewState extends State<AddExceptionView> {
     Navigator.pop(context);
   }
 
+  String dateShortNer(DateTime date) {
+    String formatedDate = DateFormat('EEE, MM/dd').format(date);
+    return formatedDate;
+  }
+
+  String timeShortNer(TimeOfDay time) {
+    String hour = '${time.hour}'.padLeft(2, '0');
+    String minute = '${time.minute}'.padLeft(2, '0');
+
+    String formatedTime = '$hour:$minute ';
+    return formatedTime;
+  }
+
+  Future onChangeTime({
+    required AddExceptionViewModel controller,
+    required TimeOfDay time,
+    required TimeType timeType,
+  }) async {
+    TimeOfDay? pickedTime = await controller.timePicker(context, time: time);
+
+    if (pickedTime != null) {
+      controller.updateTime(
+        time: pickedTime,
+        timeType: timeType,
+        onInvalidTimeRange: () {
+          customSnackBar(
+            context: context,
+            title: 'Start date cannot be after end date',
+          );
+
+          print('hit snackbar');
+        },
+      );
+    }
+  }
+
+  Future onChangeDate({
+    required AddExceptionViewModel controller,
+    required DateType dateType,
+  }) async {
+    DateTime? pickedDate = await controller.datePicker(context);
+    if (pickedDate != null) {
+      controller.updateDate(
+        date: pickedDate,
+        dateType: dateType,
+        onInvalidDateRange: () {
+          customSnackBar(
+            context: context,
+            title: 'Start date cannot be after end date',
+          );
+        },
+      );
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
-    _resonTEController.dispose();
+    _reasonTEController.dispose();
   }
 }

@@ -28,7 +28,6 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
           children: [
             SizedBox(height: 40.h),
             buildTitleSection(context),
-            // SizedBox(height: 10.h),
             !isOn
                 ? Expanded(
                     child: ListView.builder(
