@@ -64,21 +64,23 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTopSection(context),
-                SizedBox(height: 40.h),
-                _buildPinCodeFieldsSection(context),
-                SizedBox(height: 32.h),
-                _buildConfirmBtttonSection(context),
-                SizedBox(height: 32.h),
-                _buildDidnotCodeSection(context),
-              ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTopSection(context),
+                  SizedBox(height: 40.h),
+                  _buildPinCodeFieldsSection(context),
+                  SizedBox(height: 32.h),
+                  _buildConfirmBtttonSection(context),
+                  SizedBox(height: 32.h),
+                  _buildDidnotCodeSection(context),
+                ],
+              ),
             ),
           ),
         ),

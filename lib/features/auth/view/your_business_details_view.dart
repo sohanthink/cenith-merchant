@@ -100,8 +100,9 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
             ? AutovalidateMode.always
             : AutovalidateMode.disabled,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
             TextFormField(
               controller: _businessNameController,
               textInputAction: TextInputAction.next,
