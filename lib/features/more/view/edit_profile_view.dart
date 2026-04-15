@@ -232,18 +232,18 @@ class _EditProfileViewState extends State<EditProfileView> {
               width: 400.w,
             ),
           ),
+          // Positioned(
+          //   top: 30.h,
+          //   left: 20.w,
+          //   child: Text(
+          //     'Your Affiliate link',
+          //     style: fontSize16(
+          //       context,
+          //     )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp),
+          //   ),
+          // ),
           Positioned(
             top: 30.h,
-            left: 20.w,
-            child: Text(
-              'Your Affiliate link',
-              style: fontSize16(
-                context,
-              )?.copyWith(fontWeight: FontWeight.w500, letterSpacing: 0.1.sp),
-            ),
-          ),
-          Positioned(
-            top: 70.h,
             left: 20.w,
             child: Text(
               'Share this link with others and earn money',

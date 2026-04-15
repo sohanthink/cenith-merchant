@@ -1,17 +1,19 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/booking/view/download_view.dart';
 import 'package:cenith_marchent/features/booking/view_moel/booking_view_model.dart';
-import 'package:cenith_marchent/features/booking/widgets/custom_circle_icons.dart';
-import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
+import 'package:cenith_marchent/features/booking/widgets/no_booking_yet_widget.dart';
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../common/widgets/contact_support_text.dart';
 import '../../common/widgets/loading_annimation.dart';
+import '../widgets/booking_card.dart';
+import '../widgets/custom_circle_icons.dart';
+import 'download_view.dart';
 
 class BookingView extends StatefulWidget {
   const BookingView({super.key});
@@ -41,10 +43,21 @@ class _BookingViewState extends State<BookingView> {
           });
         }
       });
+
+      if (calenderKey.currentContext != null) {
+        final RenderBox renderBox =
+            calenderKey.currentContext!.findRenderObject() as RenderBox;
+
+        // double height = renderBox.size.height;
+        double height = calenderKey.currentContext!.height;
+        Get.find<BookingViewModel>().setCalenderHeight(height);
+      }
     });
   }
 
   ScrollController controller = ScrollController();
+
+  final GlobalKey calenderKey = GlobalKey();
 
   DateTime? _selectedDay;
   DateTime? _rangeStart = DateTime.now();
@@ -57,6 +70,64 @@ class _BookingViewState extends State<BookingView> {
     final style = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
+      // body: CustomScrollView(
+      //   slivers: [
+      //     GetBuilder<BookingViewModel>(
+      //       builder: (viewModel) {
+      //         return SliverAppBar(
+      //           automaticallyImplyLeading: false,
+      //           centerTitle: true,
+      //           title: Text('Booking'),
+      //           floating: true,
+      //           pinned: true,
+      //           backgroundColor: Colors.green,
+      //           expandedHeight: viewModel.calenderHeight.spMin,
+      //           flexibleSpace: FlexibleSpaceBar(
+      //             background: buildCalenderSection(),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //
+      //
+      //     SliverToBoxAdapter(
+      //       child: Container(
+      //         margin: EdgeInsets.all(20),
+      //         decoration: BoxDecoration(
+      //           color: Colors.purple,
+      //           borderRadius: BorderRadius.circular(29),
+      //         ),
+      //         height: 200,
+      //       ),
+      //     ),
+      //     SliverToBoxAdapter(
+      //       child: Container(
+      //         margin: EdgeInsets.all(20),
+      //         decoration: BoxDecoration(
+      //           color: Colors.purple,
+      //           borderRadius: BorderRadius.circular(29),
+      //         ),
+      //         height: 200,
+      //       ),
+      //     ),
+      //     SliverToBoxAdapter(
+      //       child: Container(
+      //         margin: EdgeInsets.all(20),
+      //         decoration: BoxDecoration(
+      //           color: Colors.purple,
+      //           borderRadius: BorderRadius.circular(29),
+      //         ),
+      //         height: 200,
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: AppColors.themeColor,
+        title: Text('Booking', style: TextStyle(color: Colors.white)),
+      ),
       body: SingleChildScrollView(
         controller: controller,
         child: Column(
@@ -64,17 +135,9 @@ class _BookingViewState extends State<BookingView> {
             Stack(
               children: [
                 Container(
-                  height: 150.h,
+                  height: 70.h,
                   width: double.infinity,
                   decoration: BoxDecoration(color: AppColors.themeColor),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 40.0.h),
-                    child: Text(
-                      'Booking',
-                      style: style.titleMedium?.copyWith(color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                 ),
                 buildCalenderSection(),
               ],
@@ -122,22 +185,27 @@ class _BookingViewState extends State<BookingView> {
               ),
             ),
             SizedBox(height: 40.h),
-            Center(child: LoadingAnimation()),
-            Text(
-              "You Don't Have Any Booking",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
 
-              ),
+            // Center(child: LoadingAnimation()),
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   itemCount: 4,
+            //   itemBuilder: (BuildContext context, int index) {
+            //     return BookingCard(
+            //       title: 'Mario Chacón Bernal',
+            //       date: 'Feb 16, 14:00 - Feb 16, 19:00',
+            //       id: 'K571PIZ8',
+            //       bags: 2,
+            //       status: 'Pending check in',
+            //     );
+            //   },
+            // ),
+            GetBuilder<BookingViewModel>(
+              builder: (controller) {
+                return controller.screens[controller.selectedIndex];
+              },
             ),
-            Text(
-              'Your booking are coming soon',
-              style: fontSize12(context),
-            ),
-            SizedBox(height: 16.h),
-            ContactSupportText.supportText(context, () {}),
-            SizedBox(height: 48.h),
           ],
         ),
       ),
@@ -149,179 +217,174 @@ class _BookingViewState extends State<BookingView> {
   }
 
   Widget buildCalenderSection() {
-    return Padding(
-      padding: EdgeInsets.only(top: 80.h),
-      child: Container(
-        margin: EdgeInsets.all(16.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6.r,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        // 💡
-        child: _isCalendarReady
-            ? TableCalendar(
-                daysOfWeekStyle: DaysOfWeekStyle(
-                  dowTextFormatter: (date, locale) {
-                    return date.weekday == DateTime.sunday
-                        ? 'S'
-                        : date.weekday == DateTime.monday
-                        ? 'M'
-                        : date.weekday == DateTime.tuesday
-                        ? 'T'
-                        : date.weekday == DateTime.wednesday
-                        ? 'W'
-                        : date.weekday == DateTime.thursday
-                        ? 'T'
-                        : date.weekday == DateTime.friday
-                        ? 'F'
-                        : 'S';
-                  },
-                  weekdayStyle: TextStyle(
-                    height: 1,
-                    color: AppColors.themeColor,
-                    fontSize: 16.sp,
-                  ),
-                  weekendStyle: TextStyle(
-                    height: 1,
-                    color: AppColors.themeColor,
-                    fontSize: 16,
-                  ),
-                ),
-                availableGestures: AvailableGestures.horizontalSwipe,
-
-                firstDay: _finalFirstDay,
-                lastDay: _finalLastDay,
-                focusedDay: _selectedDay ?? DateTime.now(),
-
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-
-                rangeStartDay: _rangeStart,
-                rangeEndDay: _rangeEnd,
-                rangeSelectionMode: _rangeSelectionMode,
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _rangeStart = null;
-                    _rangeEnd = null;
-                    _rangeSelectionMode = RangeSelectionMode.toggledOff;
-                  });
+    return Container(
+      key: calenderKey,
+      margin: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6.r,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: _isCalendarReady
+          ? TableCalendar(
+              daysOfWeekStyle: DaysOfWeekStyle(
+                dowTextFormatter: (date, locale) {
+                  return date.weekday == DateTime.sunday
+                      ? 'S'
+                      : date.weekday == DateTime.monday
+                      ? 'M'
+                      : date.weekday == DateTime.tuesday
+                      ? 'T'
+                      : date.weekday == DateTime.wednesday
+                      ? 'W'
+                      : date.weekday == DateTime.thursday
+                      ? 'T'
+                      : date.weekday == DateTime.friday
+                      ? 'F'
+                      : 'S';
                 },
-                onRangeSelected: (start, end, focusedDay) {
-                  setState(() {
-                    _selectedDay = null;
-                    _rangeStart = start;
-                    _rangeEnd = end;
-                    _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                  });
-                  print('Start: $start end: $end');
-                },
-                headerStyle: HeaderStyle(
-                  titleCentered: true,
-                  formatButtonVisible: false,
+                weekdayStyle: TextStyle(
+                  height: 1,
+                  color: AppColors.themeColor,
+                  fontSize: 16.sp,
                 ),
-                calendarBuilders: CalendarBuilders(
-                  headerTitleBuilder: (_, dateTime) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 10),
+                weekendStyle: TextStyle(
+                  height: 1,
+                  color: AppColors.themeColor,
+                  fontSize: 16,
+                ),
+              ),
+              availableGestures: AvailableGestures.horizontalSwipe,
+
+              firstDay: _finalFirstDay,
+              lastDay: _finalLastDay,
+              focusedDay: _selectedDay ?? DateTime.now(),
+
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+
+              rangeStartDay: _rangeStart,
+              rangeEndDay: _rangeEnd,
+              rangeSelectionMode: _rangeSelectionMode,
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _rangeStart = null;
+                  _rangeEnd = null;
+                  _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                });
+              },
+              onRangeSelected: (start, end, focusedDay) {
+                setState(() {
+                  _selectedDay = null;
+                  _rangeStart = start;
+                  _rangeEnd = end;
+                  _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                });
+                debugPrint('Start: $start end: $end');
+              },
+              headerStyle: HeaderStyle(
+                titleCentered: true,
+                formatButtonVisible: false,
+              ),
+              calendarBuilders: CalendarBuilders(
+                headerTitleBuilder: (_, dateTime) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Center(
+                      child: Text(
+                        _monthName(dateTime.month),
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          color: AppColors.themeColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                rangeStartBuilder: (_, day, _) {
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue,
+                        shape: BoxShape.rectangle,
+                      ),
                       child: Center(
                         child: Text(
-                          _monthName(dateTime.month),
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            color: AppColors.themeColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          '${day.day}',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
-                    );
-                  },
-                  rangeStartBuilder: (_, day, _) {
-                    return Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue,
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${day.day}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  rangeEndBuilder: (_, day, _) {
-                    return Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue,
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${day.day}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  selectedBuilder: (_, _, _) {
-                    return Container(
-                      decoration: BoxDecoration(shape: BoxShape.rectangle),
-                    );
-                  },
-                  todayBuilder: (context, day, focusDay) {
-                    return Container(
-                      padding: EdgeInsets.all(10),
+                    ),
+                  );
+                },
+                rangeEndBuilder: (_, day, _) {
+                  return Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 40,
+                      width: 40,
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.blue,
                         shape: BoxShape.rectangle,
-                        color: _selectedDay != null && _selectedDay == day
-                            ? AppColors.themeColor
-                            : Colors.transparent,
                       ),
-                      child: Text(
-                        textAlign: TextAlign.start,
-                        '${day.day}',
-                        style: TextStyle(fontSize: 17.sp, color: Colors.black),
+                      child: Center(
+                        child: Text(
+                          '${day.day}',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                    );
-                  },
-                ),
-                calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: AppColors.themeColor,
-                  ),
-                  rangeStartDecoration: BoxDecoration(
-                    color: AppColors.themeColor,
-                  ),
-                ),
-              )
-            : SizedBox(
-                height: 350.h,
-                child: Center(child: LoadingAnimation()),
+                    ),
+                  );
+                },
+                selectedBuilder: (_, _, _) {
+                  return Container(
+                    decoration: BoxDecoration(shape: BoxShape.rectangle),
+                  );
+                },
+                todayBuilder: (context, day, focusDay) {
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: _selectedDay != null && _selectedDay == day
+                          ? AppColors.themeColor
+                          : Colors.transparent,
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.start,
+                      '${day.day}',
+                      style: TextStyle(fontSize: 17.sp, color: Colors.black),
+                    ),
+                  );
+                },
               ),
-      ),
+              calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(
+                  color: Colors.transparent,
+                  shape: BoxShape.circle,
+                ),
+                selectedDecoration: BoxDecoration(color: AppColors.themeColor),
+                rangeStartDecoration: BoxDecoration(
+                  color: AppColors.themeColor,
+                ),
+              ),
+            )
+          : SizedBox(
+              height: 350.h,
+              child: Center(child: LoadingAnimation()),
+            ),
     );
   }
 

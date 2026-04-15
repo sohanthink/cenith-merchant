@@ -19,7 +19,7 @@ class EarningDetailsView extends StatefulWidget {
 class _EarningDetailsViewState extends State<EarningDetailsView> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -35,18 +35,16 @@ class _EarningDetailsViewState extends State<EarningDetailsView> {
     );
   }
 
-  Expanded buildTableDataSection() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: 10,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            return buildEarningDetailsTile(context);
-          },
-        ),
+  Widget buildTableDataSection() {
+    return SingleChildScrollView(
+      child: ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: 10,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return buildEarningDetailsTile(context);
+        },
       ),
     );
   }

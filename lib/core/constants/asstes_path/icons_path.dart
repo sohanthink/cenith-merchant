@@ -54,4 +54,6 @@ class IconsPath {
   static const String googleIconSvg = '$_basePath/google_icon.svg';
   static const String appleIconSvg = '$_basePath/apple_icon.svg';
   static const String appLogoSvg = '$_basePath/app_logo.svg';
+  static const String privacyIconSvg = '$_basePath/privacy_policy.svg';
+  static const String termsOfService = '$_basePath/terms_of_service.svg';
 }

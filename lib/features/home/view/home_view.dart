@@ -129,21 +129,21 @@ class _HomeViewState extends State<HomeView> {
               subTitle: 'Good Morning',
             ),
             Spacer(),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: SvgPicture.asset(
-                IconsPath.messageIconSvg,
-                colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcATop),
-              ),
-            ),
+            // CircleAvatar(
+            //   backgroundColor: Colors.white,
+            //   child: SvgPicture.asset(
+            //     IconsPath.messageIconSvg,
+            //     colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcATop),
+            //   ),
+            // ),
             SizedBox(width: 8.w),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: SvgPicture.asset(
-                IconsPath.iButtonIconSvg,
-                colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcATop),
-              ),
-            ),
+            // CircleAvatar(
+            //   backgroundColor: Colors.white,
+            //   child: SvgPicture.asset(
+            //     IconsPath.iButtonIconSvg,
+            //     colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcATop),
+            //   ),
+            // ),
           ],
         ),
         SizedBox(height: 12.h),

@@ -62,9 +62,83 @@ class _ProfileViewState extends State<ProfileView> {
                   children: [
                     SizedBox(height: 110.h),
                     buildUserInfo(context),
-                    SizedBox(height: 48.h),
-                    _buildBenefitsAndSettings(context),
+                    SizedBox(height: 60.h),
+                    _buildProfileFeatureSection(
+                      context,
+                      children: [
+                        Text('Account', style: fontSize14(context)),
+                        SizedBox(height: 10.h),
+                        _buildtemCard(
+                          context,
+                          icon: IconsPath.settingsIconSvg,
+                          title: 'Profile',
+                          Ticon: Icons.error_outline_outlined,
+                          onTapT: () {},
+                          onTapC: () {},
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 10.h),
+                    _buildProfileFeatureSection(
+                      context,
+                      children: [
+                        Text('Management', style: fontSize14(context)),
+                        SizedBox(height: 10.h),
+                        _buildtemCard(
+                          context,
+                          icon: IconsPath.earningIconSvg,
+                          title: 'Earning',
+                          onTapT: () {},
+                          onTapC: () {},
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.h),
+                    _buildProfileFeatureSection(
+                      context,
+                      children: [
+                        Text('Support', style: fontSize14(context)),
+                        SizedBox(height: 10.h),
+                        _buildtemCard(
+                          context,
+                          icon: IconsPath.questionRoundIconSvg,
+                          title: 'Help Center',
+                          onTapT: () {},
+                          onTapC: () {},
+                        ),
+                        SizedBox(height: 10.h),
+                        _buildtemCard(
+                          context,
+                          icon: IconsPath.privacyIconSvg,
+                          title: 'Privacy Policy',
+                          onTapT: () {},
+                          onTapC: () {},
+                        ),
+                        SizedBox(height: 10.h),
+                        _buildtemCard(
+                          context,
+                          icon: IconsPath.termsOfService,
+                          title: 'Terms of service',
+                          onTapT: () {},
+                          onTapC: () {},
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    _buildProfileFeatureSection(
+                      context,
+                      children: [
+                        _buildtemCard(
+                          context,
+                          icon: IconsPath.logOutIconSvg,
+                          title: 'Log out',
+                          onTapT: () {},
+                          onTapC: () {},
+                        ),
+
+                      ],
+                    ),
+                    SizedBox(height: 10,)
                   ],
                 ),
               ),
@@ -120,7 +194,10 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _buildBenefitsAndSettings(BuildContext context) {
+  Widget _buildProfileFeatureSection(
+    BuildContext context, {
+    required List<Widget> children,
+  }) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -138,64 +215,13 @@ class _ProfileViewState extends State<ProfileView> {
         padding: EdgeInsets.all(16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 16.h),
-            Text('Benefits', style: fontSize14(context)),
-            space(10),
-            _buildBenefitsAndSettingsCard(
-              context,
-              icon: IconsPath.rewardIconSvg,
-              title: 'Rewards',
-              onTapC: () {},
-            ),
-            SizedBox(height: 32.h),
-            Text('Settings', style: fontSize14(context)),
-            space(10),
-            _buildBenefitsAndSettingsCard(
-              context,
-              icon: IconsPath.settingsIconSvg,
-              title: 'Profile',
-              Ticon: Icons.error_outline_outlined,
-              onTapT: () {},
-              onTapC: () => Navigator.pushNamed(context, EditProfileView.name),
-            ),
-            space(10),
-            _buildBenefitsAndSettingsCard(
-              context,
-              icon: IconsPath.peopleStaffIconSvg,
-              title: 'Staff management',
-              Ticon: Icons.error_outline_outlined,
-              onTapT: () {},
-              onTapC: () {},
-            ),
-            space(10),
-            _buildBenefitsAndSettingsCard(
-              context,
-              icon: IconsPath.chattingIconSvg,
-              title: 'Chat with support',
-              onTapC: () {},
-            ),
-            space(10),
-            _buildBenefitsAndSettingsCard(
-              context,
-              icon: IconsPath.questionRoundIconSvg,
-              title: 'Help center',
-              onTapC: () {},
-            ),
-            space(10),
-            _buildBenefitsAndSettingsCard(
-              context,
-              icon: IconsPath.logOutIconSvg,
-              title: 'Log out',
-              onTapC: () {},
-            ),
-          ],
+          children: children,
         ),
       ),
     );
   }
 
-  Widget _buildBenefitsAndSettingsCard(
+  Widget _buildtemCard(
     BuildContext context, {
     required String icon,
     required String title,

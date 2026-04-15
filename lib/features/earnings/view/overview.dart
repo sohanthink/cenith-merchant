@@ -20,18 +20,16 @@ class _OverviewState extends State<Overview> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SortingSectionWidget(),
-            SizedBox(height: 10.h),
-            buildEarningListSection(),
-            SizedBox(height: 10.h),
-            buildChartSection(context),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SortingSectionWidget(),
+          SizedBox(height: 10.h),
+          buildEarningListSection(),
+          SizedBox(height: 10.h),
+          buildChartSection(context),
+        ],
       ),
     );
   }

@@ -20,18 +20,14 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            buildDashboardSeciton(context),
-            SizedBox(height: 30.h),
-            buildPayoutBreakdownSection(context),
-            SizedBox(height: 10.h),
-            buildPaginationSection(context),
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        buildDashboardSeciton(context),
+        SizedBox(height: 30.h),
+        buildPayoutBreakdownSection(context),
+        SizedBox(height: 10.h),
+        buildPaginationSection(context),
+      ],
     );
   }
 

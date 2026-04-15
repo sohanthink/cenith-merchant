@@ -23,23 +23,48 @@ class _StoreViewState extends State<StoreView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10.h),
-              buildHeaderSection(context),
-              SizedBox(height: 25.h),
-              buildMenuSection(context),
-              SizedBox(height: 20.h),
-              Expanded(child: tabs[selectedIndex]),
-            ],
-          ),
-        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 120,
+              backgroundColor: AppColors.scaffoldColor,
+              automaticallyImplyLeading: false,
+              floating: false,
+              pinned: false,
+              centerTitle: true,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Column(
+                  children: [
+                    buildHeaderSection(context),
+                    SizedBox(height: 10.h),
+                    buildMenuSection(context),
+                  ],
+                ),
+              )
+            ),
+            SliverToBoxAdapter(
+              child: tabs[selectedIndex]
+            )
+          ],
+        )
       ),
     );
   }
+
+  // Padding(
+  // padding: const EdgeInsets.symmetric(horizontal: 8),
+  // child: Column(
+  // crossAxisAlignment: CrossAxisAlignment.start,
+  // children: [
+  // SizedBox(height: 10.h),
+  // buildHeaderSection(context),
+  // SizedBox(height: 25.h),
+  // buildMenuSection(context),
+  // SizedBox(height: 20.h),
+  // Expanded(child: tabs[selectedIndex]),
+  // ],
+  // ),
+  // ),
 
   Widget buildMenuSection(BuildContext context) {
     return Padding(
