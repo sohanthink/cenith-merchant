@@ -5,7 +5,6 @@ import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.da
 import 'package:cenith_marchent/features/auth/view/sign_up_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
 import 'package:cenith_marchent/features/auth/view/your_business_details_view.dart';
-import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,6 +27,7 @@ class _AuthViewState extends State<AuthView> {
       GlobalKey<YourBusinessDetailsViewState>();
   late final PageController _pageController;
   int _currentIndex = 0;
+
 
   final List<Map<String, dynamic>> _steps = [
     {'title': 'Your Details', 'progress': 0.16},
@@ -52,7 +52,6 @@ class _AuthViewState extends State<AuthView> {
     _pageController = PageController();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,109 +60,64 @@ class _AuthViewState extends State<AuthView> {
           padding: EdgeInsets.all(16.w),
           child: Column(
             children: [
+              SizedBox(height: _currentIndex == 0?32.h:12.h),
               _buildTopSection(context),
               SizedBox(height: 10.h),
               Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
+                child: Stack(
                   children: [
-                    SignUpView(
-                      key: signUpKey,
-                      onValidChanged: (isValid) {
-                        _pageValidation[0] = isValid;
-                        setState(() {});
+                    PageView(
+                      controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
                       },
+                      children: [
+                        SignUpView(
+                          key: signUpKey,
+                          onValidChanged: (isValid) {
+                            _pageValidation[0] = isValid;
+                            setState(() {});
+                          },
+                        ),
+                        DescribeYourBusinessView(
+                          onValidChanged: (isValid) {
+                            _pageValidation[1] = isValid;
+                            setState(() {});
+                          },
+                        ),
+                        YourBusinessDetailsView(
+                          key: businessDetailsKey,
+                          onValidChanged: (isValid) {
+                            _pageValidation[2] = isValid;
+                            setState(() {});
+                          },
+                        ),
+                        ConfirmYourLocationView(
+                          onValidChanged: (isValid) {
+                            _pageValidation[3] = isValid;
+                            setState(() {});
+                          },
+                        ),
+                        AddYourBusinessHoursView(
+                          onValidChanged: (isValid) {
+                            _pageValidation[4] = isValid;
+                            setState(() {});
+                          },
+                        ),
+                        AddBusinessPhotosView(
+                          onValidChanged: (isValid) {
+                            _pageValidation[5] = isValid;
+                            setState(() {});
+                          },
+                        ),
+                      ],
                     ),
-                    DescribeYourBusinessView(
-                      onValidChanged: (isValid) {
-                        _pageValidation[1] = isValid;
-                        setState(() {});
-                      },
-                    ),
-                    YourBusinessDetailsView(
-                      key: businessDetailsKey,
-                      onValidChanged: (isValid) {
-                        _pageValidation[2] = isValid;
-                        setState(() {});
-                      },
-                    ),
-                    ConfirmYourLocationView(
-                      onValidChanged: (isValid) {
-                        _pageValidation[3] = isValid;
-                        setState(() {});
-                      },
-                    ),
-                    AddYourBusinessHoursView(
-                      onValidChanged: (isValid) {
-                        _pageValidation[4] = isValid;
-                        setState(() {});
-                      },
-                    ),
-                    AddBusinessPhotosView(
-                      onValidChanged: (isValid) {
-                        _pageValidation[5] = isValid;
-                        setState(() {});
-                      },
-                    ),
+                    _buildButton(context),
                   ],
                 ),
-              ),
-
-              ElevatedButton(
-                onPressed: _pageValidation[_currentIndex] == true
-                    ? () {
-                        FocusScope.of(context).unfocus();
-                        if (_currentIndex == 0) {
-                          final state = signUpKey.currentState;
-                          if (state != null) {
-                            state.submit();
-
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              if (_pageValidation[0] == true) {
-                                _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-                            });
-                          }
-                          return;
-                        }
-                        if (_currentIndex == 2) {
-                          final state = businessDetailsKey.currentState;
-                          if (state != null) {
-                            state.submit();
-                            if (_pageValidation[2] == true) {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            }
-                          }
-                          return;
-                        }
-                        if (_currentIndex < 5) {
-                          if (_pageValidation[_currentIndex] == true) {
-                            _pageController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        } else {
-                          Navigator.pushNamed(
-                            context,
-                            TermsAndConditionView.name,
-                          );
-                        }
-                      }
-                    : null,
-                child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
               ),
             ],
           ),
@@ -172,10 +126,73 @@ class _AuthViewState extends State<AuthView> {
     );
   }
 
+  Widget _buildButton(BuildContext context) {
+    bool isSmallContentPage = _currentIndex == 0;
+    bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
+    if (isKeyboardOpen) return SizedBox();
+
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: isSmallContentPage ? null : 0.h,
+      top: isSmallContentPage
+          ? MediaQuery.of(context).size.height * 0.50
+          : null,
+      child: ElevatedButton(
+        onPressed: _pageValidation[_currentIndex] == true
+            ? () {
+                FocusScope.of(context).unfocus();
+                if (_currentIndex == 0) {
+                  final state = signUpKey.currentState;
+                  if (state != null) {
+                    state.submit();
+
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (_pageValidation[0] == true) {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    });
+                  }
+                  return;
+                }
+                if (_currentIndex == 2) {
+                  final state = businessDetailsKey.currentState;
+                  if (state != null) {
+                    state.submit();
+                    if (_pageValidation[2] == true) {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  }
+                  return;
+                }
+                if (_currentIndex < 5) {
+                  if (_pageValidation[_currentIndex] == true) {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                } else {
+                  Navigator.pushNamed(context, TermsAndConditionView.name);
+                }
+              }
+            : null,
+        child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
+      ),
+    );
+  }
+
   Widget _buildTopSection(BuildContext context) {
     final currentSteps = _steps[_currentIndex];
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SvgPicture.asset(IconsPath.logWithoutBgSvg, width: 170.w),
         SizedBox(height: 16.h),

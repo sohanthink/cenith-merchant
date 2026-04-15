@@ -41,6 +41,7 @@ class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
               child: Padding(
                 padding: EdgeInsets.all(12.w),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
