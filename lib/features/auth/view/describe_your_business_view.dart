@@ -41,6 +41,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: 8.h),
           // Align(

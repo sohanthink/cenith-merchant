@@ -76,79 +76,81 @@ class SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     final style = fontSize16(context)!.copyWith(color: Colors.black);
-    return Form(
-      key: _formKey,
-      autovalidateMode: _submitted
-          ? AutovalidateMode.always
-          : AutovalidateMode.disabled,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 32.h),
-            TextFormField(
-              style: style,
-              controller: _fNameTEController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(hintText: 'First Name'),
-              validator: (v) =>
-                  v == null || v.isEmpty ? 'Enter your name' : null,
-            ),
-            SizedBox(height: 15.h),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 32.h),
+        child: Form(
+          key: _formKey,
+          autovalidateMode: _submitted
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
+          child: Column(
+            children: [
+              SizedBox(height: 32.h),
+              TextFormField(
+                style: style,
+                controller: _fNameTEController,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(hintText: 'First Name'),
+                validator: (v) =>
+                    v == null || v.isEmpty ? 'Enter your name' : null,
+              ),
+              SizedBox(height: 15.h),
 
-            TextFormField(
-              style: style,
-              controller: _lNameTEController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(hintText: 'Last Name'),
-              validator: (v) =>
-                  v == null || v.isEmpty ? 'Enter your last name' : null,
-            ),
+              TextFormField(
+                style: style,
+                controller: _lNameTEController,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(hintText: 'Last Name'),
+                validator: (v) =>
+                    v == null || v.isEmpty ? 'Enter your last name' : null,
+              ),
 
-            SizedBox(height: 15.h),
+              SizedBox(height: 15.h),
 
-            _buildPhoneNumberField(),
-            SizedBox(height: 15.h),
+              _buildPhoneNumberField(),
+              SizedBox(height: 15.h),
 
-            TextFormField(
-              style: style,
-              controller: _passwordTEController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(hintText: 'Password'),
-              validator: (v) {
-                if (v == null || v.isEmpty) return 'Password is required';
-                final regex = RegExp(
-                  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$',
-                );
-                if (!regex.hasMatch(v)) {
-                  return 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 15.h),
+              TextFormField(
+                style: style,
+                controller: _passwordTEController,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(hintText: 'Password'),
+                validator: (v) {
+                  if (v == null || v.isEmpty) return 'Password is required';
+                  final regex = RegExp(
+                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$',
+                  );
+                  if (!regex.hasMatch(v)) {
+                    return 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 15.h),
 
-            TextFormField(
-              style: style,
-              controller: _emailTEController,
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(hintText: 'Email'),
-              validator: (v) {
-                if (v == null || v.isEmpty) {
-                  return 'Enter a email';
-                }
+              TextFormField(
+                style: style,
+                controller: _emailTEController,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(hintText: 'Email'),
+                validator: (v) {
+                  if (v == null || v.isEmpty) {
+                    return 'Enter a email';
+                  }
 
-                final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                  final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-                if (!regex.hasMatch(v)) {
-                  return 'Invalid email';
-                }
+                  if (!regex.hasMatch(v)) {
+                    return 'Invalid email';
+                  }
 
-                return null;
-              },
-            ),
-            SizedBox(height: 90.h),
-          ],
+                  return null;
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

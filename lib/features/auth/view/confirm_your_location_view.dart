@@ -74,6 +74,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
       key: _formKey,
       child: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 24.h),
             Container(
