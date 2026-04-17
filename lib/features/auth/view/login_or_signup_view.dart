@@ -130,7 +130,7 @@ class _LoginOrSignupViewState extends State<LoginOrSignupView> {
           title,
           style: fontSize18(
             context,
-          )!.copyWith(color: foregroundColor, fontWeight: FontWeight.w600),
+          )!.copyWith(color: foregroundColor, fontWeight: FontWeight.w400),
         ),
       ),
     );
