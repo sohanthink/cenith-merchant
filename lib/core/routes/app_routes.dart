@@ -20,6 +20,7 @@ import 'package:cenith_marchent/features/store/view/add_new_store_view.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/dont_have_camera_view.dart';
 import 'package:cenith_marchent/features/store/view/edit_opening_hours_view.dart';
+import 'package:cenith_marchent/features/store/view/edit_store_details_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
 import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
@@ -64,6 +65,8 @@ class AppRoutes {
       screenWidget = AddExceptionView();
     } else if (settings.name == AddNewStoreView.name) {
       screenWidget = AddNewStoreView();
+    } else if (settings.name == EditStoreDetailsView.name) {
+      screenWidget = EditStoreDetailsView();
     } else if (settings.name == EditOpeningHoursView.name) {
       screenWidget = EditOpeningHoursView();
     } else if (settings.name == AddNewStoreView.name) {
@@ -74,15 +77,15 @@ class AppRoutes {
       screenWidget = TermsAndConditionView();
     } else if (settings.name == ConfirmationCodeEntryView.name) {
       screenWidget = ConfirmationCodeEntryView();
-    }else if (settings.name == ConfirmationCodeEntryView.name) {
+    } else if (settings.name == ConfirmationCodeEntryView.name) {
       screenWidget = ConfirmationCodeEntryView();
-    }else if (settings.name == SearchAndPickLocation.name) {
+    } else if (settings.name == SearchAndPickLocation.name) {
       screenWidget = SearchAndPickLocation();
-    }else if (settings.name == LearnHowToTakeGoodPhotoWidget.name) {
+    } else if (settings.name == LearnHowToTakeGoodPhotoWidget.name) {
       screenWidget = LearnHowToTakeGoodPhotoWidget();
-    }else if (settings.name == LogInView.name) {
+    } else if (settings.name == LogInView.name) {
       screenWidget = LogInView();
-    }else if (settings.name == LoginOrSignupView.name) {
+    } else if (settings.name == LoginOrSignupView.name) {
       screenWidget = LoginOrSignupView();
     }
 
