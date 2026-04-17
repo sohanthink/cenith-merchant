@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/theme/text_theme.dart';
 import '../widgets/bottom_sheet_card.dart';
+import 'edit_store_details_view.dart';
 
 class Overview extends StatefulWidget {
   const Overview({super.key});
@@ -76,7 +77,7 @@ class _OverviewState extends State<Overview> {
         Text(
           textAlign: TextAlign.justify,
           'I think this is one of the best store where i leave'
-              'my bag, the staff are very friendly and I bought some others thing where they make me a good price',
+          'my bag, the staff are very friendly and I bought some others thing where they make me a good price',
           style: fontSize14(context),
         ),
         SizedBox(height: 40.h),
@@ -88,7 +89,8 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Container reviewCard(BuildContext context, {
+  Container reviewCard(
+    BuildContext context, {
     required String name,
     required String date,
     required int stars,
@@ -151,8 +153,8 @@ class _OverviewState extends State<Overview> {
         SizedBox(height: 10),
         Text(
           'Partners with storefront photos are preferred by '
-              'customers and receive higher reviews on average. '
-              'Add yours to help increase bookings.',
+          'customers and receive higher reviews on average. '
+          'Add yours to help increase bookings.',
           textAlign: TextAlign.justify,
           style: fontSize14(
             context,
@@ -187,8 +189,7 @@ class _OverviewState extends State<Overview> {
                 .asMap()
                 .entries
                 .map(
-                  (e) =>
-                  Container(
+                  (e) => Container(
                     // margin: EdgeInsets.all(10),
                     height: 100,
                     width: 100,
@@ -200,20 +201,20 @@ class _OverviewState extends State<Overview> {
                     ),
                     child: e.key == images.length - 1
                         ? Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Center(child: Icon(Icons.add, size: 50)),
-                    )
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                            child: Center(child: Icon(Icons.add, size: 50)),
+                          )
                         : Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.shade300,
-                      ),
-                    ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                            ),
+                          ),
                   ),
-            )
+                )
                 .toList(),
           ),
         ),
@@ -304,11 +305,15 @@ class _OverviewState extends State<Overview> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Edit store details',
-                  style: fontSize16(
-                    context,
-                  )!.copyWith(color: AppColors.themeColor),
+                GestureDetector(
+                  onTap: () =>
+                      Navigator.pushNamed(context, EditStoreDetailsView.name),
+                  child: Text(
+                    'Edit store details',
+                    style: fontSize16(
+                      context,
+                    )!.copyWith(color: AppColors.themeColor),
+                  ),
                 ),
               ],
             ),
@@ -416,36 +421,36 @@ class _OverviewState extends State<Overview> {
                     curve: Curves.fastEaseInToSlowEaseOut,
                     child: controller.isExpanded
                         ? Column(
-                      children: [
-                        storeCommissionRateCard(
-                          context,
-                          iconsPath: IconsPath.smallBagIconSvg,
-                          rate: '€1.5 ',
-                          titleText: 'per small bag stored',
-                        ),
-                        horizontalDivider(),
-                        storeCommissionRateCard(
-                          context,
-                          iconsPath: IconsPath.bagIconSvg,
-                          rate: '€3.50 ',
-                          titleText: 'per regular bag stored',
-                        ),
-                        horizontalDivider(),
-                        storeCommissionRateCard(
-                          context,
-                          iconsPath: IconsPath.cycleIconSvg,
-                          rate: '€3.75 ',
-                          titleText: 'per odd size item stored',
-                        ),
-                        horizontalDivider(),
-                        storeCommissionRateCard(
-                          context,
-                          iconsPath: IconsPath.walkWalkingIconSvg,
-                          rate: '€100 ',
-                          titleText: 'per 20 walk-in bookings',
-                        ),
-                      ],
-                    )
+                            children: [
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.smallBagIconSvg,
+                                rate: '€1.5 ',
+                                titleText: 'per small bag stored',
+                              ),
+                              horizontalDivider(),
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.bagIconSvg,
+                                rate: '€3.50 ',
+                                titleText: 'per regular bag stored',
+                              ),
+                              horizontalDivider(),
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.cycleIconSvg,
+                                rate: '€3.75 ',
+                                titleText: 'per odd size item stored',
+                              ),
+                              horizontalDivider(),
+                              storeCommissionRateCard(
+                                context,
+                                iconsPath: IconsPath.walkWalkingIconSvg,
+                                rate: '€100 ',
+                                titleText: 'per 20 walk-in bookings',
+                              ),
+                            ],
+                          )
                         : SizedBox.shrink(),
                   ),
                 ],
@@ -465,7 +470,8 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Widget storeCommissionRateCard(BuildContext context, {
+  Widget storeCommissionRateCard(
+    BuildContext context, {
     required String iconsPath,
     required String rate,
     required String titleText,
@@ -515,7 +521,8 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  Row storeOverViewCard(BuildContext context, {
+  Row storeOverViewCard(
+    BuildContext context, {
     required String title,
     required String subTitle,
   }) {
@@ -589,41 +596,35 @@ class _OverviewState extends State<Overview> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Obx(
-                    () =>
-                    Column(
-                      children: [
-                        bottomSheetCards[selectedIndex.value],
-                        SizedBox(height: 10.h),
-                        Text(
-                          '${selectedIndex.value + 1} of ${bottomSheetCards
-                              .length}',
-                          style: fontSize14(
-                            context,
-                          )!.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                () => Column(
+                  children: [
+                    bottomSheetCards[selectedIndex.value],
+                    SizedBox(height: 10.h),
+                    Text(
+                      '${selectedIndex.value + 1} of ${bottomSheetCards.length}',
+                      style: fontSize14(
+                        context,
+                      )!.copyWith(fontWeight: FontWeight.bold),
                     ),
+                  ],
+                ),
               ),
 
               SizedBox(height: 10.h),
               Obx(
-                    () =>
-                    ElevatedButton(
-                      onPressed: () {
-                        if (selectedIndex.value !=
-                            bottomSheetCards.length - 1) {
-                          selectedIndex + 1;
-                          if(bottomSheetCards.length -1 == selectedIndex.value ){
-                            btnText.value = "Ok";
-                          }
-                        } else {
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Text(
-                        btnText.value
-                      ),
-                    ),
+                () => ElevatedButton(
+                  onPressed: () {
+                    if (selectedIndex.value != bottomSheetCards.length - 1) {
+                      selectedIndex + 1;
+                      if (bottomSheetCards.length - 1 == selectedIndex.value) {
+                        btnText.value = "Ok";
+                      }
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Text(btnText.value),
+                ),
               ),
               SizedBox(height: 20.h),
             ],
