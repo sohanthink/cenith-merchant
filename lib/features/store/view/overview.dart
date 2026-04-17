@@ -422,32 +422,68 @@ class _OverviewState extends State<Overview> {
                     child: controller.isExpanded
                         ? Column(
                             children: [
-                              storeCommissionRateCard(
-                                context,
-                                iconsPath: IconsPath.smallBagIconSvg,
-                                rate: '€1.5 ',
-                                titleText: 'per small bag stored',
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Icon(Icons.language),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Online Booking',
+                                    style: fontSize16(
+                                      context,
+                                    )!.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Column(
+                                  children: [
+                                    storeCommissionRateCard(
+                                      context,
+                                      iconsPath: IconsPath.smallBagIconSvg,
+                                      rate: '€1.5 ',
+                                      titleText: 'per small bag stored',
+                                    ),
+                                    storeCommissionRateCard(
+                                      context,
+                                      iconsPath: IconsPath.bagIconSvg,
+                                      rate: '€3.50 ',
+                                      titleText: 'per regular bag stored',
+                                    ),
+                                    storeCommissionRateCard(
+                                      context,
+                                      iconsPath: IconsPath.cycleIconSvg,
+                                      rate: '€3.75 ',
+                                      titleText: 'per odd size item stored',
+                                    ),
+                                    SizedBox(height: 15),
+                                  ],
+                                ),
                               ),
                               horizontalDivider(),
-                              storeCommissionRateCard(
-                                context,
-                                iconsPath: IconsPath.bagIconSvg,
-                                rate: '€3.50 ',
-                                titleText: 'per regular bag stored',
+                              SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Icon(Icons.directions_walk),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Online Booking',
+                                    style: fontSize16(
+                                      context,
+                                    )!.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                                ],
                               ),
-                              horizontalDivider(),
-                              storeCommissionRateCard(
-                                context,
-                                iconsPath: IconsPath.cycleIconSvg,
-                                rate: '€3.75 ',
-                                titleText: 'per odd size item stored',
-                              ),
-                              horizontalDivider(),
-                              storeCommissionRateCard(
-                                context,
-                                iconsPath: IconsPath.walkWalkingIconSvg,
-                                rate: '€100 ',
-                                titleText: 'per 20 walk-in bookings',
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: storeCommissionRateCard(
+                                  context,
+                                  iconsPath: IconsPath.walkWalkingIconSvg,
+                                  rate: '€100 ',
+                                  titleText: 'per 20 walk-in bookings',
+                                ),
                               ),
                             ],
                           )
@@ -466,7 +502,7 @@ class _OverviewState extends State<Overview> {
     return Container(
       width: double.infinity,
       height: 0.5,
-      color: Colors.grey.shade400,
+      color: Colors.grey.shade700,
     );
   }
 
@@ -477,7 +513,7 @@ class _OverviewState extends State<Overview> {
     required String titleText,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
