@@ -148,8 +148,8 @@ class _SignageViewState extends State<SignageView> {
                       Navigator.pushNamed(context, PrintASignageView.name),
                   buttonName: 'Print A Signage',
                 ),
-                SizedBox(height: 24.h),
-                Text(
+                SizedBox(height: 16.h),
+                /*Text(
                   'Your orders',
                   style: fontSize20(
                     context,
@@ -170,7 +170,7 @@ class _SignageViewState extends State<SignageView> {
 
                 _buildSelectOrderDate(context),
                 space(16),
-                _buildSelectStatus(context),
+                _buildSelectStatus(context),*/
               ],
             ),
           ),
@@ -182,7 +182,7 @@ class _SignageViewState extends State<SignageView> {
     );
   }
 
-  Widget _buildSelectOrderDate(BuildContext context) {
+/*  Widget _buildSelectOrderDate(BuildContext context) {
     return GestureDetector(
       onTap: _picDate,
       child: Container(
@@ -201,9 +201,9 @@ class _SignageViewState extends State<SignageView> {
         ),
       ),
     );
-  }
+  }*/
 
-  Widget _buildSelectStatus(BuildContext context) {
+/*  Widget _buildSelectStatus(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 45.h,
@@ -234,7 +234,7 @@ class _SignageViewState extends State<SignageView> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget _buildSignateAndStatus(BuildContext context) {
     return Container(

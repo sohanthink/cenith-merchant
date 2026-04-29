@@ -39,9 +39,6 @@ dependencies:
   printing: ^5.14.2
   pdf: ^3.11.3
   screenshot: ^3.0.0
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

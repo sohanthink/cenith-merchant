@@ -8,6 +8,7 @@ class DescribeYourBusinessView extends StatefulWidget {
 
   static final String name = 'describe-business-screen';
   final Function(bool isValid) onValidChanged;
+
   @override
   State<DescribeYourBusinessView> createState() =>
       _DescribeYourBusinessViewState();
@@ -31,11 +32,9 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
     {'business-name': 'Pharmacy', 'Icon': Icons.local_pharmacy_outlined},
   ];
 
-
   void _updateValidation() {
     widget.onValidChanged(_selectedIndexes.isNotEmpty);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,21 +80,22 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
                       Container(
                         padding: EdgeInsets.all(16.w),
                         decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: isSelected
+                                ? AppColors.themeColor
+                                : Colors.black,
+                          ),
                           shape: BoxShape.circle,
                           color: isSelected
                               ? AppColors.themeColor
-                              : Colors.grey.shade300,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 2,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
+                              : Colors.grey.withAlpha(20),
                         ),
                         child: Icon(
                           _businessTypeCard[index]['Icon'],
                           color: isSelected ? Colors.white : Colors.black,
+                    
+
                         ),
                       ),
                       SizedBox(height: 4.h),
