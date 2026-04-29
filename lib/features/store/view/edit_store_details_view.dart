@@ -15,12 +15,23 @@ class EditStoreDetailsView extends StatefulWidget {
 
 class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _storeNameTEController = TextEditingController();
+
+  final TextEditingController _fNameTEController = TextEditingController();
+  final TextEditingController _lNameTEController = TextEditingController();
+  final TextEditingController _mobileNmTEController = TextEditingController();
+  final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _businessNameTEController =
       TextEditingController();
-  final TextEditingController _phNumTEController = TextEditingController();
-  final TextEditingController _emailTEController = TextEditingController();
-  final TextEditingController _passwordTEController = TextEditingController();
+  final TextEditingController _legalBusinessNameTEController =
+      TextEditingController();
+  final TextEditingController _vatTaxNmTEController = TextEditingController();
+  final TextEditingController _businessAddressTEController =
+      TextEditingController();
+  final TextEditingController _cityTEController = TextEditingController();
+  final TextEditingController _postalCodeTEController = TextEditingController();
+  final TextEditingController _dailyLuggageLimitTEController =
+      TextEditingController();
+  final TextEditingController _landMarkTEController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,60 +71,133 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         space(32),
-        _textFieldTitle('Store Name'),
+        _textFieldSectionTitle('Personal Details :'),
         space(10),
         TextFormField(
-          controller: _storeNameTEController,
+          controller: _fNameTEController,
+          decoration: InputDecoration(hintText: 'First Name'),
           textInputAction: TextInputAction.next,
           style: fontSize16(context),
           validator: (String) {},
         ),
-        space(10),
-        _textFieldTitle('Business Name'),
+
         space(10),
         TextFormField(
-          controller: _businessNameTEController,
+          controller: _lNameTEController,
+          decoration: InputDecoration(hintText: 'Last Name'),
           textInputAction: TextInputAction.next,
           style: fontSize16(context),
           validator: (v) {},
         ),
-        space(10),
-        _textFieldTitle('Phone Number'),
+
         space(10),
         TextFormField(
-          controller: _phNumTEController,
+          controller: _mobileNmTEController,
+          decoration: InputDecoration(hintText: 'Mobile Number'),
           textInputAction: TextInputAction.next,
           style: fontSize16(context),
           validator: (v) {},
         ),
-        space(10),
-        _textFieldTitle('E-mail'),
+
         space(10),
         TextFormField(
+          decoration: InputDecoration(hintText: 'Email'),
           controller: _emailTEController,
           textInputAction: TextInputAction.next,
           style: fontSize16(context),
+          validator: (v) {},
         ),
-        space(10),
-        _textFieldTitle('Password'),
+        space(16),
+        _textFieldSectionTitle('Business Details :'),
         space(10),
         TextFormField(
-          controller: _passwordTEController,
+          controller: _businessNameTEController,
+          decoration: InputDecoration(hintText: 'Business Name'),
+          textInputAction: TextInputAction.next,
           style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(10),
+        TextFormField(
+          controller: _legalBusinessNameTEController,
+          decoration: InputDecoration(hintText: 'Legal Business Name'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(10),
+        TextFormField(
+          controller: _vatTaxNmTEController,
+          decoration: InputDecoration(hintText: 'Vat Tax Number'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(10),
+        TextFormField(
+          controller: _businessAddressTEController,
+          decoration: InputDecoration(hintText: 'Business address'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(10),
+        TextFormField(
+          controller: _cityTEController,
+          decoration: InputDecoration(hintText: 'City'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(10),
+        TextFormField(
+          controller: _postalCodeTEController,
+          decoration: InputDecoration(hintText: 'Postal Code'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(10),
+        TextFormField(
+          controller: _dailyLuggageLimitTEController,
+          decoration: InputDecoration(hintText: ' Daily Luggage Limit'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
+        ),
+        space(16),
+        _textFieldSectionTitle('Land Mark :'),
+        space(10),
+        TextFormField(
+          controller: _landMarkTEController,
+          decoration: InputDecoration(hintText: 'Land Mark'),
+          textInputAction: TextInputAction.next,
+          style: fontSize16(context),
+          validator: (v) {},
         ),
       ],
     );
   }
 
-  Text _textFieldTitle(String title) => Text(title, style: fontSize16(context));
+  Text _textFieldSectionTitle(String title) => Text(
+    title,
+    style: fontSize16(context)!.copyWith(fontWeight: FontWeight.w600),
+  );
 
   @override
   void deactivate() {
-    _storeNameTEController.dispose();
-    _businessNameTEController.dispose();
-    _phNumTEController.dispose();
+    _lNameTEController.dispose();
+    _fNameTEController.dispose();
+    _mobileNmTEController.dispose();
     _emailTEController.dispose();
-    _passwordTEController.dispose();
+    _businessNameTEController.dispose();
+    _legalBusinessNameTEController.dispose();
+    _vatTaxNmTEController.dispose();
+    _businessAddressTEController.dispose();
+    _cityTEController.dispose();
+    _postalCodeTEController.dispose();
+    _dailyLuggageLimitTEController.dispose();
+    _landMarkTEController.dispose();
     super.deactivate();
   }
 }
