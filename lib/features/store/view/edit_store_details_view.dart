@@ -88,7 +88,7 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'First Name'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (String) {},
+                validator: (String? value) {},
               ),
 
               space(10),
