@@ -220,6 +220,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                 ],
               ),
             ),
+            SizedBox(height: 100.h),
           ],
         ),
       ),

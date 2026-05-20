@@ -8,6 +8,7 @@ class DescribeYourBusinessView extends StatefulWidget {
 
   static final String name = 'describe-business-screen';
   final Function(bool isValid) onValidChanged;
+
   @override
   State<DescribeYourBusinessView> createState() =>
       _DescribeYourBusinessViewState();
@@ -31,11 +32,9 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
     {'business-name': 'Pharmacy', 'Icon': Icons.local_pharmacy_outlined},
   ];
 
-
   void _updateValidation() {
     widget.onValidChanged(_selectedIndexes.isNotEmpty);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,6 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 8.h),
           // Align(
           //   alignment: Alignment.bottomRight,
           //   child: TextButton(
@@ -57,80 +55,85 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
           //   ),
           // ),
           SizedBox(height: 8.h),
-          Wrap(
-            runSpacing: 10,
-            spacing: 10,
-            children: List.generate(_businessTypeCard.length, (index) {
-              final bool isSelected = _selectedIndexes.contains(index);
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (isSelected) {
-                      _selectedIndexes.remove(index);
-                    } else {
-                      _selectedIndexes.add(index);
-                    }
-                  });
-                  _updateValidation();
-                },
-                child: SizedBox(
-                  width: 60.w,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 4.h),
-                      Container(
-                        padding: EdgeInsets.all(16.w),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isSelected
-                              ? AppColors.themeColor
-                              : Colors.grey.shade300,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 2,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          _businessTypeCard[index]['Icon'],
-                          color: isSelected ? Colors.white : Colors.black,
-                        ),
-                      ),
-                      SizedBox(height: 4.h),
-                      Text(
-                        _businessTypeCard[index]['business-name'],
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          letterSpacing: 0.1.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }),
-          ),
-          /*SizedBox(height: 180.h),
-          ElevatedButton(
-            onPressed: _selectedIndexes.isEmpty
-                ? null
-                : () {
-                    final _selectedBusiness = _selectedIndexes
-                        .map((b) => _businessTypeCard[b]['business-name'])
-                        .toList();
-
-                    debugPrint('$_selectedBusiness');
-                  },
-            child: Text('Next Step'),
-          ),*/
+          _buildBusinessTypeCard(),
+          SizedBox(height: 100.h),
         ],
       ),
+    );
+  }
+
+  Widget _buildBusinessTypeCard() {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: _businessTypeCard.length,
+
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        crossAxisSpacing: 10.w,
+        mainAxisSpacing: 10.h,
+        childAspectRatio: 0.95,
+      ),
+
+      itemBuilder: (context, index) {
+        final bool isSelected = _selectedIndexes.contains(index);
+
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              if (isSelected) {
+                _selectedIndexes.remove(index);
+              } else {
+                _selectedIndexes.add(index);
+              }
+            });
+
+            _updateValidation();
+          },
+
+          child: Container(
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? AppColors.themeColor.withOpacity(.1)
+                  : Colors.white,
+
+              borderRadius: BorderRadius.circular(4.r),
+
+              border: Border.all(
+                color: isSelected ? AppColors.themeColor : Colors.grey.shade300,
+              ),
+            ),
+
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  _businessTypeCard[index]['Icon'],
+                  size: 22.sp,
+                  color: isSelected ? AppColors.themeColor : Colors.black54,
+                ),
+
+                SizedBox(height: 8.h),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4.w),
+                  child: Text(
+                    _businessTypeCard[index]['business-name'],
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

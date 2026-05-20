@@ -4,17 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-class SignUpView extends StatefulWidget {
-  const SignUpView({Key? key, required this.onValidChanged}) : super(key: key);
+class TellUsAboutYourselfView extends StatefulWidget {
+  const TellUsAboutYourselfView({Key? key, required this.onValidChanged}) : super(key: key);
 
   static final String name = 'Sign-up-screen';
   final Function(bool isValid) onValidChanged;
 
   @override
-  State<SignUpView> createState() => SignUpViewState();
+  State<TellUsAboutYourselfView> createState() => TellUsAboutYourselfViewState();
 }
 
-class SignUpViewState extends State<SignUpView> {
+class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _submitted = false;
 
@@ -87,73 +87,80 @@ class SignUpViewState extends State<SignUpView> {
           child: Column(
             children: [
               SizedBox(height: 32.h),
-              TextFormField(
-                style: style,
-                controller: _fNameTEController,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(hintText: 'First Name'),
-                validator: (v) =>
-                    v == null || v.isEmpty ? 'Enter your name' : null,
-              ),
-              SizedBox(height: 15.h),
-
-              TextFormField(
-                style: style,
-                controller: _lNameTEController,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(hintText: 'Last Name'),
-                validator: (v) =>
-                    v == null || v.isEmpty ? 'Enter your last name' : null,
-              ),
-
-              SizedBox(height: 15.h),
-
-              _buildPhoneNumberField(),
-              SizedBox(height: 15.h),
-
-              TextFormField(
-                style: style,
-                controller: _passwordTEController,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(hintText: 'Password'),
-                validator: (v) {
-                  if (v == null || v.isEmpty) return 'Password is required';
-                  final regex = RegExp(
-                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$',
-                  );
-                  if (!regex.hasMatch(v)) {
-                    return 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15.h),
-
-              TextFormField(
-                style: style,
-                controller: _emailTEController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(hintText: 'Email'),
-                validator: (v) {
-                  if (v == null || v.isEmpty) {
-                    return 'Enter a email';
-                  }
-
-                  final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-
-                  if (!regex.hasMatch(v)) {
-                    return 'Invalid email';
-                  }
-
-                  return null;
-                },
-              ),
+              _buildFormField(style),
+             SizedBox(height: 200.h,)
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildFormField(TextStyle style) {
+    return Column(
+              children: [
+                TextFormField(
+                  style: style,
+                  controller: _fNameTEController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(hintText: 'First Name'),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Enter your name' : null,
+                ),
+                SizedBox(height: 15.h),
+
+                TextFormField(
+                  style: style,
+                  controller: _lNameTEController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(hintText: 'Last Name'),
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Enter your last name' : null,
+                ),
+
+                SizedBox(height: 15.h),
+
+                _buildPhoneNumberField(),
+                SizedBox(height: 15.h),
+                TextFormField(
+                  style: style,
+                  controller: _emailTEController,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
+                  decoration: const InputDecoration(hintText: 'Email'),
+                  validator: (v) {
+                    if (v == null || v.isEmpty) {
+                      return 'Enter a email';
+                    }
+
+                    final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                    if (!regex.hasMatch(v)) {
+                      return 'Invalid email';
+                    }
+
+                    return null;
+                  },
+                ),
+                SizedBox(height: 15.h),
+                TextFormField(
+                  style: style,
+                  controller: _passwordTEController,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(hintText: 'Password'),
+                  validator: (v) {
+                    if (v == null || v.isEmpty) return 'Password is required';
+                    final regex = RegExp(
+                      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$',
+                    );
+                    if (!regex.hasMatch(v)) {
+                      return 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            );
   }
 
   Widget _buildPhoneNumberField() {

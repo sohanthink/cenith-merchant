@@ -1,7 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/features/auth/view/auth_view.dart';
-import 'package:cenith_marchent/features/auth/view/sign_up_view.dart';
+import 'package:cenith_marchent/features/auth/view/tell_us_about_yourself_view.dart';
 import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
