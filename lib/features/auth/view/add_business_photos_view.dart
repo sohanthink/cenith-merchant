@@ -5,11 +5,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../../core/constants/asstes_path/icons_path.dart';
 
 class AddBusinessPhotosView extends StatefulWidget {
   const AddBusinessPhotosView({super.key, required this.onValidChanged});

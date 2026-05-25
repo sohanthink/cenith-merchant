@@ -3,7 +3,6 @@ import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 
 class EditStoreDetailsView extends StatefulWidget {
   const EditStoreDetailsView({super.key});
@@ -88,7 +87,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'First Name'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (String? value) {},
+                validator: (String? value) {
+                  return null;
+                },
               ),
 
               space(10),
@@ -97,7 +98,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Last Name'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
 
               space(10),
@@ -106,7 +109,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Mobile Number'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -114,7 +119,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 controller: _emailTEController,
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
             ],
           ),
@@ -137,7 +144,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Business Name'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -145,7 +154,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Legal Business Name'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -153,7 +164,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Vat Tax Number'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -161,7 +174,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Business address'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -169,7 +184,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'City'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -177,7 +194,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: 'Postal Code'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
               space(10),
               TextFormField(
@@ -185,7 +204,9 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                 decoration: InputDecoration(hintText: ' Daily Luggage Limit'),
                 textInputAction: TextInputAction.next,
                 style: fontSize16(context),
-                validator: (v) {},
+                validator: (v) {
+                  return null;
+                },
               ),
             ],
           ),

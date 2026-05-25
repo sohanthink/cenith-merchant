@@ -39,6 +39,7 @@ class _AllBookingsViewState extends State<AllBookingsView> {
           surfaceTintColor: Colors.transparent,
           scrolledUnderElevation: 0,
         ),
+
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Column(

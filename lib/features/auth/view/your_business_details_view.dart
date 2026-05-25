@@ -191,7 +191,7 @@ class YourBusinessDetailsViewState extends State<YourBusinessDetailsView> {
     return DropdownButtonFormField<String>(
       style: fontSize16(context),
       icon: const Icon(Icons.keyboard_arrow_down_outlined),
-      value: value,
+      initialValue: value,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: fontSize16(

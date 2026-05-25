@@ -149,17 +149,22 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
             children: [
               TextSpan(
                 text:
-                    '*Recent earnings that are still being processed or '
-                    'on the way to your payout account.'
-                    ' Payment of these values may carry-over for next payout.',
+                    'View your earning, pending payouts and complete'
+                    'transfer from you Cenith Storage location Some recent'
+                    'earning may still be processing and may appear in your'
+                    'next payout cycle.',
 
+                // '*Recent earnings that are still being processed or '
+                // 'on the way to your payout account.'
+                // ' Payment of these values may carry-over for next payout.',
                 style: fontSize14(context),
               ),
               TextSpan(
-                text: ' Read more in our FAQs page >',
-                style: fontSize14(
-                  context,
-                )!.copyWith(color: AppColors.themeColor),
+                text: ' Learn more in our FAQs page ',
+                style: fontSize14(context)!.copyWith(
+                  color: AppColors.themeColor,
+                  fontWeight: FontWeight(600),
+                ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     //TODO: to open faq

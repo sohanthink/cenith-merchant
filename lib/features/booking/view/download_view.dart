@@ -48,7 +48,7 @@ class _DownloadViewState extends State<DownloadView> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: ()=> Navigator.pop(context),
+            onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.close, color: AppColors.midLightBlue),
           ),
         ],
@@ -100,37 +100,37 @@ class _DownloadViewState extends State<DownloadView> {
                 });
               },
             ),
-
             SizedBox(height: 16.h),
-            Container(
-              height: 150.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 2.r,
-                    offset: Offset(0, 1),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 28.h),
-                  ElevatedButton(onPressed: () {}, child: Text('Download CSV')),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Clear All',
-                      style: fontSize14(
-                        context,
-                      )?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 2.r,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 10.h),
+            ElevatedButton(onPressed: () {}, child: Text('Download CSV')),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Clear All',
+                style: fontSize14(
+                  context,
+                )?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),

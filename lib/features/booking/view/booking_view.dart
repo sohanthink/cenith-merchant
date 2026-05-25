@@ -2,16 +2,14 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/booking/view_moel/booking_view_model.dart';
-import 'package:cenith_marchent/features/booking/widgets/no_booking_yet_widget.dart';
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../common/widgets/contact_support_text.dart';
 import '../../common/widgets/loading_annimation.dart';
-import '../widgets/booking_card.dart';
 import '../widgets/custom_circle_icons.dart';
 import 'download_view.dart';
 
@@ -28,7 +26,7 @@ class _BookingViewState extends State<BookingView> {
   DateTime now = DateTime.now();
 
   bool _isCalendarReady = false;
-
+  final GlobalKey calenderKey = GlobalKey();
   late final DateTime _finalFirstDay = DateTime.utc(now.year - 10, 1, 1);
   late final DateTime _finalLastDay = DateTime.utc(now.year + 10, 12, 31);
 
@@ -57,8 +55,6 @@ class _BookingViewState extends State<BookingView> {
 
   ScrollController controller = ScrollController();
 
-  final GlobalKey calenderKey = GlobalKey();
-
   DateTime? _selectedDay;
   DateTime? _rangeStart = DateTime.now();
   DateTime? _rangeEnd = DateTime.now().add(Duration(days: 3));
@@ -68,82 +64,15 @@ class _BookingViewState extends State<BookingView> {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme;
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
-      // body: CustomScrollView(
-      //   slivers: [
-      //     GetBuilder<BookingViewModel>(
-      //       builder: (viewModel) {
-      //         return SliverAppBar(
-      //           automaticallyImplyLeading: false,
-      //           centerTitle: true,
-      //           title: Text('Booking'),
-      //           floating: true,
-      //           pinned: true,
-      //           backgroundColor: Colors.green,
-      //           expandedHeight: viewModel.calenderHeight.spMin,
-      //           flexibleSpace: FlexibleSpaceBar(
-      //             background: buildCalenderSection(),
-      //           ),
-      //         );
-      //       },
-      //     ),
-      //
-      //
-      //     SliverToBoxAdapter(
-      //       child: Container(
-      //         margin: EdgeInsets.all(20),
-      //         decoration: BoxDecoration(
-      //           color: Colors.purple,
-      //           borderRadius: BorderRadius.circular(29),
-      //         ),
-      //         height: 200,
-      //       ),
-      //     ),
-      //     SliverToBoxAdapter(
-      //       child: Container(
-      //         margin: EdgeInsets.all(20),
-      //         decoration: BoxDecoration(
-      //           color: Colors.purple,
-      //           borderRadius: BorderRadius.circular(29),
-      //         ),
-      //         height: 200,
-      //       ),
-      //     ),
-      //     SliverToBoxAdapter(
-      //       child: Container(
-      //         margin: EdgeInsets.all(20),
-      //         decoration: BoxDecoration(
-      //           color: Colors.purple,
-      //           borderRadius: BorderRadius.circular(29),
-      //         ),
-      //         height: 200,
-      //       ),
-      //     ),
-      //   ],
-      // ),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        backgroundColor: AppColors.themeColor,
-        title: Text('Booking', style: TextStyle(color: Colors.white)),
-      ),
-      body: SingleChildScrollView(
+      body: CustomScrollView(
         controller: controller,
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 70.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(color: AppColors.themeColor),
-                ),
-                buildCalenderSection(),
-              ],
-            ),
-
-            Padding(
+        slivers: [
+          SliverToBoxAdapter(child: buildCalenderSection()),
+          SliverToBoxAdapter(
+            child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
               child: Row(
                 children: [
@@ -162,53 +91,148 @@ class _BookingViewState extends State<BookingView> {
                 ],
               ),
             ),
-            SizedBox(height: 12.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-              child: GetBuilder<BookingViewModel>(
-                builder: (controller) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ...controller.button.asMap().entries.map((item) {
-                        return buildElevatedButton(
-                          isSelected: item.key == controller.selectedIndex,
-                          buttonName: item.value,
-                          onTap: () {
-                            controller.onTap(item.key);
-                          },
-                        );
-                      }),
-                    ],
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 40.h),
+          ),
+          SliverLayoutBuilder(
+            builder: (BuildContext context, SliverConstraints constraints) {
+              return SliverAppBar(
+                surfaceTintColor: AppColors.scaffoldColor,
+                // backgroundColor: constraints.scrollOffset > 10.h
+                //     ? Colors.white
+                //     : AppColors.scaffoldColor,
+                backgroundColor: AppColors.scaffoldColor,
+                automaticallyImplyLeading: false,
+                toolbarHeight: 60.h,
+                flexibleSpace: Column(
+                  children: [
+                    // constraints.scrollOffset > 10.h
+                    //     ? SizedBox(height: 10)
+                    //     : SizedBox(height: 10),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                      child: GetBuilder<BookingViewModel>(
+                        builder: (controller) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ...controller.button.asMap().entries.map((item) {
+                                return buildElevatedButton(
+                                  isSelected:
+                                      item.key == controller.selectedIndex,
+                                  buttonName: item.value,
+                                  onTap: () {
+                                    controller.onTap(item.key);
+                                  },
+                                );
+                              }),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
 
-            // Center(child: LoadingAnimation()),
-            // ListView.builder(
-            //   shrinkWrap: true,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   itemCount: 4,
-            //   itemBuilder: (BuildContext context, int index) {
-            //     return BookingCard(
-            //       title: 'Mario Chacón Bernal',
-            //       date: 'Feb 16, 14:00 - Feb 16, 19:00',
-            //       id: 'K571PIZ8',
-            //       bags: 2,
-            //       status: 'Pending check in',
-            //     );
-            //   },
-            // ),
-            GetBuilder<BookingViewModel>(
+                pinned: true,
+              );
+            },
+          ),
+          SliverToBoxAdapter(
+            child: GetBuilder<BookingViewModel>(
               builder: (controller) {
                 return controller.screens[controller.selectedIndex];
               },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        backgroundColor: AppColors.themeColor,
+        title: Text('Booking', style: TextStyle(color: Colors.white)),
+      ),
+      // body: SingleChildScrollView(
+      //   controller: controller,
+      //   child: Column(
+      //     children: [
+      //       Stack(
+      //         children: [
+      //           Container(
+      //             height: 70.h,
+      //             width: double.infinity,
+      //             decoration: BoxDecoration(color: AppColors.themeColor),
+      //           ),
+      //           buildCalenderSection(),
+      //         ],
+      //       ),
+
+      //       Padding(
+      //         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+      //         child: Row(
+      //           children: [
+      //             buildTextFormField(style),
+      //             SizedBox(width: 5.w),
+      //             CustomCircleIcons(
+      //               icon: IconsPath.toolsFilterIconSvg,
+      //               onTap: () =>
+      //                   Navigator.pushNamed(context, DownloadView.name),
+      //             ),
+      //             CustomCircleIcons(
+      //               icon: IconsPath.downloadIconSvg,
+      //               onTap: () =>
+      //                   Navigator.pushNamed(context, DownloadView.name),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       SizedBox(height: 12.h),
+      //       Padding(
+      //         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+      //         child: GetBuilder<BookingViewModel>(
+      //           builder: (controller) {
+      //             return Row(
+      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //               children: [
+      //                 ...controller.button.asMap().entries.map((item) {
+      //                   return buildElevatedButton(
+      //                     isSelected: item.key == controller.selectedIndex,
+      //                     buttonName: item.value,
+      //                     onTap: () {
+      //                       controller.onTap(item.key);
+      //                     },
+      //                   );
+      //                 }),
+      //               ],
+      //             );
+      //           },
+      //         ),
+      //       ),
+      //       SizedBox(height: 40.h),
+
+      //       // Center(child: LoadingAnimation()),
+      //       // ListView.builder(
+      //       //   shrinkWrap: true,
+      //       //   physics: NeverScrollableScrollPhysics(),
+      //       //   itemCount: 4,
+      //       //   itemBuilder: (BuildContext context, int index) {
+      //       //     return BookingCard(
+      //       //       title: 'Mario Chacón Bernal',
+      //       //       date: 'Feb 16, 14:00 - Feb 16, 19:00',
+      //       //       id: 'K571PIZ8',
+      //       //       bags: 2,
+      //       //       status: 'Pending check in',
+      //       //     );
+      //       //   },
+      //       // ),
+      //       GetBuilder<BookingViewModel>(
+      //         builder: (controller) {
+      //           return controller.screens[controller.selectedIndex];
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       floatingActionButton: CustomCheckInOutWidget(
         controller: controller,
         maxWidth: 0.92.sw,

@@ -182,8 +182,8 @@ class _HoursViewState extends State<HoursView> {
         SizedBox(height: 10.h),
         Text(
           textAlign: TextAlign.justify,
-          'Opening hours are when your store is open to check bags in and out.'
-          ' You can add exceptions for holidays or special closures.',
+          'Set the hours when customers can drop off and pick up their bags. You can also add exceptions'
+          'for holidays or special closures to keep your availability accurate.',
           style: fontSize14(context),
         ),
       ],

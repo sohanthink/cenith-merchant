@@ -1,8 +1,6 @@
 import 'package:cenith_marchent/core/controller_bindings/controller_bindings.dart';
 import 'package:cenith_marchent/core/theme/app_theme.dart';
-import 'package:cenith_marchent/features/auth/view/auth_view.dart';
 import 'package:cenith_marchent/features/auth/view/login_or_signup_view.dart';
-import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

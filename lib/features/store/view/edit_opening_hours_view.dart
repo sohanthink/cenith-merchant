@@ -40,12 +40,13 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
                             return Column(
                               children: [
                                 EditTimeTile(
-                                  day: itemIndex['day'],
-                                  startTime: itemIndex['startTime'],
-                                  endTime: itemIndex['endTime'],
-                                  isOpened: itemIndex['isOpened'],
-                                  is24hrs: itemIndex['isOpen24Hrs'],
+                                  day: itemIndex.day,
+                                  // startTime: itemIndex.slot.,
+                                  // endTime: itemIndex['endTime'],
+                                  isOpened: itemIndex.isOpen,
+                                  is24hrs: itemIndex.isOpen24Hrs,
                                   index: index,
+                                  timeSlots: itemIndex.slot,
                                 ),
                                 SizedBox(height: 0.h),
                               ],
@@ -104,8 +105,9 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
               )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
             ),
             Switch(
-              activeTrackColor: Colors.grey,
+              activeTrackColor: Colors.blue,
               inactiveTrackColor: Colors.grey,
+            
               thumbColor: WidgetStateProperty.resolveWith((state) {
                 if (state.contains(WidgetState.selected)) {
                   return Colors.white;

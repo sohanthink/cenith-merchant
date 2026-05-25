@@ -25,19 +25,17 @@ class _LearnHowToTakeGoodPhotoWidgetState
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Builder(
           builder: (context) {
             final controller = DefaultTabController.of(context);
-
             controller.addListener(() {
               if (controller.indexIsChanging) {
                 _currentIndexNotifier.value = controller.index;
               }
             });
-
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(12),

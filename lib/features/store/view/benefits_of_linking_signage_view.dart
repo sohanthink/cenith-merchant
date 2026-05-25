@@ -1,4 +1,3 @@
-import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/store/widgets/benefits_card.dart';
 import 'package:flutter/material.dart';

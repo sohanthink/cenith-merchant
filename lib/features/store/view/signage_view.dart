@@ -3,7 +3,6 @@ import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/store/view/benefits_of_linking_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/link_bounce_signage.dart';
-import 'package:cenith_marchent/features/store/view/order_tag_and_signage_view.dart';
 import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +181,7 @@ class _SignageViewState extends State<SignageView> {
     );
   }
 
-/*  Widget _buildSelectOrderDate(BuildContext context) {
+  /*  Widget _buildSelectOrderDate(BuildContext context) {
     return GestureDetector(
       onTap: _picDate,
       child: Container(
@@ -203,7 +202,7 @@ class _SignageViewState extends State<SignageView> {
     );
   }*/
 
-/*  Widget _buildSelectStatus(BuildContext context) {
+  /*  Widget _buildSelectStatus(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 45.h,
@@ -391,18 +390,35 @@ Widget _buildSignageAndStatus(
             bottom: 10.h,
           ),
           decoration: BoxDecoration(
-            color: AppColors.greenShade.shade200,
+            border: Border.all(width: 1, color: getColorWithStatus(status)),
+            color: getColorWithStatus(status).withAlpha(10),
             borderRadius: BorderRadius.circular(8.r),
           ),
           child: Text(
             status,
-            style: fontSize14(context)?.copyWith(letterSpacing: 0.1.sp),
+            style: fontSize14(context)?.copyWith(
+              letterSpacing: 0.1.sp,
+              color: getColorWithStatus(status),
+            ),
           ),
         ),
         IconButton(onPressed: onTap, icon: Icon(Icons.arrow_forward_ios)),
       ],
     ),
   );
+}
+
+Color getColorWithStatus(String status) {
+  Color color = AppColors.greenShade;
+  if (status == 'Delivered') {
+    color = Colors.green;
+  } else if (status == 'Pending') {
+    color = Colors.deepOrange;
+  } else if (status == 'Cancelled') {
+    color = Colors.orange;
+  }
+
+  return color;
 }
 
 SizedBox space(double h) => SizedBox(height: h.h);

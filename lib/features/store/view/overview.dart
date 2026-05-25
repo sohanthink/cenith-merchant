@@ -1,7 +1,6 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
-import 'package:cenith_marchent/features/store/view/print_a_signage_view.dart';
 import 'package:cenith_marchent/features/store/view_model/overview_view_model.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +28,15 @@ class _OverviewState extends State<Overview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 12.h),
             buildHeaderSection(context),
-            SizedBox(height: 15.h),
+            SizedBox(height: 18.h),
             buildStoreOverViewSection(context),
             SizedBox(height: 30.h),
             buildStoreCommissionSection(context),
             SizedBox(height: 15.h),
-            walkInBookingCountCard(context),
-            SizedBox(height: 15.h),
+            // walkInBookingCountCard(context),
+            // SizedBox(height: 15.h),
             buildContactInfoCard(context),
             SizedBox(height: 20.h),
             buildLocationPhotoSection(context),
@@ -218,27 +218,27 @@ class _OverviewState extends State<Overview> {
                 .toList(),
           ),
         ),
-        SizedBox(height: 20),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  IconsPath.downloadIconSvg,
-                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Earning Details',
-                  style: fontSize16(context)!.copyWith(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
+        SizedBox(height: 30),
+        // SizedBox(
+        //   width: double.infinity,
+        //   child: ElevatedButton(
+        //     onPressed: () {},
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         SvgPicture.asset(
+        //           IconsPath.downloadIconSvg,
+        //           colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        //         ),
+        //         SizedBox(width: 10),
+        //         Text(
+        //           'Earning Details',
+        //           style: fontSize16(context)!.copyWith(color: Colors.white),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -591,20 +591,20 @@ class _OverviewState extends State<Overview> {
       children: [
         Text(
           'Overview',
-          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500),
+          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w700),
         ),
-        OutlinedButton(
-          onPressed: () => Navigator.pushNamed(context, PrintASignageView.name),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.themeColor,
-            disabledForegroundColor: AppColors.themeColor.shade50,
-            side: BorderSide(color: AppColors.themeColor, width: 1),
 
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          decoration: BoxDecoration(
+            color: Colors.white.withAlpha(500),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(width: 1, color: AppColors.themeColor),
           ),
-          child: Text('Print A Signage'),
+          child: Text(
+            'Print a Signage',
+            style: fontSize14(context)?.copyWith(color: AppColors.themeColor),
+          ),
         ),
       ],
     );
