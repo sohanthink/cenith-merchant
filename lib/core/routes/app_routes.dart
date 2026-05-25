@@ -5,6 +5,7 @@ import 'package:cenith_marchent/features/auth/view/confirmation_code_entry_view.
 import 'package:cenith_marchent/features/auth/view/log_in_view.dart';
 import 'package:cenith_marchent/features/auth/view/login_or_signup_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
+import 'package:cenith_marchent/features/auth/view/welcome_view.dart';
 import 'package:cenith_marchent/features/booking/view/all_bookings_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_details_view.dart';
 import 'package:cenith_marchent/features/booking/view/booking_view.dart';
@@ -87,6 +88,8 @@ class AppRoutes {
       screenWidget = LogInView();
     } else if (settings.name == LoginOrSignupView.name) {
       screenWidget = LoginOrSignupView();
+    } else if (settings.name == WelcomeView.name) {
+      screenWidget = WelcomeView();
     }
 
     return MaterialPageRoute(builder: (context) => screenWidget);

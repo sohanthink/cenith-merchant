@@ -1,7 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/auth/view/log_in_view.dart';
-import 'package:cenith_marchent/features/main_bottom_nav/view/main_bottom_nav_view.dart';
+import 'package:cenith_marchent/features/auth/view/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -53,7 +52,7 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
    if (valid) {
      Navigator.pushNamedAndRemoveUntil(
        context,
-       LogInView.name,
+       WelcomeView.name,
            (route) => false,
      );
    }
