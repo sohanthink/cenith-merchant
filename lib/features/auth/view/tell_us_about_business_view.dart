@@ -1,3 +1,4 @@
+import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,11 +22,11 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
   final _businessNameController = TextEditingController();
   final _cityController = TextEditingController();
   final _postalController = TextEditingController();
-  final _luggageLimitController = TextEditingController();
-  final _legalBusinessNameTEController = TextEditingController();
+  final _streetOrBuildingNumController = TextEditingController();
+  final _registeredNameTEController = TextEditingController();
   final _vatTEController = TextEditingController();
-  final _businessPhoneNumberTEController = TextEditingController();
-  final _businessAddressTEController = TextEditingController();
+  final _phoneTEController = TextEditingController();
+  final _addressTEController = TextEditingController();
 
 
   @override
@@ -39,11 +40,11 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
       _businessNameController,
       _cityController,
       _postalController,
-      _luggageLimitController,
-      _legalBusinessNameTEController,
+      _streetOrBuildingNumController,
+      _registeredNameTEController,
       _vatTEController,
-      _businessPhoneNumberTEController,
-      _businessAddressTEController,
+      _phoneTEController,
+      _addressTEController,
     ]) {
       c.addListener(_checkFilledOnly);
     }
@@ -54,11 +55,11 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
         _businessNameController.text.isNotEmpty &&
         _cityController.text.isNotEmpty &&
         _postalController.text.isNotEmpty &&
-        _luggageLimitController.text.isNotEmpty &&
-        _legalBusinessNameTEController.text.isNotEmpty &&
+        _streetOrBuildingNumController.text.isNotEmpty &&
+        _registeredNameTEController.text.isNotEmpty &&
         _vatTEController.text.isNotEmpty &&
-        _businessPhoneNumberTEController.text.isNotEmpty &&
-        _legalBusinessNameTEController.text.isNotEmpty;
+        _phoneTEController.text.isNotEmpty &&
+        _registeredNameTEController.text.isNotEmpty;
 
     widget.onValidChanged(filled);
   }
@@ -76,11 +77,11 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
     _businessNameController.dispose();
     _cityController.dispose();
     _postalController.dispose();
-    _luggageLimitController.dispose();
-    _legalBusinessNameTEController.dispose();
+    _streetOrBuildingNumController.dispose();
+    _registeredNameTEController.dispose();
     _vatTEController.dispose();
-    _businessPhoneNumberTEController.dispose();
-    _businessAddressTEController.dispose();
+    _phoneTEController.dispose();
+    _addressTEController.dispose();
 
     super.dispose();
   }
@@ -91,7 +92,7 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding:  EdgeInsets.only(bottom: 100.h),
+        padding: EdgeInsets.only(bottom: 100.h),
         child: Form(
           key: _formKey,
           autovalidateMode: _submitted
@@ -102,7 +103,6 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
             children: [
               SizedBox(height: 12.h),
               _buildFormField(style),
-
             ],
           ),
         ),
@@ -112,114 +112,146 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
 
   Widget _buildFormField(TextStyle style) {
     return Column(
-              children: [
-                TextFormField(
-                  controller: _businessNameController,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(hintText: 'Business Name'),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _legalBusinessNameTEController,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(
-                    hintText: 'Legal Business Name',
-                  ),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _vatTEController,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(
-                    hintText: 'VAT Number/Tax Code',
-                  ),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _businessPhoneNumberTEController,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(
-                    hintText: 'Business Phone Number',
-                  ),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _businessAddressTEController,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(hintText: 'Business Address'),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
+      children: [
+        TextFormField(
+          controller: _businessNameController,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: InputDecoration(
+            hintText: 'Business Name',
+            suffixIcon: _buildToolTip(
 
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _cityController,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(hintText: 'City'),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _postalController,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
-                  style: style,
-                  decoration: const InputDecoration(hintText: 'Postal Code (ZIP)'),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  controller: _luggageLimitController,
-                  style: style,
-                  decoration: const InputDecoration(
-                    hintText: 'Daily Luggage Limit',
-                  ),
-                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                ),
-              ],
-            );
+              toolTipTitle: 'Public name of your business',
+
+            ),
+          ),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _registeredNameTEController,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: InputDecoration(
+            hintText: 'Registered Name',
+            suffixIcon: _buildToolTip(
+
+              toolTipTitle: 'Official company name (mandatory)',
+
+            ),
+          ),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _vatTEController,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: InputDecoration(
+            hintText: 'VAT Number',
+            suffixIcon: _buildToolTip(
+
+              toolTipTitle: 'P.IVA/C.F (mandatory)',
+
+            ),
+          ),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _phoneTEController,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: InputDecoration(
+            hintText: 'Phone Number',
+            suffixIcon: _buildToolTip(
+
+              toolTipTitle: 'Not visible to customer (mandatory)',
+
+            ),
+          ),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _addressTEController,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: InputDecoration(
+            hintText: 'Address',
+            suffixIcon: _buildToolTip(
+
+              toolTipTitle: 'Business location address',
+
+            ),
+          ),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _streetOrBuildingNumController,
+          style: style,
+          decoration: const InputDecoration(
+            hintText: 'Street or building number',
+          ),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _cityController,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: const InputDecoration(hintText: 'City'),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+        SizedBox(height: 10.h),
+        TextFormField(
+          controller: _postalController,
+          keyboardType: TextInputType.number,
+          textInputAction: TextInputAction.next,
+          style: style,
+          decoration: const InputDecoration(hintText: 'Postal Code (ZIP)'),
+          validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+        ),
+      ],
+    );
   }
 
-/*  Widget _dropdownFormField({
-    required String hint,
-    required List<String> items,
-    String? value,
-    required Function(String?) onChanged,
+  Widget _buildToolTip({
+    required String toolTipTitle,
   }) {
-    return DropdownButtonFormField<String>(
-      style: fontSize16(context),
-      icon: const Icon(Icons.keyboard_arrow_down_outlined),
-      value: value,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: fontSize16(
-          context,
-        )!.copyWith(color: Colors.grey, fontWeight: FontWeight.w400),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14.r),
-          borderSide: BorderSide(color: Colors.grey),
+    return Tooltip(
+      message: toolTipTitle,
+      triggerMode: TooltipTriggerMode.tap,
+      preferBelow: false,
+      verticalOffset: 8.h,
+      padding: EdgeInsets.all(12.r),
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(8.r),
+          topLeft: Radius.circular(8.r),
+          bottomLeft: Radius.circular(8.r),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 4,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
-      validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-      items: items
-          .map(
-            (e) => DropdownMenuItem<String>(
-              value: e,
-              child: Text(e, style: fontSize16(context)),
-            ),
-          )
-          .toList(),
-      onChanged: onChanged,
+      textStyle: fontSize16(context)!.copyWith(
+        color: Colors.white,
+
+      ),
+      child: Icon(
+        Icons.info_outline,
+        color: AppColors.themeColor.shade500,
+      ),
     );
-  }*/
+  }
 }
+
