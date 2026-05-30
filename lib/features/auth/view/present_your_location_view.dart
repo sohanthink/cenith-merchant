@@ -9,17 +9,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 
-class AddBusinessPhotosView extends StatefulWidget {
-  const AddBusinessPhotosView({super.key, required this.onValidChanged});
+class PresentYourLocationView extends StatefulWidget {
+  const PresentYourLocationView({super.key, required this.onValidChanged});
 
   static final String name = 'add-business-photos-screen';
   final Function(bool isValid) onValidChanged;
 
   @override
-  State<AddBusinessPhotosView> createState() => _AddBusinessPhotosViewState();
+  State<PresentYourLocationView> createState() => _PresentYourLocationViewState();
 }
 
-class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
+class _PresentYourLocationViewState extends State<PresentYourLocationView> {
   final ImagePicker _imagePicker = ImagePicker();
   final List<XFile> _pickedImages = [];
 
@@ -45,7 +45,7 @@ class _AddBusinessPhotosViewState extends State<AddBusinessPhotosView> {
     );
   }
 
-  Row buildUploadPhotoSection() {
+  Widget buildUploadPhotoSection() {
     return Row(
       spacing: 13,
       children: [

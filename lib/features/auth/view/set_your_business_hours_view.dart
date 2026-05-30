@@ -5,17 +5,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../widgets/day_tile.dart';
 
-class AddYourBusinessHoursView extends StatefulWidget {
-  const AddYourBusinessHoursView({super.key, required this.onValidChanged});
+class SetYourBusinessHoursView extends StatefulWidget {
+  const SetYourBusinessHoursView({super.key, required this.onValidChanged});
 
   final Function(bool) onValidChanged;
 
   @override
-  State<AddYourBusinessHoursView> createState() =>
-      _AddYourBusinessHoursViewState();
+  State<SetYourBusinessHoursView> createState() =>
+      _SetYourBusinessHoursViewState();
 }
 
-class _AddYourBusinessHoursViewState extends State<AddYourBusinessHoursView> {
+class _SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
   late final BusinessHoursController controller;
 
   @override

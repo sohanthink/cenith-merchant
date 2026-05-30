@@ -1,15 +1,15 @@
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/auth/view/add_business_photos_view.dart';
+import 'package:cenith_marchent/features/auth/view/present_your_location_view.dart';
 import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.dart';
-import 'package:cenith_marchent/features/auth/view/sign_up_view.dart';
+import 'package:cenith_marchent/features/auth/view/tell_us_about_yourself_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
-import 'package:cenith_marchent/features/auth/view/your_business_details_view.dart';
+import 'package:cenith_marchent/features/auth/view/tell_us_about_business_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'add_your_business_hours_view.dart';
+import 'set_your_business_hours_view.dart';
 import 'describe_your_business_view.dart';
 
 class AuthView extends StatefulWidget {
@@ -22,20 +22,48 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewState extends State<AuthView> {
-  final GlobalKey<SignUpViewState> signUpKey = GlobalKey<SignUpViewState>();
-  final GlobalKey<YourBusinessDetailsViewState> businessDetailsKey =
-      GlobalKey<YourBusinessDetailsViewState>();
+  final GlobalKey<TellUsAboutYourselfViewState> signUpKey = GlobalKey<TellUsAboutYourselfViewState>();
+  final GlobalKey<TellUsAboutBusinessViewState> businessDetailsKey =
+      GlobalKey<TellUsAboutBusinessViewState>();
   late final PageController _pageController;
   int _currentIndex = 0;
 
-
   final List<Map<String, dynamic>> _steps = [
-    {'title': 'Your Details', 'progress': 0.16},
-    {'title': 'Describe Your Business', 'progress': 0.32},
-    {'title': 'Business Details', 'progress': 0.48},
-    {'title': 'Confirm Location', 'progress': 0.64},
-    {'title': 'Business Hours', 'progress': 0.80},
-    {'title': 'Business Photos', 'progress': 1.0},
+    {
+      'title': 'Tell Us About Yourself',
+      'sub-title':
+          'This information will help us create your profile. Please fill in all required fields.',
+      'progress': 0.16,
+    },
+    {
+      'title': 'Describe your business',
+      'sub-title':
+          'Tell us about your business and select the location type that fits you best.',
+      'progress': 0.32,
+    },
+    {
+      'title': 'Tell Us About Business',
+      'sub-title':
+          'Add your business name and fill in the details to get started.',
+      'progress': 0.48,
+    },
+    {
+      'title': 'Confirm Your Location',
+      'sub-title': 'Make sure the pin is placed correctly on the map.',
+      'progress': 0.64,
+    },
+    {
+      'title': 'Set Your Business Hours',
+      'sub-title':
+          'Let customers know your opening times and availability for service.',
+      'progress': 0.80,
+    },
+    {
+      'title': 'Present Your Location',
+      'sub-title':
+          'Add photos so customers can clearly see your business and where their luggage will be stored.',
+      'progress': 1.0,
+    },
   ];
 
   final Map<int, bool> _pageValidation = {
@@ -52,15 +80,17 @@ class _AuthViewState extends State<AuthView> {
     _pageController = PageController();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.w),
           child: Column(
             children: [
-              SizedBox(height: _currentIndex == 0?32.h:12.h),
+              SizedBox(height: _currentIndex == 0 ? 32.h : 12.h),
               _buildTopSection(context),
               SizedBox(height: 10.h),
               Expanded(
@@ -75,7 +105,7 @@ class _AuthViewState extends State<AuthView> {
                         });
                       },
                       children: [
-                        SignUpView(
+                        TellUsAboutYourselfView(
                           key: signUpKey,
                           onValidChanged: (isValid) {
                             _pageValidation[0] = isValid;
@@ -88,7 +118,7 @@ class _AuthViewState extends State<AuthView> {
                             setState(() {});
                           },
                         ),
-                        YourBusinessDetailsView(
+                        TellUsAboutBusinessView(
                           key: businessDetailsKey,
                           onValidChanged: (isValid) {
                             _pageValidation[2] = isValid;
@@ -101,13 +131,13 @@ class _AuthViewState extends State<AuthView> {
                             setState(() {});
                           },
                         ),
-                        AddYourBusinessHoursView(
+                        SetYourBusinessHoursView(
                           onValidChanged: (isValid) {
                             _pageValidation[4] = isValid;
                             setState(() {});
                           },
                         ),
-                        AddBusinessPhotosView(
+                        PresentYourLocationView(
                           onValidChanged: (isValid) {
                             _pageValidation[5] = isValid;
                             setState(() {});
@@ -115,7 +145,6 @@ class _AuthViewState extends State<AuthView> {
                         ),
                       ],
                     ),
-                    _buildButton(context),
                   ],
                 ),
               ),
@@ -123,68 +152,72 @@ class _AuthViewState extends State<AuthView> {
           ),
         ),
       ),
+      bottomNavigationBar: _buildButton(context),
     );
   }
 
   Widget _buildButton(BuildContext context) {
-    bool isSmallContentPage = _currentIndex == 0;
-    bool isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
-    if (isKeyboardOpen) return SizedBox();
+    if (isKeyboardOpen) return const SizedBox.shrink();
 
-    return Positioned(
-      left: 0,
-      right: 0,
-      bottom: isSmallContentPage ? null : 0.h,
-      top: isSmallContentPage
-          ? MediaQuery.of(context).size.height * 0.50
-          : null,
-      child: ElevatedButton(
-        onPressed: _pageValidation[_currentIndex] == true
-            ? () {
-                FocusScope.of(context).unfocus();
-                if (_currentIndex == 0) {
-                  final state = signUpKey.currentState;
-                  if (state != null) {
-                    state.submit();
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB( 16.w,
+            _currentIndex == 0 ? 8.h : 8.h,
+            16.w,
+            _currentIndex == 0 ? 80.h : 16.h
 
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      if (_pageValidation[0] == true) {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    });
-                  }
-                  return;
-                }
-                if (_currentIndex == 2) {
-                  final state = businessDetailsKey.currentState;
-                  if (state != null) {
-                    state.submit();
-                    if (_pageValidation[2] == true) {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  }
-                  return;
-                }
-                if (_currentIndex < 5) {
-                  if (_pageValidation[_currentIndex] == true) {
+        ),
+        child: ElevatedButton(
+          onPressed: _pageValidation[_currentIndex] == true
+              ? () {
+            FocusScope.of(context).unfocus();
+
+            if (_currentIndex == 0) {
+              final state = signUpKey.currentState;
+              if (state != null) {
+                state.submit();
+
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (_pageValidation[0] == true) {
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   }
-                } else {
-                  Navigator.pushNamed(context, TermsAndConditionView.name);
+                });
+              }
+              return;
+            }
+
+            if (_currentIndex == 2) {
+              final state = businessDetailsKey.currentState;
+              if (state != null) {
+                state.submit();
+
+                if (_pageValidation[2] == true) {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
                 }
               }
-            : null,
-        child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
+              return;
+            }
+
+            if (_currentIndex < 5) {
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            } else {
+              Navigator.pushNamed(context, TermsAndConditionView.name);
+            }
+          }
+              : null,
+          child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
+        ),
       ),
     );
   }
@@ -200,9 +233,15 @@ class _AuthViewState extends State<AuthView> {
           currentSteps['title'],
           style: TextStyle(
             fontSize: 30.sp,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             letterSpacing: 0.1.sp,
           ),
+        ),
+        SizedBox(height: 16.h),
+        Text(
+          currentSteps['sub-title'],
+          textAlign: TextAlign.center,
+          style: fontSize18(context)!.copyWith(color: Colors.black54),
         ),
         SizedBox(height: 24.h),
         LinearProgressIndicator(
