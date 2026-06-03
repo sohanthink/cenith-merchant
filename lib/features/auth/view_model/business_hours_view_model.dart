@@ -1,10 +1,10 @@
-import 'package:cenith_marchent/features/store/model/day_model.dart';
 import 'package:cenith_marchent/features/common/model/time_slot_model.dart';
-import 'package:flutter/rendering.dart';
+import 'package:cenith_marchent/features/store/model/day_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EditHourViewModel extends GetxController {
-  bool isChecked = false;
+class BusinessHoursViewModel extends GetxController {
+  bool isAllDay = false;
 
   List<DayModel> dayList = [
     DayModel(
@@ -112,9 +112,8 @@ class EditHourViewModel extends GetxController {
     update();
   }
 
-  void updateButtonStatus() {
-    isChecked = !isChecked;
-    update();
+  void isOpen247(bool v) {
+    isAllDay = v;
   }
 
   void removeTimeSlot(int dayIndex, int slotIndex) {
@@ -131,7 +130,7 @@ class EditHourViewModel extends GetxController {
     update();
   }
 
- void copyScheduleToAllDay(int index) {
+  void copyScheduleToAllDay(int index) {
     if (dayList[index].isOpen24Hrs) {
       for (int i = 0; i < dayList.length; i++) {
         if (index != i) {
@@ -156,4 +155,10 @@ class EditHourViewModel extends GetxController {
     }
   }
 
+  bool get isValid {
+    if (isAllDay) return true;
+    return dayList.any((item) => item.isOpen);
+  }
+
+  //previous models
 }

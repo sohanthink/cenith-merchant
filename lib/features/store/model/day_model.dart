@@ -10,7 +10,7 @@
 //       'isOpen24Hrs': false,
 //     },
 
-import 'package:cenith_marchent/features/store/model/time_slot_model.dart';
+import 'package:cenith_marchent/features/common/model/time_slot_model.dart';
 
 class DayModel {
   String day;

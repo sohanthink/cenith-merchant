@@ -146,7 +146,7 @@ class _LogInViewState extends State<LogInView> {
           title,
           style: fontSize18(
             context,
-          )!.copyWith(color: foregroundColor, fontWeight: FontWeight.w600),
+          )!.copyWith(color: foregroundColor, fontWeight: FontWeight.w400),
         ),
       ),
     );

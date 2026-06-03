@@ -102,7 +102,6 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
                   return null;
                 },
               ),
-
               space(10),
               TextFormField(
                 controller: _mobileNmTEController,

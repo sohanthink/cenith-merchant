@@ -1,9 +1,9 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/auth/controllers/business_hours_controller.dart';
+import 'package:cenith_marchent/features/auth/view_model/business_hours_view_model.dart';
+import 'package:cenith_marchent/features/common/widgets/edit_time_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../widgets/day_tile.dart';
 
 class SetYourBusinessHoursView extends StatefulWidget {
   const SetYourBusinessHoursView({super.key, required this.onValidChanged});
@@ -16,13 +16,13 @@ class SetYourBusinessHoursView extends StatefulWidget {
 }
 
 class _SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
-  late final BusinessHoursController controller;
+  late final BusinessHoursViewModel controller;
 
   @override
   void initState() {
     super.initState();
 
-    controller = Get.put(BusinessHoursController());
+    controller = Get.put(BusinessHoursViewModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onValidChanged(controller.isValid);
@@ -31,7 +31,7 @@ class _SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BusinessHoursController>(
+    return GetBuilder<BusinessHoursViewModel>(
       builder: (controller) {
         return ListView(
           children: [
@@ -56,7 +56,7 @@ class _SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
                           inactiveTrackColor: Colors.grey.shade300,
                           value: controller.isAllDay,
                           onChanged: (v) {
-                            controller.toggleAllDay(v);
+                            controller.isOpen247(v);
                             widget.onValidChanged(controller.isValid);
                           },
                         ),
@@ -68,46 +68,20 @@ class _SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
             ),
 
             if (!controller.isAllDay)
-              ...controller.schedules.map(
-                (day) => DayTile(
-                  data: day,
-                  onToggleEnabled: (v) {
-                    controller.toggleDayEnabled(day, v);
-                    widget.onValidChanged(controller.isValid);
-                  },
-                  onPickTime: (bool isFrom, String currentTime) async {
-                    final time = await _pickTime(currentTime: currentTime);
-                    if (time != null) {
-                      controller.updateSlotTime(
-                        day: day,
-                        isFrom: isFrom,
-                        time: time,
-                      );
-                      widget.onValidChanged(controller.isValid);
-                    }
-                  },
-                ),
-              ),
+              ...controller.dayList.asMap().entries.map((item) {
+                final day = item.value;
+                return EditTimeTileWidget(
+                  controller: controller,
+                  day: day.day,
+                  isOpened: day.isOpen,
+                  is24hrs: day.isOpen24Hrs,
+                  index: item.key,
+                  timeSlots: day.slot,
+                );
+              }),
           ],
         );
       },
     );
-  }
-
-  Future<String?> _pickTime({required String currentTime}) async {
-    List<String> spilledTime = currentTime.split(':');
-    int? currentHour = int.tryParse(spilledTime[0]);
-    int? currentMinute = int.tryParse(spilledTime[1]);
-    DateTime now = DateTime.now();
-    TimeOfDay processedInitialTime = TimeOfDay(
-      hour: currentHour!,
-      minute: currentMinute!,
-    );
-    final pickedTime = await showTimePicker(
-      context: context,
-      initialTime: processedInitialTime,
-    );
-    if (pickedTime == null) return null;
-    return "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
   }
 }

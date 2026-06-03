@@ -1,6 +1,6 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/store/view_model/edit_hour_view_model.dart';
-import 'package:cenith_marchent/features/store/widgets/edit_time_tile.dart';
+import 'package:cenith_marchent/features/common/widgets/edit_time_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,8 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
                           builder: (controller) {
                             return Column(
                               children: [
-                                EditTimeTile(
+                                EditTimeTileWidget(
+                                  controller: controller,
                                   day: itemIndex.day,
                                   // startTime: itemIndex.slot.,
                                   // endTime: itemIndex['endTime'],

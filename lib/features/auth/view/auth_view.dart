@@ -241,7 +241,7 @@ class _AuthViewState extends State<AuthView> {
         Text(
           currentSteps['sub-title'],
           textAlign: TextAlign.center,
-          style: fontSize18(context)!.copyWith(color: Colors.black54),
+          style: fontSize16(context)!.copyWith(color: Colors.black54),
         ),
         SizedBox(height: 24.h),
         LinearProgressIndicator(

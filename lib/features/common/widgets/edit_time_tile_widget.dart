@@ -1,5 +1,4 @@
-import 'package:cenith_marchent/features/store/model/time_slot_model.dart';
-import 'package:cenith_marchent/features/store/view_model/edit_hour_view_model.dart';
+import 'package:cenith_marchent/features/common/model/time_slot_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,31 +7,29 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/asstes_path/icons_path.dart';
 import '../../../core/theme/text_theme.dart';
 
-class EditTimeTile extends StatefulWidget {
-  const EditTimeTile({
+class EditTimeTileWidget<T> extends StatefulWidget {
+  const EditTimeTileWidget({
     super.key,
     required this.day,
-    // required this.startTime,
-    // required this.endTime,
     required this.isOpened,
     required this.is24hrs,
     required this.index,
     required this.timeSlots,
+    required this.controller,
   });
 
   final String day;
-  // final String startTime;
-  // final String endTime;
   final bool isOpened;
   final bool is24hrs;
   final int index;
   final TimeSlotModel timeSlots;
+  final T controller;
 
   @override
-  State<EditTimeTile> createState() => _EditTimeTileState();
+  State<EditTimeTileWidget> createState() => _EditTimeTileWidgetState();
 }
 
-class _EditTimeTileState extends State<EditTimeTile>
+class _EditTimeTileWidgetState extends State<EditTimeTileWidget>
     with SingleTickerProviderStateMixin {
   RxBool isExpanded = false.obs;
   TimeOfDay initialTime = TimeOfDay.now();
@@ -115,9 +112,7 @@ class _EditTimeTileState extends State<EditTimeTile>
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.find<EditHourViewModel>().updateOpenStatus(
-                      widget.index,
-                    );
+                    widget.controller.updateOpenStatus(widget.index);
                   },
                   child: Container(
                     height: 22.h,
@@ -156,19 +151,27 @@ class _EditTimeTileState extends State<EditTimeTile>
                   ),
                 ),
                 const Spacer(),
-                GetBuilder<EditHourViewModel>(
-                  builder: (controller) {
-                    return Text(
-                      controller.dayList[widget.index].isOpen24Hrs
-                          ? '24 Hour'
-                          : '${widget.timeSlots.timeSlots.first.startTime} - ${widget.timeSlots.timeSlots.last.endTime}',
+                Text(
+                  widget.controller.dayList[widget.index].isOpen24Hrs
+                      ? '24 Hour'
+                      : '${widget.timeSlots.timeSlots.first.startTime} - ${widget.timeSlots.timeSlots.last.endTime}',
 
-                      style: fontSize16(
-                        context,
-                      )!.copyWith(color: Colors.black54),
-                    );
-                  },
+                  style: fontSize16(context)!.copyWith(color: Colors.black54),
                 ),
+                // GetBuilder<EditHourViewModel>(
+                //   builder: (controller) {
+                //     return Text(
+                //       controller.dayList[widget.index].isOpen24Hrs
+                //           ? '24 Hour'
+                //           : '${widget.timeSlots.timeSlots.first.startTime} - ${widget.timeSlots.timeSlots.last.endTime}',
+
+                //       style: fontSize16(
+                //         context,
+                //       )!.copyWith(color: Colors.black54),
+                //     );
+                //   },
+                // ),
+
                 // Text(
                 //   Get.find<EditHourViewModel>()
                 //           .dayList[widget.index]
@@ -210,173 +213,175 @@ class _EditTimeTileState extends State<EditTimeTile>
   }
 
   Widget buildTimeButtonSection() {
-    return GetBuilder<EditHourViewModel>(
-      builder: (controller) {
-        return Column(
-          children: [
-            const Divider(thickness: .4, color: Colors.grey),
-            SizedBox(height: 15.h),
-            if (!widget.is24hrs)
-              ...widget.timeSlots.timeSlots.asMap().entries.map((item) {
-                return Column(
+    // return GetBuilder<EditHourViewModel>(
+    //   builder: (controller) {
+    //     return
+
+    //   },
+    // );
+
+    return Column(
+      children: [
+        const Divider(thickness: .4, color: Colors.grey),
+        SizedBox(height: 15.h),
+        if (!widget.is24hrs)
+          ...widget.timeSlots.timeSlots.asMap().entries.map((item) {
+            return Column(
+              children: [
+                item.key != 0 ? SizedBox(height: 10) : SizedBox(height: 0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    item.key != 0 ? SizedBox(height: 10) : SizedBox(height: 0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        buildTimeButton(
-                          label: "Start Time",
-                          time: item.value.startTime,
-                          onTap: () {
-                            setTime(
-                              (time) => controller.updateStartTime(
-                                widget.index,
-                                item.key,
-                                time,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(width: 5),
-                        buildTimeButton(
-                          label: "End Time",
-                          time: item.value.endTime,
-                          onTap: () {
-                            setTime(
-                              (time) => controller.updateEndTime(
-                                widget.index,
-                                time,
-                                item.key,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(width: 5),
-                        widget.timeSlots.timeSlots.length > 1
-                            ? GestureDetector(
-                                onTap: () {
-                                  controller.removeTimeSlot(
-                                    widget.index,
-                                    item.key,
-                                  );
-                                },
-                                child: Icon(Icons.close, color: Colors.red),
-                              )
-                            : SizedBox.shrink(),
-                      ],
+                    buildTimeButton(
+                      label: "Start Time",
+                      time: item.value.startTime,
+                      onTap: () {
+                        setTime(
+                          (time) => widget.controller.updateStartTime(
+                            widget.index,
+                            item.key,
+                            time,
+                          ),
+                        );
+                      },
                     ),
-                    widget.timeSlots.timeSlots.length < 2
+                    SizedBox(width: 5),
+                    buildTimeButton(
+                      label: "End Time",
+                      time: item.value.endTime,
+                      onTap: () {
+                        setTime(
+                          (time) => widget.controller.updateEndTime(
+                            widget.index,
+                            time,
+                            item.key,
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(width: 5),
+                    widget.timeSlots.timeSlots.length > 1
                         ? GestureDetector(
                             onTap: () {
-                              controller.addNewSlot(widget.index);
+                              widget.controller.removeTimeSlot(
+                                widget.index,
+                                item.key,
+                              );
                             },
-                            child: Column(
-                              children: [
-                                SizedBox(height: 15),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Add Slot',
-                                      style: fontSize12(
-                                        context,
-                                      )!.copyWith(color: Colors.green),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Icon(
-                                      Icons.add_circle,
-                                      color: Colors.green,
-                                      size: 18,
-                                    ),
-                                    SizedBox(width: 5.w),
-                                  ],
-                                ),
-                              ],
-                            ),
+                            child: Icon(Icons.close, color: Colors.red),
                           )
                         : SizedBox.shrink(),
                   ],
-                );
-              }),
-            SizedBox(height: 10.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Open 24 hour',
-                  style: fontSize16(context)!.copyWith(
-                    color: Colors.black.withAlpha(100),
-                    fontWeight: FontWeight.w500,
-                  ),
                 ),
-                SizedBox(width: 10),
-                Switch(
-                  activeTrackColor: Colors.blue,
-                  inactiveTrackColor: Colors.grey,
-                  thumbColor: WidgetStateProperty.resolveWith((state) {
-                    if (state.contains(WidgetState.selected)) {
-                      return Colors.white;
-                    } else {
-                      return Colors.white;
-                    }
-                  }),
-                  // activeThumbColor: AppColors.themeColor,
-                  // inactiveThumbColor: Colors.grey,
-                  // inactiveTrackColor: Colors.grey.shade300,
-                  value: widget.is24hrs,
-                  onChanged: (value) {
-                    controller.update24HoursOpen(widget.index);
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: AppColors.themeColor.withAlpha(10),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(Icons.error_outline, size: 24),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          overflow: TextOverflow.visible,
-                          'Copy this opening hours to all days',
-                          textAlign: TextAlign.justify,
-                          style: fontSize18(context),
-                        ),
-                        SizedBox(height: 10),
-                        GestureDetector(
-                          onTap: () {
-                            controller.copyScheduleToAllDay(widget.index);
-                          },
-                          child: Text(
-                          
-                            overflow: TextOverflow.visible,
-                            'Yes, copy',
-                            style: fontSize18(context)!.copyWith(
-                              color: AppColors.themeColor,
-                              fontWeight: FontWeight.bold,
+                widget.timeSlots.timeSlots.length < 2
+                    ? GestureDetector(
+                        onTap: () {
+                          widget.controller.addNewSlot(widget.index);
+                        },
+                        child: Column(
+                          children: [
+                            SizedBox(height: 15),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Add Slot',
+                                  style: fontSize12(
+                                    context,
+                                  )!.copyWith(color: Colors.green),
+                                ),
+                                SizedBox(width: 5),
+                                Icon(
+                                  Icons.add_circle,
+                                  color: Colors.green,
+                                  size: 18,
+                                ),
+                                SizedBox(width: 5.w),
+                              ],
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
+                      )
+                    : SizedBox.shrink(),
+              ],
+            );
+          }),
+        SizedBox(height: 10.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Open 24 hour',
+              style: fontSize16(context)!.copyWith(
+                color: Colors.black.withAlpha(100),
+                fontWeight: FontWeight.w500,
               ),
+            ),
+            SizedBox(width: 10),
+            Switch(
+              activeTrackColor: Colors.blue,
+              inactiveTrackColor: Colors.grey,
+              thumbColor: WidgetStateProperty.resolveWith((state) {
+                if (state.contains(WidgetState.selected)) {
+                  return Colors.white;
+                } else {
+                  return Colors.white;
+                }
+              }),
+              // activeThumbColor: AppColors.themeColor,
+              // inactiveThumbColor: Colors.grey,
+              // inactiveTrackColor: Colors.grey.shade300,
+              value: widget.is24hrs,
+              onChanged: (value) {
+                widget.controller.update24HoursOpen(widget.index);
+              },
             ),
           ],
-        );
-      },
+        ),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: AppColors.themeColor.withAlpha(10),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.error_outline, size: 24),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      overflow: TextOverflow.visible,
+                      'Copy this opening hours to all days',
+                      textAlign: TextAlign.justify,
+                      style: fontSize18(context),
+                    ),
+                    SizedBox(height: 10),
+                    GestureDetector(
+                      onTap: () {
+                        widget.controller.copyScheduleToAllDay(widget.index);
+                      },
+                      child: Text(
+                        overflow: TextOverflow.visible,
+                        'Yes, copy',
+                        style: fontSize18(context)!.copyWith(
+                          color: AppColors.themeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
