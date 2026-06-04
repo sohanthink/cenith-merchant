@@ -1,6 +1,5 @@
 import 'package:cenith_marchent/features/auth/view/Search_and_pick_location.dart';
 import 'package:cenith_marchent/features/auth/view/auth_view.dart';
-import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.dart';
 import 'package:cenith_marchent/features/auth/view/confirmation_code_entry_view.dart';
 import 'package:cenith_marchent/features/auth/view/log_in_view.dart';
 import 'package:cenith_marchent/features/auth/view/login_or_signup_view.dart';

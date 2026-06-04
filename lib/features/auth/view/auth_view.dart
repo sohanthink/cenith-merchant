@@ -22,7 +22,8 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewState extends State<AuthView> {
-  final GlobalKey<TellUsAboutYourselfViewState> signUpKey = GlobalKey<TellUsAboutYourselfViewState>();
+  final GlobalKey<TellUsAboutYourselfViewState> signUpKey =
+      GlobalKey<TellUsAboutYourselfViewState>();
   final GlobalKey<TellUsAboutBusinessViewState> businessDetailsKey =
       GlobalKey<TellUsAboutBusinessViewState>();
   late final PageController _pageController;
@@ -163,60 +164,81 @@ class _AuthViewState extends State<AuthView> {
 
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.fromLTRB( 16.w,
-            _currentIndex == 0 ? 8.h : 8.h,
-            16.w,
-            _currentIndex == 0 ? 80.h : 16.h
+        padding: EdgeInsets.fromLTRB(
+          16.w,
+          8.h,
+          16.w,
 
+          _currentIndex == 0
+              ? 80.h
+              : _currentIndex == 5
+              ? 0.h
+              : 16.h,
         ),
-        child: ElevatedButton(
-          onPressed: _pageValidation[_currentIndex] == true
-              ? () {
-            FocusScope.of(context).unfocus();
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: _pageValidation[_currentIndex] == true
+                  ? () {
+                      FocusScope.of(context).unfocus();
 
-            if (_currentIndex == 0) {
-              final state = signUpKey.currentState;
-              if (state != null) {
-                state.submit();
+                      if (_currentIndex == 0) {
+                        final state = signUpKey.currentState;
+                        if (state != null) {
+                          state.submit();
 
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (_pageValidation[0] == true) {
-                    _pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                });
-              }
-              return;
-            }
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (_pageValidation[0] == true) {
+                              _pageController.nextPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                              );
+                            }
+                          });
+                        }
+                        return;
+                      }
 
-            if (_currentIndex == 2) {
-              final state = businessDetailsKey.currentState;
-              if (state != null) {
-                state.submit();
+                      if (_currentIndex == 2) {
+                        final state = businessDetailsKey.currentState;
+                        if (state != null) {
+                          state.submit();
 
-                if (_pageValidation[2] == true) {
-                  _pageController.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                }
-              }
-              return;
-            }
+                          if (_pageValidation[2] == true) {
+                            _pageController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        }
+                        return;
+                      }
 
-            if (_currentIndex < 5) {
-              _pageController.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            } else {
-              Navigator.pushNamed(context, TermsAndConditionView.name);
-            }
-          }
-              : null,
-          child: Text(_currentIndex == 5 ? 'Finish' : 'Next Step'),
+                      if (_currentIndex < 5) {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      } else {
+                        Navigator.pushNamed(
+                          context,
+                          TermsAndConditionView.name,
+                        );
+                      }
+                    }
+                  : null,
+              child: Text(_currentIndex == 5 ? 'Continue' : 'Next Step'),
+            ),
+            if (_currentIndex == 5) ...[
+              SizedBox(height: 2.h),
+              TextButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, TermsAndConditionView.name),
+                child: Text('Skip for now'),
+              ),
+            ],
+          ],
         ),
       ),
     );

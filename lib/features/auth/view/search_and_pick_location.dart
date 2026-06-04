@@ -1,6 +1,5 @@
 import 'package:cenith_marchent/core/keys/api_key.dart';
 import 'package:cenith_marchent/core/services/locatin_service/location_services.dart';
-import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.dart';
 import 'package:cenith_marchent/features/auth/view_model/location_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

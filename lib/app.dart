@@ -20,7 +20,7 @@ class CenithStorage extends StatelessWidget {
             initialRoute: LoginOrSignupView.name,
             initialBinding: ControllerBindings(),
             onGenerateRoute: AppRoutes.routes,
-            theme: AppTheme.themeData
+            theme: AppTheme.themeData,
         );
       },
     );

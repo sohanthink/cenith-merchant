@@ -5,7 +5,7 @@ import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class TellUsAboutYourselfView extends StatefulWidget {
-  const TellUsAboutYourselfView({Key? key, required this.onValidChanged}) : super(key: key);
+  const TellUsAboutYourselfView({super.key, required this.onValidChanged});
 
   static final String name = 'Sign-up-screen';
   final Function(bool isValid) onValidChanged;
