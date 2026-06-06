@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/auth/view/Search_and_pick_location.dart';
 import 'package:cenith_marchent/features/auth/view_model/location_view_model.dart';
+import 'package:cenith_marchent/features/auth/widgets/tooltip_portal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -148,6 +149,10 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                     style: style,
                     maxLines: 3,
                     decoration: InputDecoration(
+                      suffixIcon: Padding(
+                        padding:  EdgeInsets.only(bottom: 48.h),
+                        child: ToolTipPortal(context: context, toolTipTitle: 'Provide clear directions so customers can find your location without difficulty. (not mandatory) SKIP Option'),
+                      ),
                       hintText: 'Additional information...',
                       hintStyle: fontSize14(
                         context,

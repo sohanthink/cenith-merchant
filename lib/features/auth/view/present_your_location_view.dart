@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/auth/widgets/tooltip_portal.dart';
 import 'package:cenith_marchent/features/common/widgets/learn_how_to_take_good_photo_widget.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
@@ -184,11 +185,17 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Location Photos',
-          style: fontSize20(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Location Photos',
+              style: fontSize20(
+                context,
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+            ToolTipPortal(context: context, toolTipTitle: 'Uploading interior photos is optional and they will not be visible to customers')
+          ],
         ),
         SizedBox(height: 10),
         Text(
