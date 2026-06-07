@@ -16,48 +16,46 @@ class ConfirmationCodeEntryView extends StatefulWidget {
 }
 
 class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
- final GlobalKey<FormState> _formKey=GlobalKey<FormState>();
- final TextEditingController _pinCodeTEController=TextEditingController();
- bool _isFilled = false;
- bool _isSubmitted = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _pinCodeTEController = TextEditingController();
+  bool _isFilled = false;
+  bool _isSubmitted = false;
 
-
- @override
+  @override
   void initState() {
     _listen();
     super.initState();
   }
 
- void _listen() {
-   _pinCodeTEController.addListener(_checkFilledOnly);
- }
+  void _listen() {
+    _pinCodeTEController.addListener(_checkFilledOnly);
+  }
 
- void _checkFilledOnly() {
-   final filled = _pinCodeTEController.text.length == 4;
+  void _checkFilledOnly() {
+    final filled = _pinCodeTEController.text.length == 4;
 
-   if (filled != _isFilled) {
-     setState(() {
-       _isFilled = filled;
-     });
-   }
- }
+    if (filled != _isFilled) {
+      setState(() {
+        _isFilled = filled;
+      });
+    }
+  }
 
- void _submit() {
-   setState(() {
-     _isSubmitted = true;
-   });
+  void _submit() {
+    setState(() {
+      _isSubmitted = true;
+    });
 
-   final valid = _formKey.currentState?.validate() ?? false;
+    final valid = _formKey.currentState?.validate() ?? false;
 
-   if (valid) {
-     Navigator.pushNamedAndRemoveUntil(
-       context,
-       WelcomeView.name,
-           (route) => false,
-     );
-   }
- }
-
+    if (valid) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        WelcomeView.name,
+        (route) => false,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,18 +109,18 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
           animationType: AnimationType.fade,
           textStyle: fontSize20(
             context,
-          )!.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
+          )!.copyWith(color: AppColors.themeColor, fontWeight: FontWeight.w500),
           pinTheme: PinTheme(
             shape: PinCodeFieldShape.box,
             borderRadius: BorderRadius.circular(25.r),
-            fieldHeight: 80.h,
+            fieldHeight: 60.h,
             fieldWidth: 50.w,
-            activeFillColor: AppColors.themeColor,
+            activeFillColor: AppColors.themeColor.withAlpha(10),
             activeColor: AppColors.themeColor,
             inactiveFillColor: Colors.grey.shade100,
             inactiveBorderWidth: 1.w,
             activeBorderWidth: 1.w,
-            // selectedFillColor: AppColors.themeColor.shade100,
+            selectedFillColor: AppColors.themeColor,
             selectedColor: AppColors.themeColor,
             inactiveColor: Colors.grey.shade400,
           ),
@@ -157,7 +155,7 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
         ),
         SizedBox(height: 16.h),
         Text(
-          'INFOASRISLAMIOMAIL.COM',
+          'info.demomarchent@gmail.com',
           style: fontSize14(
             context,
           )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
@@ -185,28 +183,25 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
   }
 
   Widget _buildDidnotCodeSection(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h, bottom: 8.h),
-      decoration: BoxDecoration(
-        color: AppColors.themeColor.shade100,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.error_outline, color: AppColors.themeColor),
-          SizedBox(width: 8.w),
-          Text(
-            "Didn't get the Code?",
-            style: fontSize14(
-              context,
-            )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Icon(Icons.error_outline, color: AppColors.themeColor),
+        SizedBox(width: 8.w),
+        Text(
+          "Didn't get the Code?",
+          style: fontSize14(
+            context,
+          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+        ),
+        Text(
+          ' resend',
+          style: fontSize14(context)!.copyWith(
+            // fontWeight: FontWeight.bold,
+            color: AppColors.themeColor,
           ),
-          Text(
-            ' try SMS',
-            style: fontSize14(context)!.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

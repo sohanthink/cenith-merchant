@@ -39,6 +39,7 @@ dependencies:
   printing: ^5.14.2
   pdf: ^3.11.3
   screenshot: ^3.0.0
+  lottie: ^3.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,6 +67,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/icons/low_graph.svg
+    - assets/lottie/luggage.json
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

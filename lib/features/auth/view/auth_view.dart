@@ -232,10 +232,16 @@ class _AuthViewState extends State<AuthView> {
             ),
             if (_currentIndex == 5) ...[
               SizedBox(height: 2.h),
-              TextButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, TermsAndConditionView.name),
-                child: Text('Skip for now'),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, TermsAndConditionView.name),
+                      child: Text('Skip for now'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ],
