@@ -5,6 +5,7 @@ import 'package:cenith_marchent/features/booking/view_moel/booking_view_model.da
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -43,9 +44,6 @@ class _BookingViewState extends State<BookingView> {
       });
 
       if (calenderKey.currentContext != null) {
-        final RenderBox renderBox =
-            calenderKey.currentContext!.findRenderObject() as RenderBox;
-
         // double height = renderBox.size.height;
         double height = calenderKey.currentContext!.height;
         Get.find<BookingViewModel>().setCalenderHeight(height);
@@ -101,7 +99,7 @@ class _BookingViewState extends State<BookingView> {
                 //     : AppColors.scaffoldColor,
                 backgroundColor: AppColors.scaffoldColor,
                 automaticallyImplyLeading: false,
-                toolbarHeight: 60.h,
+                toolbarHeight: 60,
                 flexibleSpace: Column(
                   children: [
                     // constraints.scrollOffset > 10.h
@@ -149,8 +147,17 @@ class _BookingViewState extends State<BookingView> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.grey,
+          statusBarBrightness: Brightness.dark,
+        ),
         backgroundColor: AppColors.themeColor,
-        title: Text('Booking', style: TextStyle(color: Colors.white)),
+        title: Text(
+          'Booking',
+          style: fontSize20(
+            context,
+          )!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
+        ),
       ),
       // body: SingleChildScrollView(
       //   controller: controller,

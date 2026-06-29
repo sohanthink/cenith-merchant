@@ -23,38 +23,64 @@ class _EarningViewState extends State<EarningView> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 120,
-              backgroundColor: AppColors.scaffoldColor,
-              automaticallyImplyLeading: false,
-              floating: false,
-              pinned: false,
-              centerTitle: true,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
-                        child: Text('Earning', style: fontSize24(context)),
-                      ),
-                      SizedBox(height: 15),
-                      buildMenuSection(context),
-                    ],
-                  ),
-                ),
+        body: Padding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                textAlign: TextAlign.left,
+                'Earning',
+                style: fontSize20(
+                  context,
+                )!.copyWith(fontWeight: FontWeight(500)),
               ),
-            ),
-            SliverToBoxAdapter(child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: tabs[selectedIndex],
-            )),
-          ],
+              SizedBox(height: 18),
+              buildMenuSection(context),
+              SizedBox(height: 18),
+              Expanded(child: tabs[selectedIndex]),
+            ],
+          ),
         ),
+        // body: CustomScrollView(
+        //   slivers: [
+        //     SliverAppBar(
+        //       expandedHeight: 120,
+        //       backgroundColor: AppColors.scaffoldColor,
+        //       automaticallyImplyLeading: false,
+        //       floating: false,
+        //       pinned: false,
+        //       centerTitle: true,
+        //       flexibleSpace: FlexibleSpaceBar(
+        //         background: Padding(
+        //           padding: EdgeInsets.symmetric(horizontal: 6),
+        //           child: Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Padding(
+        //                 padding: EdgeInsets.symmetric(horizontal: 4),
+        //                 child: Text(
+        //                   'Earning',
+        //                   style: fontSize20(
+        //                     context,
+        //                   )!.copyWith(fontWeight: FontWeight(500)),
+        //                 ),
+        //               ),
+        //               SizedBox(height: 18),
+        //               buildMenuSection(context),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     SliverToBoxAdapter(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(10),
+        //         child: tabs[selectedIndex],
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

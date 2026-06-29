@@ -23,30 +23,35 @@ class _StoreViewState extends State<StoreView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 120,
-              backgroundColor: AppColors.scaffoldColor,
-              automaticallyImplyLeading: false,
-              floating: false,
-              pinned: false,
-              centerTitle: true,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Column(
-                  children: [
-                    buildHeaderSection(context),
-                    SizedBox(height: 10.h),
-                    buildMenuSection(context),
-                  ],
-                ),
-              )
-            ),
-            SliverToBoxAdapter(
-              child: tabs[selectedIndex]
-            )
+        body: Column(
+          children: [
+            buildHeaderSection(context),
+            SizedBox(height: 10.h),
+            buildMenuSection(context),
+            SizedBox(height: 10.h),
+            Expanded(child: tabs[selectedIndex]),
           ],
-        )
+        ),
+        // body: CustomScrollView(
+        //   slivers: [
+        //     SliverAppBar(
+        //       expandedHeight: 120,
+        //       backgroundColor: AppColors.scaffoldColor,
+        //       automaticallyImplyLeading: false,
+        //       floating: true,
+        //       pinned: true,
+        //       centerTitle: true,
+        //       flexibleSpace: Column(
+        //         children: [
+        //           buildHeaderSection(context),
+        //           SizedBox(height: 10.h),
+        //           buildMenuSection(context),
+        //         ],
+        //       ),
+        //     ),
+        //     SliverToBoxAdapter(child: tabs[selectedIndex]),
+        //   ],
+        // ),
       ),
     );
   }
@@ -118,17 +123,17 @@ class _StoreViewState extends State<StoreView> {
         children: [
           Text(
             'Lavaterilla',
-            style: fontSize24(
+            style: fontSize20(
               context,
             )!.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
           ),
-          TextButton(
-            onPressed: onTapAddStore,
-            child: Text(
-              'Add Store +',
-              style: fontSize16(context)!.copyWith(color: AppColors.themeColor),
-            ),
-          ),
+          // TextButton(
+          //   onPressed: onTapAddStore,
+          //   child: Text(
+          //     'Add Store +',
+          //     style: fontSize16(context)!.copyWith(color: AppColors.themeColor),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -60,7 +60,7 @@ class _HoursViewState extends State<HoursView> {
             context,
           )!.copyWith(color: Colors.black, fontWeight: FontWeight.w400),
         ),
-        SizedBox(height: 25.h),
+        SizedBox(height: 250.h),
         SizedBox(
           width: 250,
           child: ElevatedButton(

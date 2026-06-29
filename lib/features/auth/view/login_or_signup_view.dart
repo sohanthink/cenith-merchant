@@ -3,6 +3,7 @@ import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/auth/view/auth_view.dart';
 import 'package:cenith_marchent/features/auth/view/log_in_view.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,11 +90,14 @@ class _LoginOrSignupViewState extends State<LoginOrSignupView> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 13),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text('1.0.1', style: fontSize16(context)),
+            dynamicBottomILand(
+              context: context,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 13),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text('1.0.1', style: fontSize16(context)),
+                ),
               ),
             ),
           ],

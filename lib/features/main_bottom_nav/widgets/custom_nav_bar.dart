@@ -41,8 +41,9 @@ class CustomNavBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    height: 25.h,
-                    width: 25.w,
+                    height: 24.h,
+                    width: 24.w,
+                    fit: BoxFit.cover,
                     destinations[item.key].svgIconPath,
                     color: selectedIndex == item.key
                         ? selectedColor

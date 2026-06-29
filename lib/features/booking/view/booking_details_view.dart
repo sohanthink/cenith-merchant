@@ -2,6 +2,8 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
+import 'package:cenith_marchent/features/home/view/qr_code_scanning_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,69 +30,77 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: buildAppBarSection(context),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-        child: Column(
-          children: [
-            buildNameAndWidget(style),
-            SizedBox(height: 8.h),
-            buildBookingDetailsSection(style),
-            SizedBox(height: 16.h),
-            buildPickupDropOffSection(style),
-            SizedBox(height: 16.h),
-            buildBagDetailsSection(style),
-
-            SizedBox(height: 28.h),
-            Row(
-              children: [
-                Icon(Icons.error_outline_outlined, color: AppColors.themeColor),
-                SizedBox(width: 4.w),
-                Text(
-                  'Learn to identify bag types',
-                  style: fontSize16(context)!.copyWith(
+      body: SingleChildScrollView(
+        controller: controller,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          child: Column(
+            children: [
+              buildNameAndWidget(style),
+              SizedBox(height: 8.h),
+              buildBookingDetailsSection(style),
+              SizedBox(height: 16.h),
+              buildPickupDropOffSection(style),
+              SizedBox(height: 16.h),
+              buildBagDetailsSection(style),
+              SizedBox(height: 28.h),
+              Row(
+                children: [
+                  Icon(
+                    Icons.error_outline_outlined,
                     color: AppColors.themeColor,
-                    fontWeight: FontWeight.w500,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 28.h),
-            bagPictureSection(style),
-            SizedBox(height: 24.h),
-            buildCustomTagSection(style),
-            SizedBox(height: 40.h),
-          ],
+                  SizedBox(width: 4.w),
+                  Text(
+                    'Learn to identify bag types',
+                    style: fontSize16(context)!.copyWith(
+                      color: AppColors.themeColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 28.h),
+              bagPictureSection(style),
+              SizedBox(height: 28.h),
+              buildCustomTagSection(style),
+              SizedBox(height: 40.h),
+            ],
+          ),
         ),
       ),
       floatingActionButton: CustomCheckInOutWidget(
         controller: controller,
         maxWidth: 0.92.sw,
-        onTap: () {},
+
       ),
     );
   }
 
-  Row buildCustomTagSection(TextTheme style) {
-    return Row(
-      children: [
-        buildCard(
-          style,
-          icon: IconsPath.addIconSvg,
-          moreInfoText: 'Add more\nbags',
-        ),
-        SizedBox(width: 10.w),
-        buildCard(
-          style,
-          icon: IconsPath.chatIconSvg,
-          moreInfoText: 'Chat with\ncustomer',
-        ),
-        SizedBox(width: 10.w),
-        buildCard(
-          style,
-          icon: IconsPath.worldIconSvg,
-          moreInfoText: 'Reach out to\nSupport',
-        ),
-      ],
+  Widget buildCustomTagSection(TextTheme style) {
+    return dynamicBottomILand(
+      context: context,
+      child: Row(
+        children: [
+          buildCard(
+            style,
+            icon: IconsPath.addIconSvg,
+            moreInfoText: 'Add more\nbags',
+          ),
+          SizedBox(width: 10.w),
+          buildCard(
+            style,
+            icon: IconsPath.chatIconSvg,
+            moreInfoText: 'Chat with\ncustomer',
+          ),
+          SizedBox(width: 10.w),
+          buildCard(
+            style,
+            icon: IconsPath.worldIconSvg,
+            moreInfoText: 'Reach out to\nSupport',
+          ),
+        ],
+      ),
     );
   }
 
@@ -262,33 +272,33 @@ class _BookingDetailsViewState extends State<BookingDetailsView> {
     required String icon,
     required String moreInfoText,
   }) {
-    return Container(
-      height: 95.h,
-      width: 107.w,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 2.r,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(icon, width: 30.w),
-            SizedBox(height: 8.h),
-            Text(
-              textAlign: TextAlign.start,
-              moreInfoText,
-              style: fontSize14(context),
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 2.r,
+              offset: Offset(0, 1),
             ),
           ],
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SvgPicture.asset(icon, width: 30.w),
+              SizedBox(height: 8.h),
+              Text(
+                textAlign: TextAlign.start,
+                moreInfoText,
+                style: fontSize14(context),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -20,23 +20,29 @@ class _MainBottomNavViewState extends State<MainBottomNavView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: GetBuilder<MainBottomNavViewModel>(
         builder: (controller) {
           return controller.screens[controller.selectedIndex];
         },
       ),
-      bottomNavigationBar: GetBuilder<MainBottomNavViewModel>(
-        builder: (controller) {
-          return CustomNavBar(
-            destinations: controller.destinations,
-            selectedIndex: controller.selectedIndex,
-            onDestinationSelected: (int index) {
-              controller.onchange(index);
-            },
-            unSelectedColor: Colors.black,
-            selectedColor: AppColors.themeColor,
-          );
-        },
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewPadding.bottom,
+        ),
+        child: GetBuilder<MainBottomNavViewModel>(
+          builder: (controller) {
+            return CustomNavBar(
+              destinations: controller.destinations,
+              selectedIndex: controller.selectedIndex,
+              onDestinationSelected: (int index) {
+                controller.onchange(index);
+              },
+              unSelectedColor: Colors.black,
+              selectedColor: AppColors.themeColor,
+            );
+          },
+        ),
       ),
     );
   }

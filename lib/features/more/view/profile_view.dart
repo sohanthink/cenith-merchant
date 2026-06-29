@@ -72,7 +72,21 @@ class _ProfileViewState extends State<ProfileView> {
                           context,
                           icon: IconsPath.settingsIconSvg,
                           title: 'Profile',
-                          Ticon: Icons.error_outline_outlined,
+                          // Ticon: Icons.error_outline_outlined,
+                          onTapTrailing: () {},
+                          onTapLeading: () {
+                            Navigator.pushNamed(context, EditProfileView.name);
+                          },
+                        ),
+                        SizedBox(height: 10.h),
+                        _buildtemCard(
+                          context,
+                          premetivIcon: Icon(
+                            Icons.notifications_outlined,
+                            weight: 0.1,
+                          ),
+                          title: 'Notification',
+                          // Ticon: Icons.error_outline_outlined,
                           onTapTrailing: () {},
                           onTapLeading: () {
                             Navigator.pushNamed(context, EditProfileView.name);
@@ -224,11 +238,12 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget _buildtemCard(
     BuildContext context, {
-    required String icon,
+    String? icon,
     required String title,
     VoidCallback? onTapTrailing,
     required VoidCallback onTapLeading,
     IconData? Ticon,
+    Icon? premetivIcon,
   }) {
     return GestureDetector(
       onTap: onTapLeading,
@@ -245,11 +260,16 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Padding(
                 padding: EdgeInsets.only(bottom: 4.0.h),
-                child: SvgPicture.asset(
-                  icon,
-                  width: 25.w,
-                  colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
-                ),
+                child: premetivIcon == null && icon != null
+                    ? SvgPicture.asset(
+                        icon,
+                        width: 25.w,
+                        colorFilter: ColorFilter.mode(
+                          Colors.black,
+                          BlendMode.srcIn,
+                        ),
+                      )
+                    : premetivIcon,
               ),
               SizedBox(width: 8.w),
               Text(title, style: fontSize16(context)),

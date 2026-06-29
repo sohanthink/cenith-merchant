@@ -1,5 +1,6 @@
 import 'package:cenith_marchent/core/constants/asstes_path/image_paths.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:cenith_marchent/features/store/view/signage_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,22 +44,25 @@ class _EditStoreDetailsViewState extends State<EditStoreDetailsView> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                space(16),
-                CircleAvatar(
-                  radius: 50.r,
-                  backgroundImage: AssetImage(ImagePaths.personDemo),
-                ),
-                _buildTextFieldSection(context),
-                space(32),
-                ElevatedButton(onPressed: () {}, child: Text('Update')),
-              ],
+      body: dynamicBottomILand(
+        context: context,
+        child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  space(16),
+                  CircleAvatar(
+                    radius: 50.r,
+                    backgroundImage: AssetImage(ImagePaths.personDemo),
+                  ),
+                  _buildTextFieldSection(context),
+                  space(32),
+                  ElevatedButton(onPressed: () {}, child: Text('Update')),
+                ],
+              ),
             ),
           ),
         ),

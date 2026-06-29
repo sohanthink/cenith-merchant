@@ -468,7 +468,7 @@ class _OverviewState extends State<Overview> {
                                   Icon(Icons.directions_walk),
                                   SizedBox(width: 10),
                                   Text(
-                                    'Online Booking',
+                                    'Walk-in Booking',
                                     style: fontSize16(
                                       context,
                                     )!.copyWith(fontWeight: FontWeight.w700),
@@ -590,7 +590,7 @@ class _OverviewState extends State<Overview> {
       children: [
         Text(
           'Overview',
-          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w700),
+          style: fontSize20(context)!.copyWith(fontWeight: FontWeight.w500),
         ),
 
         Container(

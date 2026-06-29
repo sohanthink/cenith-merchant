@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/booking/widgets/check_box_group.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,83 +56,111 @@ class _DownloadViewState extends State<DownloadView> {
         backgroundColor: Colors.grey.shade100,
         scrolledUnderElevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: Text(
-                'Select the data you want to add to your download.',
-                style: fontSize14(context)?.copyWith(
-                  color: AppColors.midLightBlue,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1.sp,
+      body: dynamicBottomILand(
+        context: context,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                child: Text(
+                  'Select the data you want to add to your download.',
+                  style: fontSize14(context)?.copyWith(
+                    color: AppColors.midLightBlue,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1.sp,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 8.h),
-            CheckboxGroup(
-              title: 'Booking Status',
-              items: bookingStatus,
-              onChanged: (key, value) {
-                setState(() {
-                  bookingStatus[key] = value;
-                  if (key == 'All Status' && value == true) {
-                    bookingStatus.updateAll((key, value) => true);
-                  }
-                  if (key == 'All Status' && value == false) {
-                    bookingStatus.updateAll((key, value) => false);
-                  }
-                });
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-              child: Divider(thickness: 1.4, color: Colors.grey),
-            ),
-            CheckboxGroup(
-              title: 'Booking Date',
-              items: bookingDate,
-              onChanged: (key, value) {
-                setState(() {
-                  bookingDate.updateAll((key, value) => false);
-                  bookingDate[key] = value;
-                });
-              },
-            ),
-            SizedBox(height: 16.h),
-          ],
+              SizedBox(height: 8.h),
+              CheckboxGroup(
+                title: 'Booking Status',
+                items: bookingStatus,
+                onChanged: (key, value) {
+                  setState(() {
+                    bookingStatus[key] = value;
+                    if (key == 'All Status' && value == true) {
+                      bookingStatus.updateAll((key, value) => true);
+                    }
+                    if (key == 'All Status' && value == false) {
+                      bookingStatus.updateAll((key, value) => false);
+                    }
+                  });
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                child: Divider(thickness: 1.4, color: Colors.grey),
+              ),
+              CheckboxGroup(
+                title: 'Booking Date',
+                items: bookingDate,
+                onChanged: (key, value) {
+                  setState(() {
+                    if (key == 'All Time' && bookingDate['All Time'] == false) {
+                      bookingDate.updateAll((key, value) => true);
+                    } else if (key == 'All Time' &&
+                        bookingDate['All Time'] == true) {
+                      bookingDate.updateAll((key, value) => false);
+                    }
+                    bookingDate[key] = value;
+                  });
+                },
+              ),
+              SizedBox(height: 16.h),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 2.r,
-              offset: Offset(0, 1),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 10.h),
-            ElevatedButton(onPressed: () {}, child: Text('Download CSV')),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Clear All',
-                style: fontSize14(
-                  context,
-                )?.copyWith(fontWeight: FontWeight.bold),
+      bottomNavigationBar: dynamicBottomILand(
+        context: context,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2.r,
+                offset: Offset(0, 1),
               ),
-            ),
-            SizedBox(height: 10),
-          ],
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10.h),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Download CSV'),
+                ),
+              ),
+              SizedBox(height: 5),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    bookingStatus.updateAll((key, value) => false);
+                    bookingDate.updateAll((key, value) => false);
+                    setState(() {
+                      // TODO fix with controller.
+                    });
+                  },
+                  child: Text(
+                    'Clear All',
+                    style: fontSize14(
+                      context,
+                    )?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );

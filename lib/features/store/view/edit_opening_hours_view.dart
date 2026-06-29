@@ -1,4 +1,5 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:cenith_marchent/features/store/view_model/edit_hour_view_model.dart';
 import 'package:cenith_marchent/features/common/widgets/edit_time_tile_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,53 +23,57 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
   Widget build(BuildContext context) {
     final item = Get.find<EditHourViewModel>().dayList;
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          children: [
-            SizedBox(height: 40.h),
-            buildTitleSection(context),
-            !isOn
-                ? Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(top: 10),
-                      itemCount: item.length,
-                      itemBuilder: (context, index) {
-                        final itemIndex = item[index];
-                        return GetBuilder<EditHourViewModel>(
-                          builder: (controller) {
-                            return Column(
-                              children: [
-                                EditTimeTileWidget(
-                                  controller: controller,
-                                  day: itemIndex.day,
-                                  // startTime: itemIndex.slot.,
-                                  // endTime: itemIndex['endTime'],
-                                  isOpened: itemIndex.isOpen,
-                                  is24hrs: itemIndex.isOpen24Hrs,
-                                  index: index,
-                                  timeSlots: itemIndex.slot,
-                                ),
-                                SizedBox(height: 0.h),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  )
-                : Expanded(child: SizedBox()),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Save',
-                style: fontSize16(context)!.copyWith(color: Colors.white),
+      body: dynamicBottomILand(
+        context: context,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            children: [
+              SizedBox(height: 40.h),
+              buildTitleSection(context),
+              !isOn
+                  ? Expanded(
+                      child: ListView.builder(
+                        padding: EdgeInsets.only(top: 10),
+                        itemCount: item.length,
+                        itemBuilder: (context, index) {
+                          final itemIndex = item[index];
+                          return GetBuilder<EditHourViewModel>(
+                            builder: (controller) {
+                              return Column(
+                                children: [
+                                  EditTimeTileWidget(
+                                    controller: controller,
+                                    day: itemIndex.day,
+                                    // startTime: itemIndex.slot.,
+                                    // endTime: itemIndex['endTime'],
+                                    isOpened: itemIndex.isOpen,
+                                    is24hrs: itemIndex.isOpen24Hrs,
+                                    index: index,
+                                    timeSlots: itemIndex.slot,
+                                  ),
+                                  SizedBox(height: 0.h),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  : Expanded(child: SizedBox()),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Save',
+                  style: fontSize16(context)!.copyWith(color: Colors.white),
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-          ],
+
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );
@@ -108,7 +113,7 @@ class _EditOpeningHoursViewState extends State<EditOpeningHoursView> {
             Switch(
               activeTrackColor: Colors.blue,
               inactiveTrackColor: Colors.grey,
-            
+
               thumbColor: WidgetStateProperty.resolveWith((state) {
                 if (state.contains(WidgetState.selected)) {
                   return Colors.white;

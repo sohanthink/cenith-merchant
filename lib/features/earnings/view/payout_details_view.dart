@@ -20,71 +20,73 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildDashboardSeciton(context),
-        SizedBox(height: 30.h),
-        buildPayoutBreakdownSection(context),
-        SizedBox(height: 10.h),
-        buildPaginationSection(context),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          buildDashboardSeciton(context),
+          SizedBox(height: 30.h),
+          buildPayoutBreakdownSection(context),
+          SizedBox(height: 10.h),
+          // buildPaginationSection(context),
+        ],
+      ),
     );
   }
 
-  Column buildPaginationSection(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: Row(
-                children: [
-                  Icon(Icons.arrow_back, size: 20),
-                  SizedBox(width: 10.w),
-                  Text('Previous', style: fontSize14(context)),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: Row(
-                children: [
-                  Text('Previous', style: fontSize14(context)),
-                  SizedBox(width: 10.w),
-                  Icon(Icons.arrow_forward, size: 20),
-                ],
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 30.h),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'To learn more about receipts please read our ',
-                style: fontSize14(context),
-              ),
-              TextSpan(
-                text: 'FAQ page',
-                style: fontSize14(
-                  context,
-                )!.copyWith(color: AppColors.themeColor),
-                recognizer: TapGestureRecognizer()..onTap = () {},
-              ),
-            ],
-          ),
-        ),
-
-        SizedBox(height: 200.h),
-
-        ContactSupportText.supportText(context, () {}),
-        SizedBox(height: 25),
-      ],
-    );
-  }
+  // Column buildPaginationSection(BuildContext context) {
+  //   return Column(
+  //     children: [
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           GestureDetector(
+  //             onTap: () {},
+  //             child: Row(
+  //               children: [
+  //                 Icon(Icons.arrow_back, size: 20),
+  //                 SizedBox(width: 10.w),
+  //                 Text('Previous', style: fontSize14(context)),
+  //               ],
+  //             ),
+  //           ),
+  //           GestureDetector(
+  //             onTap: () {},
+  //             child: Row(
+  //               children: [
+  //                 Text('Previous', style: fontSize14(context)),
+  //                 SizedBox(width: 10.w),
+  //                 Icon(Icons.arrow_forward, size: 20),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //       SizedBox(height: 30.h),
+  //       RichText(
+  //         text: TextSpan(
+  //           children: [
+  //             TextSpan(
+  //               text: 'To learn more about receipts please read our ',
+  //               style: fontSize14(context),
+  //             ),
+  //             TextSpan(
+  //               text: 'FAQ page',
+  //               style: fontSize14(
+  //                 context,
+  //               )!.copyWith(color: AppColors.themeColor),
+  //               recognizer: TapGestureRecognizer()..onTap = () {},
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //
+  //       SizedBox(height: 200.h),
+  //
+  //       ContactSupportText.supportText(context, () {}),
+  //       SizedBox(height: 25),
+  //     ],
+  //   );
+  // }
 
   Widget buildPayoutBreakdownSection(BuildContext context) {
     return Container(
@@ -135,13 +137,13 @@ class _PayoutDetailsViewState extends State<PayoutDetailsView> {
             ),
           );
         }),
-        SizedBox(height: 10.h),
-        Center(
-          child: Text(
-            'Visit Stripe Dashboard',
-            style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
-          ),
-        ),
+        // SizedBox(height: 10.h),
+        // Center(
+        //   child: Text(
+        //     'Visit Stripe Dashboard',
+        //     style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
+        //   ),
+        // ),
         SizedBox(height: 25.h),
         RichText(
           textAlign: TextAlign.justify,

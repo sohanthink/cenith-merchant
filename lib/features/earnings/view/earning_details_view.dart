@@ -19,20 +19,50 @@ class EarningDetailsView extends StatefulWidget {
 class _EarningDetailsViewState extends State<EarningDetailsView> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SortingSectionWidget(),
-          SizedBox(height: 15.h),
-          buildDownloadSection(context),
-          SizedBox(height: 15.h),
-          buildTableTitleSection(),
-          SizedBox(height: 15.h),
-          buildTableDataSection(),
-        ],
-      ),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              SortingSectionWidget(),
+              SizedBox(height: 15.h),
+              buildDownloadSection(context),
+              SizedBox(height: 15.h),
+            ],
+          ),
+        ),
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 90,
+          collapsedHeight: 90,
+          automaticallyImplyLeading: false,
+          flexibleSpace: Column(children: [buildTableTitleSection()]),
+        ),
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              SizedBox(height: 15.h),
+              buildTableDataSection(),
+            ],
+          ),
+        ),
+      ],
     );
+
+    // return SingleChildScrollView(
+    //   child: Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       SortingSectionWidget(),
+    //       SizedBox(height: 15.h),
+    //       buildDownloadSection(context),
+    //       SizedBox(height: 15.h),
+    //       buildTableTitleSection(),
+    //       SizedBox(height: 15.h),
+    //       buildTableDataSection(),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget buildTableDataSection() {
@@ -131,7 +161,7 @@ class _EarningDetailsViewState extends State<EarningDetailsView> {
           ),
           SizedBox(width: 10.w),
           Text(
-            'Download SVG',
+            'Download PDF',
             style: fontSize16(context)!.copyWith(
               color: AppColors.themeColor,
               fontWeight: FontWeight.w500,

@@ -2,6 +2,7 @@ import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/core/utils/custom_snackbar.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:cenith_marchent/features/store/view_model/add_exception_view_model.dart';
 import 'package:cenith_marchent/features/store/widgets/exception_date_button.dart';
 import 'package:flutter/material.dart';
@@ -26,19 +27,22 @@ class _AddExceptionViewState extends State<AddExceptionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 50.h),
-              buildTitleSection(context),
-              SizedBox(height: 20.h),
-              buildExceptionSetupSection(context),
-              SizedBox(height: 30.h),
-              ElevatedButton(onPressed: () {}, child: Text('Add Exception')),
-              SizedBox(height: 50.h),
-            ],
+      body: dynamicBottomILand(
+        context: context,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 60.h),
+                buildTitleSection(context),
+                SizedBox(height: 20.h),
+                buildExceptionSetupSection(context),
+                SizedBox(height: 30.h),
+                ElevatedButton(onPressed: () {}, child: Text('Add Exception')),
+                SizedBox(height: 50.h),
+              ],
+            ),
           ),
         ),
       ),
@@ -187,24 +191,28 @@ class _AddExceptionViewState extends State<AddExceptionView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(
-          alignment: Alignment.topRight,
-          child: GestureDetector(
-            onTap: onTapCancelButton,
-            child: SvgPicture.asset(
-              IconsPath.cancelIconSvg,
-              height: 30.h,
-              width: 30.w,
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Add exception',
+              style: fontSize24(
+                context,
+              )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
             ),
-          ),
+
+            GestureDetector(
+              onTap: onTapCancelButton,
+              child: SvgPicture.asset(
+                IconsPath.cancelIconSvg,
+                height: 30.h,
+                width: 30.w,
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 30.h),
-        Text(
-          'Add exception',
-          style: fontSize24(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-        ),
+
         SizedBox(height: 12.h),
         Text(
           textAlign: TextAlign.justify,

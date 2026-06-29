@@ -1,6 +1,7 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/features/booking/widgets/no_bookings_yet_design.dart';
 import 'package:cenith_marchent/features/common/widgets/custom_checkin_out_widget.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,9 +19,12 @@ class _PastViewState extends State<PastView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
-      body: SingleChildScrollView(
-        controller: controller,
-        child: NoBookingsYetDesign(style: Theme.of(context).textTheme),
+      body: dynamicBottomILand(
+        context: context,
+        child: SingleChildScrollView(
+          controller: controller,
+          child: NoBookingsYetDesign(style: Theme.of(context).textTheme),
+        ),
       ),
       floatingActionButton: CustomCheckInOutWidget(
         controller: controller,

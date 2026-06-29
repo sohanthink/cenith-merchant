@@ -175,7 +175,7 @@ class _SignageViewState extends State<SignageView> {
           ),
           SizedBox(height: 24.h),
           _buildSignateAndStatus(context),
-          _buildPagination(context),
+          // _buildPagination(context),
         ],
       ),
     );
@@ -365,44 +365,51 @@ Widget _buildSignageAndStatus(
 }) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-    child: Row(
+    child: Column(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            Text(
-              signageTitle,
-              style: fontSize16(context)?.copyWith(
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.1.sp,
-                color: Colors.black,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  signageTitle,
+                  style: fontSize16(context)?.copyWith(
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1.sp,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(unit, style: fontSize14(context)),
+              ],
             ),
-            Text(unit, style: fontSize14(context)),
+            Spacer(),
+            // Container(
+            //   padding: EdgeInsets.only(
+            //     left: 20.w,
+            //     right: 20.w,
+            //     top: 10.h,
+            //     bottom: 10.h,
+            //   ),
+            //   decoration: BoxDecoration(
+            //     border: Border.all(width: 1, color: getColorWithStatus(status)),
+            //     color: getColorWithStatus(status).withAlpha(10),
+            //     borderRadius: BorderRadius.circular(8.r),
+            //   ),
+            //   child: Text(
+            //     status,
+            //     style: fontSize14(context)?.copyWith(
+            //       letterSpacing: 0.1.sp,
+            //       color: getColorWithStatus(status),
+            //     ),
+            //   ),
+            // ),
+            IconButton(onPressed: onTap, icon: Icon(Icons.arrow_forward_ios)),
+
           ],
         ),
-        Spacer(),
-        Container(
-          padding: EdgeInsets.only(
-            left: 20.w,
-            right: 20.w,
-            top: 10.h,
-            bottom: 10.h,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: getColorWithStatus(status)),
-            color: getColorWithStatus(status).withAlpha(10),
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-          child: Text(
-            status,
-            style: fontSize14(context)?.copyWith(
-              letterSpacing: 0.1.sp,
-              color: getColorWithStatus(status),
-            ),
-          ),
-        ),
-        IconButton(onPressed: onTap, icon: Icon(Icons.arrow_forward_ios)),
+        SizedBox(height: 5,),
+        Divider(thickness: 2,color: Colors.grey.withAlpha(50),)
       ],
     ),
   );
