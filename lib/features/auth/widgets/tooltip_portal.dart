@@ -20,8 +20,8 @@ class ToolTipPortal extends StatelessWidget {
       triggerMode: TooltipTriggerMode.tap,
       preferBelow: false,
       verticalOffset: 8.h,
-      padding: EdgeInsets.all(12.r),
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.all(6.r),
+      margin: EdgeInsets.symmetric(horizontal: 24.w),
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.only(
@@ -38,7 +38,7 @@ class ToolTipPortal extends StatelessWidget {
           ),
         ],
       ),
-      textStyle: fontSize16(context)!.copyWith(
+      textStyle: fontSize12(context)!.copyWith(
         color: Colors.white,
 
       ),

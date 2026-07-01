@@ -5,6 +5,7 @@ import 'package:cenith_marchent/features/auth/view/confirm_your_location_view.da
 import 'package:cenith_marchent/features/auth/view/tell_us_about_yourself_view.dart';
 import 'package:cenith_marchent/features/auth/view/terms_and_condition_view.dart';
 import 'package:cenith_marchent/features/auth/view/tell_us_about_business_view.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -88,7 +89,7 @@ class _AuthViewState extends State<AuthView> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             children: [
               SizedBox(height: _currentIndex == 0 ? 32.h : 12.h),
@@ -153,100 +154,85 @@ class _AuthViewState extends State<AuthView> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildButton(context),
+
+      bottomNavigationBar: dynamicBottomILand(
+        context: context,
+        child: _buildButton(context),
+      ),
     );
   }
 
   Widget _buildButton(BuildContext context) {
     final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-
     if (isKeyboardOpen) return const SizedBox.shrink();
-
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          16.w,
-          8.h,
-          16.w,
-
-          _currentIndex == 0
-              ? 80.h
-              : _currentIndex == 5
-              ? 0.h
-              : 16.h,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
-              onPressed: _pageValidation[_currentIndex] == true
-                  ? () {
-                      FocusScope.of(context).unfocus();
-
-                      if (_currentIndex == 0) {
-                        final state = signUpKey.currentState;
-                        if (state != null) {
-                          state.submit();
-
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            if (_pageValidation[0] == true) {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            }
-                          });
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(height: 5),
+        ElevatedButton(
+          onPressed: _pageValidation[_currentIndex] == true
+              ? () {
+                  FocusScope.of(context).unfocus();
+                  if (_currentIndex == 0) {
+                    final state = signUpKey.currentState;
+                    if (state != null) {
+                      state.submit();
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_pageValidation[0] == true) {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
                         }
-                        return;
-                      }
+                      });
+                    }
+                    return;
+                  }
 
-                      if (_currentIndex == 2) {
-                        final state = businessDetailsKey.currentState;
-                        if (state != null) {
-                          state.submit();
+                  if (_currentIndex == 2) {
+                    final state = businessDetailsKey.currentState;
+                    if (state != null) {
+                      state.submit();
 
-                          if (_pageValidation[2] == true) {
-                            _pageController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        }
-                        return;
-                      }
-
-                      if (_currentIndex < 5) {
+                      if (_pageValidation[2] == true) {
                         _pageController.nextPage(
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                         );
-                      } else {
-                        Navigator.pushNamed(
-                          context,
-                          TermsAndConditionView.name,
-                        );
                       }
                     }
-                  : null,
-              child: Text(_currentIndex == 5 ? 'Continue' : 'Next Step'),
-            ),
-            if (_currentIndex == 5) ...[
-              SizedBox(height: 2.h),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, TermsAndConditionView.name),
-                      child: Text('Skip for now'),
-                    ),
-                  ),
-                ],
+                    return;
+                  }
+
+                  if (_currentIndex < 5) {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  } else {
+                    Navigator.pushNamed(context, TermsAndConditionView.name);
+                  }
+                }
+              : null,
+          child: Text(_currentIndex == 5 ? 'Continue' : 'Next Step'),
+        ),
+        SizedBox(height: 10),
+        if (_currentIndex == 5) ...[
+          SizedBox(height: 2.h),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, TermsAndConditionView.name),
+                  child: Text('Skip for now'),
+                ),
               ),
             ],
-          ],
-        ),
-      ),
+          ),
+          SizedBox(height: 10),
+        ],
+      ],
     );
   }
 
@@ -310,7 +296,7 @@ class _AuthViewState extends State<AuthView> {
                     ),
                   )
                 : SizedBox.shrink(),
-            if (_currentIndex == 1)
+            if (_currentIndex == 1 || _currentIndex == 3)
               TextButton(
                 onPressed: onTapToNextPage,
                 child: Text(

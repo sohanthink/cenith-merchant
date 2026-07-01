@@ -1,4 +1,5 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/common/widgets/dynamic_bottom_iland.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,90 +29,92 @@ class _LearnHowToTakeGoodPhotoWidgetState
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Builder(
-          builder: (context) {
-            final controller = DefaultTabController.of(context);
-            controller.addListener(() {
-              if (controller.indexIsChanging) {
-                _currentIndexNotifier.value = controller.index;
-              }
-            });
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 30.h),
-                    Text(
-                      'Avoid Cropped Photos',
-                      style: fontSize18(
-                        context,
-                      )!.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      textAlign: TextAlign.center,
-                      'Show where your business is relative to \nits surroundings.',
-                      style: fontSize14(context),
-                    ),
-                    SizedBox(height: 20),
-
-                    SizedBox(
-                      height: 380.h,
-                      child: TabBarView(
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          buildPhotoSection(),
-                          buildPhotoSection(),
-                          buildPhotoSection(),
-                          buildPhotoSection(),
-                        ],
+        body: dynamicBottomILand(
+          context: context,
+          child: Builder(
+            builder: (context) {
+              final controller = DefaultTabController.of(context);
+              controller.addListener(() {
+                if (controller.indexIsChanging) {
+                  _currentIndexNotifier.value = controller.index;
+                }
+              });
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 30.h),
+                      Text(
+                        'Avoid Cropped Photos',
+                        style: fontSize18(
+                          context,
+                        )!.copyWith(fontWeight: FontWeight.w500),
                       ),
-                    ),
-                    ValueListenableBuilder(
-                      valueListenable: _currentIndexNotifier,
-                      builder: (BuildContext context, value, Widget? child) {
-                        return Text(
-                          '${value + 1} of ${DefaultTabController.of(context).length}',
-                        );
-                      },
-                    ),
-                    SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final controller = DefaultTabController.of(context);
+                      SizedBox(height: 5),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Show where your business is relative to \nits surroundings.',
+                        style: fontSize14(context),
+                      ),
+                      SizedBox(height: 20),
 
-                          if (controller.index < controller.length - 1) {
-                            controller.animateTo(controller.index + 1);
-                          } else {
-                            Navigator.pop(context);
-                          }
-                        },
-                        child: ValueListenableBuilder(
-                          valueListenable: _currentIndexNotifier,
-                          builder:
-                              (
-                                BuildContext context,
-                                int value,
-                                Widget? child,
-                              ) {
-                                return Text(
-                                  value >= controller.length - 1
-                                      ? 'Finish'
-                                      : 'Next',
-                                );
-                              },
+                      SizedBox(
+                        height: 380.h,
+                        child: TabBarView(
+                          physics: NeverScrollableScrollPhysics(),
+                          children: [
+                            buildPhotoSection(),
+                            buildPhotoSection(),
+                            buildPhotoSection(),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      ValueListenableBuilder(
+                        valueListenable: _currentIndexNotifier,
+                        builder: (BuildContext context, value, Widget? child) {
+                          return Text(
+                            '${value + 1} of ${DefaultTabController.of(context).length}',
+                          );
+                        },
+                      ),
+                      SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            final controller = DefaultTabController.of(context);
+
+                            if (controller.index < controller.length - 1) {
+                              controller.animateTo(controller.index + 1);
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: ValueListenableBuilder(
+                            valueListenable: _currentIndexNotifier,
+                            builder:
+                                (
+                                  BuildContext context,
+                                  int value,
+                                  Widget? child,
+                                ) {
+                                  return Text(
+                                    value >= controller.length - 1
+                                        ? 'Finish'
+                                        : 'Next',
+                                  );
+                                },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

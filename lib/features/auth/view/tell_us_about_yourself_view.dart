@@ -88,7 +88,7 @@ class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
             children: [
               SizedBox(height: 32.h),
               _buildFormField(style),
-             SizedBox(height: 200.h,)
+             // SizedBox(height: 200.h,)
             ],
           ),
         ),

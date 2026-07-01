@@ -30,11 +30,9 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
 
   GoogleMapController? _mapController;
 
-
   final TextEditingController additionalTEController = TextEditingController();
 
   setLanMark() {
-
     Get.find<LocationViewModel>().update();
   }
 
@@ -65,7 +63,6 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
       FocusScope.of(context).unfocus();
     });
     animateCameraIfCurrentPositionNotNull();
-
   }
 
   @override
@@ -77,7 +74,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 24.h),
+            SizedBox(height: 12.h),
             Container(
               padding: EdgeInsets.all(16.w),
               width: double.infinity,
@@ -150,8 +147,12 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                     maxLines: 3,
                     decoration: InputDecoration(
                       suffixIcon: Padding(
-                        padding:  EdgeInsets.only(bottom: 48.h),
-                        child: ToolTipPortal(context: context, toolTipTitle: 'Provide clear directions so customers can find your location without difficulty. (not mandatory) SKIP Option'),
+                        padding: EdgeInsets.only(bottom: 48.h),
+                        child: ToolTipPortal(
+                          context: context,
+                          toolTipTitle:
+                              'Provide clear directions so customers can find your location without difficulty. (not mandatory) SKIP Option',
+                        ),
                       ),
                       hintText: 'Additional information...',
                       hintStyle: fontSize14(
@@ -244,7 +245,6 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
       debugPrint(e.toString());
     }
   }
-
 
   @override
   void dispose() {

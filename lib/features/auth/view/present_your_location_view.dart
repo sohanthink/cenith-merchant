@@ -6,9 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:image_picker/image_picker.dart';
-
 
 class PresentYourLocationView extends StatefulWidget {
   const PresentYourLocationView({super.key, required this.onValidChanged});
@@ -17,7 +15,8 @@ class PresentYourLocationView extends StatefulWidget {
   final Function(bool isValid) onValidChanged;
 
   @override
-  State<PresentYourLocationView> createState() => _PresentYourLocationViewState();
+  State<PresentYourLocationView> createState() =>
+      _PresentYourLocationViewState();
 }
 
 class _PresentYourLocationViewState extends State<PresentYourLocationView> {
@@ -194,7 +193,11 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
                 context,
               )!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
             ),
-            ToolTipPortal(context: context, toolTipTitle: 'Uploading interior photos is optional and they will not be visible to customers')
+            ToolTipPortal(
+              context: context,
+              toolTipTitle:
+                  'Uploading interior photos is optional and they will not be visible to customers',
+            ),
           ],
         ),
         SizedBox(height: 10),
@@ -214,9 +217,8 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
               context: context,
               builder: (context) {
                 return Container(
-                  height: MediaQuery.of(context).size.height*0.72,
+                  height: MediaQuery.of(context).size.height * 0.78,
                   decoration: BoxDecoration(
-
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25),
@@ -226,13 +228,12 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
                     padding: const EdgeInsets.all(8.0),
                     child: LearnHowToTakeGoodPhotoWidget(),
                   ),
-
                 );
               },
             );
           },
           child: Text(
-            'Learn how to take good photos',
+            'Learn how to take good photos →',
             style: fontSize14(context)!.copyWith(color: AppColors.themeColor),
           ),
         ),

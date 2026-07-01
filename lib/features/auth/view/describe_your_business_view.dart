@@ -14,7 +14,8 @@ class DescribeYourBusinessView extends StatefulWidget {
 }
 
 class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
-  final Set<int> _selectedIndexes = {};
+  int? _selectedIndexes;
+
   final List<Map<String, dynamic>> _businessTypeCard = [
     {'business-name': 'Bar', 'Icon': Icons.local_bar_rounded},
     {'business-name': 'Cafe', 'Icon': Icons.coffee},
@@ -32,7 +33,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
   ];
 
   void _updateValidation() {
-    widget.onValidChanged(_selectedIndexes.isNotEmpty);
+    widget.onValidChanged(_selectedIndexes != null);
   }
 
   @override
@@ -55,7 +56,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
           // ),
           SizedBox(height: 8.h),
           _buildBusinessTypeCard(),
-          SizedBox(height: 100.h),
+          // SizedBox(height: 100.h),
         ],
       ),
     );
@@ -75,17 +76,19 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
       ),
 
       itemBuilder: (context, index) {
-        final bool isSelected = _selectedIndexes.contains(index);
+        final bool isSelected =
+            _selectedIndexes != null && _selectedIndexes == index;
 
         return GestureDetector(
           onTap: () {
             setState(() {
               if (isSelected) {
-                _selectedIndexes.remove(index);
+                _selectedIndexes = null;
               } else {
-                _selectedIndexes.add(index);
+                _selectedIndexes = index;
               }
             });
+            print("tapped $index and selected index: $_selectedIndexes");
 
             _updateValidation();
           },

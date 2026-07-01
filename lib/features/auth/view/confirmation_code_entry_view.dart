@@ -3,7 +3,10 @@ import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/auth/view/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../../../core/constants/asstes_path/icons_path.dart';
 
 class ConfirmationCodeEntryView extends StatefulWidget {
   const ConfirmationCodeEntryView({super.key});
@@ -69,6 +72,7 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 20),
                   _buildTopSection(context),
                   SizedBox(height: 40.h),
                   _buildPinCodeFieldsSection(context),
@@ -133,36 +137,36 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
     );
   }
 
-  Widget _buildTopSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Enter The Confirmation Code',
-          style: TextStyle(
-            fontSize: 30.sp,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.1.sp,
-            color: AppColors.darkBlue,
-          ),
-        ),
-        SizedBox(height: 16.h),
-        Text(
-          'Enter the code to confirm your email.',
-          style: fontSize14(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-        ),
-        SizedBox(height: 16.h),
-        Text(
-          'info.demomarchent@gmail.com',
-          style: fontSize14(
-            context,
-          )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
-        ),
-      ],
-    );
-  }
+  // Widget _buildTopSection(BuildContext context) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Enter The Confirmation Code',
+  //         style: TextStyle(
+  //           fontSize: 30.sp,
+  //           fontWeight: FontWeight.w600,
+  //           letterSpacing: 0.1.sp,
+  //           color: AppColors.darkBlue,
+  //         ),
+  //       ),
+  //       SizedBox(height: 16.h),
+  //       Text(
+  //         'Enter the code to confirm your email.',
+  //         style: fontSize14(
+  //           context,
+  //         )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+  //       ),
+  //       SizedBox(height: 16.h),
+  //       Text(
+  //         'info.demomarchent@gmail.com',
+  //         style: fontSize14(
+  //           context,
+  //         )!.copyWith(color: Colors.black, fontWeight: FontWeight.w500),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildConfirmBtttonSection(BuildContext context) {
     return Column(
@@ -201,6 +205,73 @@ class _ConfirmationCodeEntryViewState extends State<ConfirmationCodeEntryView> {
             color: AppColors.themeColor,
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildTopSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Icon(Icons.pin),
+        SvgPicture.asset(IconsPath.logWithoutBgSvg, width: 170.w),
+        SizedBox(height: 16.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              textAlign: TextAlign.center,
+              'Enter The Confirmation Code',
+              style: TextStyle(
+                fontSize: 25.sp,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.1.sp,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.h),
+        Text(
+          'enter the code to confirm you email',
+          textAlign: TextAlign.center,
+          style: fontSize16(context)!.copyWith(color: Colors.black54),
+        ),
+        SizedBox(height: 24.h),
+
+        SizedBox(height: 4.h),
+
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     _currentIndex != 0
+        //         ? GestureDetector(
+        //       onTap: () {
+        //         _pageController.previousPage(
+        //           duration: const Duration(milliseconds: 300),
+        //           curve: Curves.easeInOut,
+        //         );
+        //       },
+        //       child: CircleAvatar(
+        //         radius: 20,
+        //         backgroundColor: Colors.white,
+        //         child: Icon(
+        //           Icons.arrow_back_ios_new,
+        //           color: Colors.grey,
+        //           size: 20,
+        //         ),
+        //       ),
+        //     )
+        //         : SizedBox.shrink(),
+        //     if (_currentIndex == 1 || _currentIndex == 3)
+        //       TextButton(
+        //         onPressed: onTapToNextPage,
+        //         child: Text(
+        //           'Skip',
+        //           style: fontSize16(context)!.copyWith(color: Colors.black),
+        //         ),
+        //       ),
+        //   ],
+        // ),
       ],
     );
   }

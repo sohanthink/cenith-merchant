@@ -91,20 +91,17 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
     final style = fontSize16(context)!.copyWith(color: Colors.black);
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 100.h),
-        child: Form(
-          key: _formKey,
-          autovalidateMode: _submitted
-              ? AutovalidateMode.always
-              : AutovalidateMode.disabled,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 12.h),
-              _buildFormField(style),
-            ],
-          ),
+      child: Form(
+        key: _formKey,
+        autovalidateMode: _submitted
+            ? AutovalidateMode.always
+            : AutovalidateMode.disabled,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 12.h),
+            _buildFormField(style),
+          ],
         ),
       ),
     );
@@ -130,7 +127,7 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
           style: style,
           decoration: InputDecoration(
             hintText: 'Registered Name',
-            suffixIcon: ToolTipPortal(context: context, toolTipTitle: 'Official company name (mandatory)'),
+            suffixIcon: ToolTipPortal(context: context, toolTipTitle: 'Official company name'),
           ),
           validator: (v) => v == null || v.isEmpty ? 'Required' : null,
         ),
@@ -141,7 +138,7 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
           style: style,
           decoration: InputDecoration(
             hintText: 'VAT Number',
-            suffixIcon: ToolTipPortal(context: context, toolTipTitle: 'P.IVA/C.F (mandatory)'),
+            suffixIcon: ToolTipPortal(context: context, toolTipTitle: 'P.IVA/C.F'),
           ),
           validator: (v) => v == null || v.isEmpty ? 'Required' : null,
         ),
@@ -152,7 +149,7 @@ class TellUsAboutBusinessViewState extends State<TellUsAboutBusinessView> {
           style: style,
           decoration: InputDecoration(
             hintText: 'Phone Number',
-            suffixIcon: ToolTipPortal(context: context, toolTipTitle: 'Not visible to customer (mandatory)'),
+            suffixIcon: ToolTipPortal(context: context, toolTipTitle: 'Not visible to customer'),
           ),
           validator: (v) => v == null || v.isEmpty ? 'Required' : null,
         ),
