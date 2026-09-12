@@ -12,10 +12,10 @@ class SetYourBusinessHoursView extends StatefulWidget {
 
   @override
   State<SetYourBusinessHoursView> createState() =>
-      _SetYourBusinessHoursViewState();
+      SetYourBusinessHoursViewState();
 }
 
-class _SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
+class SetYourBusinessHoursViewState extends State<SetYourBusinessHoursView> {
   late final BusinessHoursViewModel controller;
 
   @override

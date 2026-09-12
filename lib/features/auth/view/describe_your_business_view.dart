@@ -1,6 +1,12 @@
+import 'dart:ffi';
+
 import 'package:cenith_marchent/core/constants/app_colors.dart';
+import 'package:cenith_marchent/features/auth/model/describe_your_business_model.dart';
+import 'package:cenith_marchent/features/auth/view_model/registration_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class DescribeYourBusinessView extends StatefulWidget {
   const DescribeYourBusinessView({super.key, required this.onValidChanged});
@@ -10,13 +16,13 @@ class DescribeYourBusinessView extends StatefulWidget {
 
   @override
   State<DescribeYourBusinessView> createState() =>
-      _DescribeYourBusinessViewState();
+      DescribeYourBusinessViewState();
 }
 
-class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
-  int? _selectedIndexes;
+class DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
+  final RxnInt selectedIndexes = RxnInt();
 
-  final List<Map<String, dynamic>> _businessTypeCard = [
+  final List<Map<String, dynamic>> businessTypeCard = [
     {'business-name': 'Bar', 'Icon': Icons.local_bar_rounded},
     {'business-name': 'Cafe', 'Icon': Icons.coffee},
     {'business-name': 'Barber Shop', 'Icon': Icons.cut},
@@ -32,8 +38,22 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
     {'business-name': 'Pharmacy', 'Icon': Icons.local_pharmacy_outlined},
   ];
 
-  void _updateValidation() {
-    widget.onValidChanged(_selectedIndexes != null);
+  void updateValidation() {
+    widget.onValidChanged(
+      selectedIndexes.value == null || selectedIndexes.value != null,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  getDataFromCache() async {
+    Map<String, dynamic> body = await Get.find<RegistrationViewModel>()
+        .getDataFromCache();
+    final processedData = DescribeYourBusinessModel.fromJson(body);
+    selectedIndexes.value = processedData.index;
   }
 
   @override
@@ -42,21 +62,8 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Align(
-          //   alignment: Alignment.bottomRight,
-          //   child: TextButton(
-          //     onPressed: () {
-          //
-          //     },
-          //     child: Text(
-          //       'Skip',
-          //       style: fontSize16(context)!.copyWith(color: Colors.black),
-          //     ),
-          //   ),
-          // ),
           SizedBox(height: 8.h),
           _buildBusinessTypeCard(),
-          // SizedBox(height: 100.h),
         ],
       ),
     );
@@ -66,7 +73,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: _businessTypeCard.length,
+      itemCount: businessTypeCard.length,
 
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
@@ -77,20 +84,19 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
 
       itemBuilder: (context, index) {
         final bool isSelected =
-            _selectedIndexes != null && _selectedIndexes == index;
+            selectedIndexes.value != null && selectedIndexes.value == index;
 
         return GestureDetector(
           onTap: () {
-            setState(() {
-              if (isSelected) {
-                _selectedIndexes = null;
-              } else {
-                _selectedIndexes = index;
-              }
-            });
-            print("tapped $index and selected index: $_selectedIndexes");
+            if (isSelected) {
+              selectedIndexes.value = null;
+            } else {
+              selectedIndexes.value = index;
+            }
 
-            _updateValidation();
+            debugPrint("tapped $index and selected index: $selectedIndexes");
+
+            updateValidation();
           },
 
           child: Container(
@@ -110,7 +116,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  _businessTypeCard[index]['Icon'],
+                  businessTypeCard[index]['Icon'],
                   size: 22.sp,
                   color: isSelected ? AppColors.themeColor : Colors.black54,
                 ),
@@ -120,7 +126,7 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: Text(
-                    _businessTypeCard[index]['business-name'],
+                    businessTypeCard[index]['business-name'],
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -137,5 +143,6 @@ class _DescribeYourBusinessViewState extends State<DescribeYourBusinessView> {
         );
       },
     );
+    ;
   }
 }

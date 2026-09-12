@@ -1,4 +1,5 @@
 import 'package:cenith_marchent/features/common/model/time_slot_model.dart';
+import 'package:cenith_marchent/features/store/model/day_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +23,7 @@ class EditTimeTileWidget<T> extends StatefulWidget {
   final bool isOpened;
   final bool is24hrs;
   final int index;
-  final TimeSlotModel timeSlots;
+  final List<ShiftSlot> timeSlots;
   final T controller;
 
   @override
@@ -101,6 +102,7 @@ class _EditTimeTileWidgetState extends State<EditTimeTileWidget>
   }
 
   Widget buildNormalTileView(BuildContext context) {
+    DayModel day = widget.controller.dayList[widget.index];
     return InkWell(
       onTap: () => isExpanded.value = !isExpanded.value,
       borderRadius: BorderRadius.circular(15.r),
@@ -151,36 +153,18 @@ class _EditTimeTileWidgetState extends State<EditTimeTileWidget>
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  widget.controller.dayList[widget.index].isOpen24Hrs
-                      ? '24 Hour'
-                      : '${widget.timeSlots.timeSlots.first.startTime} - ${widget.timeSlots.timeSlots.last.endTime}',
+                day.slot.isNotEmpty
+                    ? Text(
+                        widget.controller.dayList[widget.index].isOpen24Hrs
+                            ? '24 Hour'
+                            : '${day.slot.first.startTime} - ${day.slot.last.endTime}',
 
-                  style: fontSize16(context)!.copyWith(color: Colors.black54),
-                ),
-                // GetBuilder<EditHourViewModel>(
-                //   builder: (controller) {
-                //     return Text(
-                //       controller.dayList[widget.index].isOpen24Hrs
-                //           ? '24 Hour'
-                //           : '${widget.timeSlots.timeSlots.first.startTime} - ${widget.timeSlots.timeSlots.last.endTime}',
+                        style: fontSize16(
+                          context,
+                        )!.copyWith(color: Colors.black54),
+                      )
+                    : SizedBox.shrink(),
 
-                //       style: fontSize16(
-                //         context,
-                //       )!.copyWith(color: Colors.black54),
-                //     );
-                //   },
-                // ),
-
-                // Text(
-                //   Get.find<EditHourViewModel>()
-                //           .dayList[widget.index]
-                //           .isOpen24Hrs
-                //       ? '24 Hour'
-                //       : '${widget.timeSlots.timeSlots.first.startTime} - ${widget.timeSlots.timeSlots.last.endTime}',
-
-                //   style: fontSize16(context)!.copyWith(color: Colors.black54),
-                // ),
                 SizedBox(width: 10.w),
                 AnimatedRotation(
                   turns: isExpanded.value ? 0.5 : 0.0,
@@ -213,100 +197,102 @@ class _EditTimeTileWidgetState extends State<EditTimeTileWidget>
   }
 
   Widget buildTimeButtonSection() {
-    // return GetBuilder<EditHourViewModel>(
-    //   builder: (controller) {
-    //     return
-
-    //   },
-    // );
-
     return Column(
       children: [
         const Divider(thickness: .4, color: Colors.grey),
         SizedBox(height: 15.h),
         if (!widget.is24hrs)
-          ...widget.timeSlots.timeSlots.asMap().entries.map((item) {
-            return Column(
-              children: [
-                item.key != 0 ? SizedBox(height: 10) : SizedBox(height: 0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildTimeButton(
-                      label: "Start Time",
-                      time: item.value.startTime,
-                      onTap: () {
-                        setTime(
-                          (time) => widget.controller.updateStartTime(
-                            widget.index,
-                            item.key,
-                            time,
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(width: 5),
-                    buildTimeButton(
-                      label: "End Time",
-                      time: item.value.endTime,
-                      onTap: () {
-                        setTime(
-                          (time) => widget.controller.updateEndTime(
-                            widget.index,
-                            time,
-                            item.key,
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(width: 5),
-                    widget.timeSlots.timeSlots.length > 1
-                        ? GestureDetector(
+        widget.timeSlots.isNotEmpty
+            ? ListView.builder(
+          shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final item = widget.timeSlots[index];
+                  return Column(
+                    children: [
+                      index != 0 ? SizedBox(height: 10) : SizedBox(height: 0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          buildTimeButton(
+                            label: "Start Time",
+                            time: item.startTime,
                             onTap: () {
-                              widget.controller.removeTimeSlot(
-                                widget.index,
-                                item.key,
+                              setTime(
+                                (time) => widget.controller.updateStartTime(
+                                  widget.index,
+                                  index,
+                                  time,
+                                ),
                               );
                             },
-                            child: Icon(Icons.close, color: Colors.red),
-                          )
-                        : SizedBox.shrink(),
-                  ],
-                ),
-                widget.timeSlots.timeSlots.length < 2
-                    ? GestureDetector(
-                        onTap: () {
-                          widget.controller.addNewSlot(widget.index);
-                        },
-                        child: Column(
-                          children: [
-                            SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'Add Slot',
-                                  style: fontSize12(
-                                    context,
-                                  )!.copyWith(color: Colors.green),
+                          ),
+                          SizedBox(width: 5),
+                          buildTimeButton(
+                            label: "End Time",
+                            time: item.endTime,
+                            onTap: () {
+                              setTime(
+                                (time) => widget.controller.updateEndTime(
+                                  widget.index,
+                                  time,
+                                  index,
                                 ),
-                                SizedBox(width: 5),
-                                Icon(
-                                  Icons.add_circle,
-                                  color: Colors.green,
-                                  size: 18,
-                                ),
-                                SizedBox(width: 5.w),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    : SizedBox.shrink(),
-              ],
-            );
-          }),
+                              );
+                            },
+                          ),
+                          SizedBox(width: 5),
+                          widget.timeSlots.length > 1
+                              ? GestureDetector(
+                                  onTap: () {
+                                    widget.controller.removeTimeSlot(
+                                      widget.index,
+                                      index,
+                                    );
+                                  },
+                                  child: Icon(Icons.close, color: Colors.red),
+                                )
+                              : SizedBox.shrink(),
+                        ],
+                      ),
+                      widget.timeSlots.length < 2
+                          ? GestureDetector(
+                              onTap: () {
+                                widget.controller.addNewSlot(widget.index);
+                              },
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 15),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'Add Slot',
+                                        style: fontSize12(
+                                          context,
+                                        )!.copyWith(color: Colors.green),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Icon(
+                                        Icons.add_circle,
+                                        color: Colors.green,
+                                        size: 18,
+                                      ),
+                                      SizedBox(width: 5.w),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                    ],
+                  );
+                },
+                itemCount: widget.timeSlots.length,
+              )
+            : SizedBox(),
+
         SizedBox(height: 10.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,

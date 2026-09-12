@@ -25,6 +25,12 @@ class LocationViewModel extends GetxController {
 
   Position? currentLocation;
 
+
+  void updateLandMark(String text){
+    landMarkTEController.text = text;
+    update();
+  }
+
   addMarker(LatLng latLng) async {
     markers.clear();
     markers.add(
@@ -70,9 +76,9 @@ class LocationViewModel extends GetxController {
     );
     if (presentLocation != null && mapController != null) {
       currentLocation = presentLocation;
-      Placemark? placemark = await LocationServices.locationName(
-        LatLng(currentLocation!.latitude, currentLocation!.longitude),
-      );
+      // Placemark? placemark = await LocationServices.locationName(
+      //   LatLng(currentLocation!.latitude, currentLocation!.longitude),
+      // );
 
       updateName(LatLng(currentLocation!.latitude, currentLocation!.longitude));
 
@@ -87,7 +93,7 @@ class LocationViewModel extends GetxController {
       target = LatLng(presentLocation.latitude, presentLocation.longitude);
       update();
     } else {
-      print("Failed Location: $presentLocation");
+      debugPrint("Failed Location: $presentLocation");
     }
   }
 

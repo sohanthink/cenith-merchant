@@ -10,100 +10,98 @@ class EditHourViewModel extends GetxController {
     DayModel(
       day: 'Sat',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [],
+      // [
+      //   ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+      //   ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      // ],
       isOpen24Hrs: false,
     ),
 
     DayModel(
       day: 'Sun',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ],
       isOpen24Hrs: false,
     ),
 
     DayModel(
       day: 'Mon',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ],
       isOpen24Hrs: false,
     ),
 
     DayModel(
       day: 'Tue',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ],
       isOpen24Hrs: false,
     ),
 
     DayModel(
       day: 'Wed',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ],
       isOpen24Hrs: false,
     ),
 
     DayModel(
       day: 'Thu',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ],
       isOpen24Hrs: false,
     ),
 
     DayModel(
       day: 'Fri',
       isOpen: true,
-      slot: TimeSlotModel(
-        timeSlots: [
-          ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
-          ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
-        ],
-      ),
+      slot: [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ],
       isOpen24Hrs: false,
     ),
   ];
 
   void updateOpenStatus(int index) {
-    dayList[index].isOpen = !dayList[index].isOpen;
-    update();
+    if (dayList[index].isOpen) {
+      dayList[index].isOpen = false;
+      update();
+      dayList[index].slot = <ShiftSlot>[];
+      return;
+    } else if (!dayList[index].isOpen) {
+      dayList[index].isOpen = true;
+      update();
+      dayList[index].slot = [
+        ShiftSlot(startTime: '09:30 AM', endTime: '11:30 PM'),
+        ShiftSlot(startTime: '08:30 AM', endTime: '10:30 PM'),
+      ];
+    }
   }
 
   void updateStartTime(int dayIndex, int slotIndex, String time) {
-    dayList[dayIndex].slot.timeSlots[slotIndex].startTime = time;
+    dayList[dayIndex].slot[slotIndex].startTime = time;
     update();
   }
 
   void updateEndTime(int index, String time, int slotIndex) {
-    dayList[index].slot.timeSlots[slotIndex].endTime = time;
+    dayList[index].slot[slotIndex].endTime = time;
     update();
   }
 
@@ -118,20 +116,20 @@ class EditHourViewModel extends GetxController {
   }
 
   void removeTimeSlot(int dayIndex, int slotIndex) {
-    if (dayList[dayIndex].slot.timeSlots.length < 2) return;
-    dayList[dayIndex].slot.timeSlots.removeAt(slotIndex);
+    if (dayList[dayIndex].slot.length < 2) return;
+    dayList[dayIndex].slot.removeAt(slotIndex);
     update();
   }
 
   void addNewSlot(int dayIndex) {
-    if (dayList[dayIndex].slot.timeSlots.length > 1) return;
-    dayList[dayIndex].slot.timeSlots.add(
+    if (dayList[dayIndex].slot.length > 1) return;
+    dayList[dayIndex].slot.add(
       ShiftSlot(startTime: '10:30 AM', endTime: '08:30 PM'),
     );
     update();
   }
 
- void copyScheduleToAllDay(int index) {
+  void copyScheduleToAllDay(int index) {
     if (dayList[index].isOpen24Hrs) {
       for (int i = 0; i < dayList.length; i++) {
         if (index != i) {
@@ -155,5 +153,4 @@ class EditHourViewModel extends GetxController {
       update();
     }
   }
-
 }

@@ -1,7 +1,7 @@
-import 'dart:ui';
 import 'package:cenith_marchent/core/keys/api_key.dart';
 import 'package:cenith_marchent/core/services/network_services/urls.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -57,14 +57,16 @@ class LocationServices {
       if (placemarks.isNotEmpty) {
         return placemarks.first;
       } else {
-        print("No placemarks found");
+        debugPrint("No placemarks found");
         return null;
       }
     } catch (e) {
-      print("Error in reverse geocoding: $e");
+      debugPrint("Error in reverse geocoding: $e");
       return null;
     }
   }
+
+
 
   static Future<ScreenCoordinate> placeMarkToCoordinate(
     Placemark placemark,
@@ -91,7 +93,7 @@ class LocationServices {
 
         LatLng latLng = LatLng(location['lat'], location['lng']);
 
-        print(latLng);
+        debugPrint(latLng.toString());
 
         return latLng;
       }

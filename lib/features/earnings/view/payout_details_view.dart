@@ -1,7 +1,6 @@
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/constants/asstes_path/icons_path.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
-import 'package:cenith_marchent/features/common/widgets/contact_support_text.dart';
 import 'package:cenith_marchent/features/earnings/widgets/table_title_section_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

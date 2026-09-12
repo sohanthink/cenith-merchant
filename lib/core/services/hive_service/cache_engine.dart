@@ -9,7 +9,6 @@ class CacheEngine {
     required T Function(Map<String, dynamic> json) fromJson,
     required Function(T value) onUpdate,
   }) async {
-
     if (!Hive.isBoxOpen(boxName)) {
       await Hive.openBox(boxName);
     }

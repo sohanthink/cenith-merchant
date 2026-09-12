@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cenith_marchent/core/constants/app_colors.dart';
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/auth/widgets/tooltip_portal.dart';
@@ -68,7 +70,6 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
           onTap: _showAlertDialogue,
           child: Container(
             padding: EdgeInsets.all(16.w),
-
             decoration: BoxDecoration(color: Colors.grey.shade200),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +86,7 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
                 SizedBox(height: 6.h),
                 Text(
                   'Support:JPG,JPEG2000,PNG',
-                  style: fontSize14(context)!.copyWith(color: Colors.grey),
+                  style: fontSize12(context)!.copyWith(color: Colors.grey),
                 ),
               ],
             ),
@@ -101,6 +102,7 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
       _pickedImages.add(image);
       setState(() {});
       _updateValidity();
+      debugPrint(_pickedImages.toString());
     }
   }
 
@@ -180,7 +182,6 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
   }
 
   Widget buildLocationPhotoSection(BuildContext context) {
-    List<dynamic> images = [1, 2, 3];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -243,41 +244,82 @@ class _PresentYourLocationViewState extends State<PresentYourLocationView> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: images
-                .asMap()
-                .entries
-                .map(
-                  (e) => Container(
-                    margin: EdgeInsets.all(10),
-                    height: 100,
-                    width: 100,
-                    decoration: DottedDecoration(
-                      dash: [2, 4],
-                      strokeWidth: 2,
-                      shape: Shape.box,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: e.key == images.length - 1
-                        ? Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade300,
-                            ),
-                            child: Center(child: Icon(Icons.add, size: 50)),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade300,
-                            ),
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ...subList(_pickedImages).asMap().entries.map(
+                (e) => Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      height: 100,
+                      width: 100,
+                      decoration: DottedDecoration(
+                        dash: [2, 4],
+                        strokeWidth: 2,
+                        shape: Shape.box,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey.shade300,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.file(
+                            fit: BoxFit.cover,
+                            File(e.value.path),
                           ),
-                  ),
-                )
-                .toList(),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 1,
+                      top: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          _pickedImages.removeAt(e.key);
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.delete, color: Colors.red, size: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              _pickedImages.length > 2 || _pickedImages.isEmpty
+                  ? Container(
+                      margin: EdgeInsets.only(right: 10),
+                      height: 100,
+                      width: 100,
+                      decoration: DottedDecoration(
+                        dash: [2, 4],
+                        strokeWidth: 2,
+                        shape: Shape.box,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey.shade300,
+                        ),
+                        child: Center(child: Icon(Icons.add, size: 50)),
+                      ),
+                    )
+                  : SizedBox.shrink(),
+            ],
           ),
         ),
         SizedBox(height: 20),
       ],
     );
+  }
+
+  subList(List imageList) {
+    if (imageList.length > 2) {
+      return imageList.sublist(0, 2);
+    } else {
+      return imageList;
+    }
   }
 }

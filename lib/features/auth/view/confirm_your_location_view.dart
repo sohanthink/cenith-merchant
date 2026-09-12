@@ -1,12 +1,15 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
 import 'package:cenith_marchent/features/auth/view/Search_and_pick_location.dart';
 import 'package:cenith_marchent/features/auth/view_model/location_view_model.dart';
+import 'package:cenith_marchent/features/auth/view_model/registration_view_model.dart';
 import 'package:cenith_marchent/features/auth/widgets/tooltip_portal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../model/confirm_your_location_model.dart';
 
 class ConfirmYourLocationView extends StatefulWidget {
   const ConfirmYourLocationView({super.key, required this.onValidChanged});
@@ -17,13 +20,14 @@ class ConfirmYourLocationView extends StatefulWidget {
 
   @override
   State<ConfirmYourLocationView> createState() =>
-      _ConfirmYourLocationViewState();
+      ConfirmYourLocationViewState();
 }
 
-class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
+class ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Position? position;
 
-  void _checkFormValidity() {
+  void checkFormValidity() {
     final isValid = _formKey.currentState?.validate() ?? false;
     widget.onValidChanged(isValid);
   }
@@ -38,9 +42,10 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
 
   animateCameraIfCurrentPositionNotNull() {
     Position? currentLocation = Get.find<LocationViewModel>().currentLocation;
-
     if (Get.find<LocationViewModel>().currentLocation != null &&
         _mapController != null) {
+      position = currentLocation;
+
       _mapController!.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -61,8 +66,23 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       setLanMark();
       FocusScope.of(context).unfocus();
+      if (position == null) {
+        animateCameraIfCurrentPositionNotNull();
+      }
     });
-    animateCameraIfCurrentPositionNotNull();
+  }
+
+  Future<void> getDataFromCache() async {
+    Map<String, dynamic> data = await Get.find<RegistrationViewModel>()
+        .getDataFromCache();
+
+    ConfirmYourLocationModel processedData = ConfirmYourLocationModel.fromJson(
+      data,
+    );
+
+    additionalTEController.text = processedData.additionalInfo;
+    position = processedData.position;
+    Get.find<LocationViewModel>().updateLandMark(processedData.streetAddress);
   }
 
   @override
@@ -85,50 +105,18 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
               ),
               child: Column(
                 children: [
-                  // GetBuilder<LocationViewModel>(
-                  //   id: 'landmark',
-                  //   builder: (controller) {
-                  //     updateTextFieldWithMarker(controller);
-                  //     return TextFormField(
-                  //       enabled: true,
-                  //       style: style,
-                  //       controller: landMarkTEController,
-                  //       decoration: InputDecoration(
-                  //         hintText: 'Land mark',
-                  //         hintStyle: fontSize14(
-                  //           context,
-                  //         )!.copyWith(color: Colors.grey.shade400),
-                  //         contentPadding: EdgeInsets.symmetric(
-                  //           horizontal: 16.w,
-                  //         ),
-                  //       ),
-                  //       validator: (v) =>
-                  //           v == null || v.isEmpty ? 'Required' : null,
-                  //       onChanged: (v) {
-                  //         _checkFormValidity();
-                  //         onTextFieldChange(v);
-                  //       },
-                  //     );
-                  //   },
-                  // ),
                   GetBuilder<LocationViewModel>(
                     id: 'landmark',
                     builder: (controller) {
                       return TextFormField(
                         textInputAction: TextInputAction.go,
                         style: style,
-                        // ViewModel থেকে কন্ট্রোলারটি ব্যবহার করুন
                         controller: controller.landMarkTEController,
-                        decoration: InputDecoration(
-                          hintText: 'Land mark',
-                          // ...
-                        ),
+                        decoration: InputDecoration(hintText: 'Land mark'),
                         validator: (v) =>
                             v == null || v.isEmpty ? 'Required' : null,
                         onChanged: (v) {
-                          _checkFormValidity();
-                          // টাইপ করার সময় ম্যাপ আপডেট করার দরকার নেই,
-                          // এতে ইউজার শান্তিতে টাইপ করতে পারবে।
+                          checkFormValidity();
                         },
                         onFieldSubmitted: (value) {
                           onTextFieldChange(value);
@@ -161,7 +149,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                     ),
                     validator: (v) =>
                         v == null || v.isEmpty ? 'Required' : null,
-                    onChanged: (v) => _checkFormValidity(),
+                    onChanged: (v) => checkFormValidity(),
                     onFieldSubmitted: (value) {
                       FocusScope.of(context).unfocus();
                     },
@@ -186,9 +174,11 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                               return GoogleMap(
                                 onMapCreated: (controller) {
                                   _mapController = controller;
-                                  Get.find<LocationViewModel>().getLocation(
-                                    _mapController,
-                                  );
+                                  if (position != null) {
+                                    Get.find<LocationViewModel>().getLocation(
+                                      _mapController,
+                                    );
+                                  }
                                 },
                                 markers: controller.markers,
 
@@ -226,6 +216,7 @@ class _ConfirmYourLocationViewState extends State<ConfirmYourLocationView> {
                 ],
               ),
             ),
+
             SizedBox(height: 100.h),
           ],
         ),

@@ -1,6 +1,9 @@
 import 'package:cenith_marchent/core/theme/text_theme.dart';
+import 'package:cenith_marchent/features/auth/model/tell_about_your_self_model.dart';
+import 'package:cenith_marchent/features/auth/view_model/registration_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -11,32 +14,38 @@ class TellUsAboutYourselfView extends StatefulWidget {
   final Function(bool isValid) onValidChanged;
 
   @override
-  State<TellUsAboutYourselfView> createState() => TellUsAboutYourselfViewState();
+  State<TellUsAboutYourselfView> createState() =>
+      TellUsAboutYourselfViewState();
 }
 
 class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _submitted = false;
+  String selectedCountryCode = '+39';
+  String initialCountry = 'IT';
 
-  final _fNameTEController = TextEditingController();
-  final _lNameTEController = TextEditingController();
-  final _phoneTEController = TextEditingController();
-  final _passwordTEController = TextEditingController();
-  final _emailTEController = TextEditingController();
+  final fNameTEController = TextEditingController();
+  final lNameTEController = TextEditingController();
+  final phoneTEController = TextEditingController();
+  final passwordTEController = TextEditingController();
+  final emailTEController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _listen();
+    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
+      getDataFromCache();
+    });
   }
 
   void _listen() {
     for (final c in [
-      _fNameTEController,
-      _lNameTEController,
-      _phoneTEController,
-      _passwordTEController,
-      _emailTEController,
+      fNameTEController,
+      lNameTEController,
+      phoneTEController,
+      passwordTEController,
+      emailTEController,
     ]) {
       c.addListener(_checkFilled);
     }
@@ -44,11 +53,11 @@ class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
 
   void _checkFilled() {
     final filled =
-        _fNameTEController.text.isNotEmpty &&
-        _lNameTEController.text.isNotEmpty &&
-        _phoneTEController.text.isNotEmpty &&
-        _passwordTEController.text.isNotEmpty &&
-        _emailTEController.text.isNotEmpty;
+        fNameTEController.text.isNotEmpty &&
+        lNameTEController.text.isNotEmpty &&
+        phoneTEController.text.isNotEmpty &&
+        passwordTEController.text.isNotEmpty &&
+        emailTEController.text.isNotEmpty;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onValidChanged(filled);
     });
@@ -65,12 +74,33 @@ class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
 
   @override
   void dispose() {
-    _fNameTEController.dispose();
-    _lNameTEController.dispose();
-    _phoneTEController.dispose();
-    _passwordTEController.dispose();
-    _emailTEController.dispose();
+    fNameTEController.dispose();
+    lNameTEController.dispose();
+    phoneTEController.dispose();
+    passwordTEController.dispose();
+    emailTEController.dispose();
     super.dispose();
+  }
+
+  void getDataFromCache() async {
+    RegistrationViewModel controller = Get.find<RegistrationViewModel>();
+
+    Map<String, dynamic> data = await controller.getDataFromCache();
+
+    if (data.isNotEmpty) {
+      TellUsAboutYourSelfModel processedData =
+          TellUsAboutYourSelfModel.fromJson(data);
+      fNameTEController.text = processedData.firstName;
+      lNameTEController.text = processedData.lastName;
+      phoneTEController.text = processedData.mobileNumber;
+      emailTEController.text = processedData.email;
+      passwordTEController.text = processedData.password;
+      selectedCountryCode = processedData.countryCode;
+      initialCountry = processedData.initialCountry;
+     debugPrint(initialCountry);
+    } else {
+      debugPrint('failed to get data');
+    }
   }
 
   @override
@@ -88,7 +118,7 @@ class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
             children: [
               SizedBox(height: 32.h),
               _buildFormField(style),
-             // SizedBox(height: 200.h,)
+              // SizedBox(height: 200.h,)
             ],
           ),
         ),
@@ -98,73 +128,73 @@ class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
 
   Widget _buildFormField(TextStyle style) {
     return Column(
-              children: [
-                TextFormField(
-                  style: style,
-                  controller: _fNameTEController,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(hintText: 'First Name'),
-                  validator: (v) =>
-                      v == null || v.isEmpty ? 'Enter your name' : null,
-                ),
-                SizedBox(height: 15.h),
+      children: [
+        TextFormField(
+          style: style,
+          controller: fNameTEController,
+          textInputAction: TextInputAction.next,
+          decoration: const InputDecoration(hintText: 'First Name'),
+          validator: (v) => v == null || v.isEmpty ? 'Enter your name' : null,
+        ),
+        SizedBox(height: 15.h),
 
-                TextFormField(
-                  style: style,
-                  controller: _lNameTEController,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(hintText: 'Last Name'),
-                  validator: (v) =>
-                      v == null || v.isEmpty ? 'Enter your last name' : null,
-                ),
+        TextFormField(
+          style: style,
+          controller: lNameTEController,
+          textInputAction: TextInputAction.next,
+          decoration: const InputDecoration(hintText: 'Last Name'),
+          validator: (v) =>
+              v == null || v.isEmpty ? 'Enter your last name' : null,
+        ),
 
-                SizedBox(height: 15.h),
+        SizedBox(height: 15.h),
 
-                _buildPhoneNumberField(),
-                SizedBox(height: 15.h),
-                TextFormField(
-                  style: style,
-                  controller: _emailTEController,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  decoration: const InputDecoration(hintText: 'Email'),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) {
-                      return 'Enter a email';
-                    }
+        _buildPhoneNumberField(),
+        SizedBox(height: 15.h),
+        TextFormField(
+          style: style,
+          controller: emailTEController,
+          keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.done,
+          decoration: const InputDecoration(hintText: 'Email'),
+          validator: (v) {
+            if (v == null || v.isEmpty) {
+              return 'Enter a email';
+            }
 
-                    final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+            final regex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-                    if (!regex.hasMatch(v)) {
-                      return 'Invalid email';
-                    }
+            if (!regex.hasMatch(v)) {
+              return 'Invalid email';
+            }
 
-                    return null;
-                  },
-                ),
-                SizedBox(height: 15.h),
-                TextFormField(
-                  style: style,
-                  controller: _passwordTEController,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(hintText: 'Password'),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Password is required';
-                    final regex = RegExp(
-                      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$',
-                    );
-                    if (!regex.hasMatch(v)) {
-                      return 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
-                    }
-                    return null;
-                  },
-                ),
-              ],
+            return null;
+          },
+        ),
+        SizedBox(height: 15.h),
+        TextFormField(
+          style: style,
+          controller: passwordTEController,
+          textInputAction: TextInputAction.next,
+          decoration: const InputDecoration(hintText: 'Password'),
+          validator: (v) {
+            if (v == null || v.isEmpty) return 'Password is required';
+            final regex = RegExp(
+              r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$',
             );
+            if (!regex.hasMatch(v)) {
+              return 'Password must be 8+ chars, include uppercase, lowercase, number & special char';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
   }
 
   Widget _buildPhoneNumberField() {
     return IntlPhoneField(
+      key: ValueKey(initialCountry),
       countries: [
         Country(
           name: "United States",
@@ -246,13 +276,16 @@ class TellUsAboutYourselfViewState extends State<TellUsAboutYourselfView> {
           maxLength: 9,
         ),
       ],
-
       style: fontSize16(context),
-      controller: _phoneTEController,
+      controller: phoneTEController,
       keyboardType: TextInputType.phone,
       textInputAction: TextInputAction.next,
       dropdownIcon: const Icon(Icons.keyboard_arrow_down),
-      initialCountryCode: 'IT',
+      initialCountryCode: initialCountry,
+      onCountryChanged: (countries) {
+        selectedCountryCode = '+${countries.dialCode}';
+        initialCountry = countries.code;
+      },
       validator: (phone) {
         if (phone == null || phone.number.isEmpty) {
           return 'Phone number required';
